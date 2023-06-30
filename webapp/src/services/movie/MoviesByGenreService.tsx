@@ -25,7 +25,6 @@ function MoviesByGenreService(children: Props) {
         })
         .catch((err) => console.log(err));
     }
-
     fetchData();
   }, [children.id_genre]);
 
