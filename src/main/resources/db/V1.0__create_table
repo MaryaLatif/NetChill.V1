@@ -1,0 +1,13 @@
+create table movie(
+    id_movie int primary key,
+    title varchar,
+    genre int references genre(id_genre),
+    url varchar,
+    description varchar,
+    img varchar
+);
+
+create table genre(
+    id_genre int primary key,
+    nom_genre varchar
+);
