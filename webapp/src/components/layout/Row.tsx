@@ -1,32 +1,11 @@
-import React, {useState, useEffect, Children} from 'react';
-import "../../../public/assets/css/row.css";
-import MovieApi, {AllMovies, Movie, TopMovies} from "../../api/session/MovieApi";
+import React from 'react';
+import '../../../public/assets/css/row.css';
+import MoviesByGenreService from '../../services/movie/MoviesByGenreService';
 
-const base_url = "https://image.tmdb.org/t/p/original/";
-
-type Props = {
-  title: string,
-  fetchMovies: Movie[],
-  isLargerRow: boolean,
-}
-
-function Row(children: Props) {
-
+function Row() {
   return (
-    <div className="row">
-      <h2>{children.title}</h2>
-      <div className="row_posters">
-        {children.fetchMovies.map(movie => (
-          <div key={movie.id} className={`row_poster ${children.isLargerRow && "row_poster_large"}`}>
-            <img
-              src={base_url + (children.isLargerRow ? movie.poster_path : movie.backdrop_path)}
-              alt={movie.name}/>
-            <h3 className={'title'}>{movie.name ? movie.name : movie.title}</h3>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+    <MoviesByGenreService title={'Action'} id_genre={28} isLargerRow={false}/>
+  );
 }
 
-export default Row
+export default Row;

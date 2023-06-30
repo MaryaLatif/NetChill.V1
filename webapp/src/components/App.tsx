@@ -18,9 +18,7 @@ export default function App() {
       children: [
         {
           index: true,
-          element: <div>
-            <Row title={'NETFLIX ORIGINALS'} fetchMovies={TopOfMoviesByGenre(28)} isLargerRow={true}/>
-          </div>,
+          element: <Row />,
         },
       ],
     },
