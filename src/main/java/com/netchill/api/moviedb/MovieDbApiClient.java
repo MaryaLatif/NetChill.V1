@@ -2,7 +2,6 @@ package com.netchill.api.moviedb;
 
 import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
-import com.netchill.api.moviedb.models.NetflixMovie;
 import com.netchill.services.configuration.ConfigurationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Interceptor;
@@ -20,7 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
-import java.util.MissingFormatArgumentException;
 import java.util.concurrent.TimeUnit;
 
 @Singleton
@@ -91,7 +89,7 @@ public class MovieDbApiClient {
     );
   }
 
-  public MovieDbPaginatedResponse<NetflixMovie> getNetflixOriginals(@Nullable Integer page) {
+  public MovieDbPaginatedResponse<Movie> getNetflixOriginals(@Nullable Integer page) {
     return executeRequest(movieDbApi.getNetflixOriginals(
         this.configurationService.getMovieDbApiKey(),
         NETFLIX_ID,

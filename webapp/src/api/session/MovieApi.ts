@@ -15,8 +15,9 @@ export type Movie = {
   overview: string,
   poster_path: string,
   release_date: string,
-  title: string,
-  video: boolean
+  title?: string,
+  name?: string,
+  media_type: string
 };
 export type NetflixMovie = {
   backdrop_path: string,
@@ -50,7 +51,19 @@ export default class MovieApi {
   getNetflixOriginals() {
     return this
       .httpClient
-      .restRequest<NetflixMovie[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
+      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
+      .execute();
+  }
+  getTrendingMovies(){
+    return this
+      .httpClient
+      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/trending`)
+      .execute();
+  }
+  getTopRatedMovies(){
+    return this
+      .httpClient
+      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
       .execute();
   }
 }

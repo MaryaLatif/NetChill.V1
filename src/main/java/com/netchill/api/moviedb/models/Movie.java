@@ -14,7 +14,8 @@ public class Movie {
   public String overview;
   public String poster_path;
   public String release_date;
-
+  public String first_air_date;
   public String title;
-  public boolean video;
+  public String name;
+  public String media_type;
 }

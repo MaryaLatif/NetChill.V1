@@ -3,7 +3,6 @@ package com.netchill.services.movie;
 import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.MovieDbApiClient;
-import com.netchill.api.moviedb.models.NetflixMovie;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,7 +17,7 @@ public class MovieDbService {
     this.movieDbApiClient = movieDbApiClient;
   }
 
-  public List<NetflixMovie> getTopNetflixOriginals(){
+  public List<Movie> getTopNetflixOriginals(){
     return this.movieDbApiClient.getNetflixOriginals(null).getResults();
   }
   public MovieDbPaginatedResponse<Movie> getMoviesByGenre(int genre, int page){
@@ -30,7 +29,7 @@ public class MovieDbService {
   public List<Movie> getTrending(){
     return this.movieDbApiClient.getTrending(null).getResults();
   }
-  public MovieDbPaginatedResponse<NetflixMovie> getAllNetflixOriginals(Integer page){
+  public MovieDbPaginatedResponse<Movie> getAllNetflixOriginals(Integer page){
     return this.movieDbApiClient.getNetflixOriginals(page);
   }
   public List<Movie> getTopMoviesByGenre(int genre){

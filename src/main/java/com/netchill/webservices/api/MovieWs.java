@@ -5,10 +5,7 @@ import javax.inject.Singleton;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 
-import com.netchill.api.moviedb.MovieDbApiClient;
 import com.netchill.api.moviedb.models.Movie;
-import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
-import com.netchill.api.moviedb.models.NetflixMovie;
 import com.netchill.services.movie.MovieDbService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -45,7 +42,7 @@ public class MovieWs {
     }
     @GET
     @Path("/netflix-originals")
-    public List<NetflixMovie> getTopNetflixOriginals(){
+    public List<Movie> getTopNetflixOriginals(){
         return movieDbService.getTopNetflixOriginals();
     }
     @GET
