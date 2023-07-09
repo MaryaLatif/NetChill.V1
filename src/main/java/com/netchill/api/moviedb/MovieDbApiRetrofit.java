@@ -2,8 +2,10 @@ package com.netchill.api.moviedb;
 
 import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
+import com.netchill.api.moviedb.models.Trailer;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MovieDbApiRetrofit {
@@ -33,6 +35,12 @@ public interface MovieDbApiRetrofit {
       @Query("api_key") String apiKey,
       @Query("with_networks") Integer networks,
       @Query("page") Integer page
+  );
+  @GET("/3/movie/{movie_id}/videos")
+  Call<Trailer> getTrailerById(
+          @Path("movie_id") Integer id,
+          @Query("api_key") String apiKey,
+          @Query("language") String language
   );
 }
 

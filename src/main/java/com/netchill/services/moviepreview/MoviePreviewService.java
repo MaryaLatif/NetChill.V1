@@ -1,4 +1,4 @@
-package com.netchill.services.movie;
+package com.netchill.services.moviepreview;
 
 import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
@@ -9,11 +9,11 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class MovieDbService {
+public class MoviePreviewService {
   private final MovieDbApiClient movieDbApiClient;
 
   @Inject
-  private MovieDbService(MovieDbApiClient movieDbApiClient) {
+  private MoviePreviewService(MovieDbApiClient movieDbApiClient) {
     this.movieDbApiClient = movieDbApiClient;
   }
 

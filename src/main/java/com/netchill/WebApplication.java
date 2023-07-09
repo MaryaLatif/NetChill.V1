@@ -23,7 +23,6 @@ import com.google.inject.Stage;
  */
 public class WebApplication {
 	private static final Logger logger = LoggerFactory.getLogger(WebApplication.class);
-
 	// maximal waiting time for the last process to execute after the JVM received a kill signal
 	public static final Duration GRACEFUL_SHUTDOWN_TIMEOUT = Duration.ofSeconds(60);
 
@@ -39,7 +38,7 @@ public class WebApplication {
 			jerseyResourceConfig.register(new JerseyGuiceFeature(injector));
 
 			// migrate the database
-			//injector.getInstance(FlywayService.class).migrate();
+			injector.getInstance(FlywayService.class).migrate();
 			
 			// starts the server
 			HttpServer httpServer = GrizzlySetup.start(

@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 
 import com.netchill.api.moviedb.models.Movie;
-import com.netchill.services.movie.MovieDbService;
+import com.netchill.services.moviepreview.MoviePreviewService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.ws.rs.Consumes;
@@ -28,31 +28,31 @@ import java.util.List;
 @Singleton
 public class MovieWs {
     private final ConfigurationService configurationService;
-    private final MovieDbService movieDbService;
+    private final MoviePreviewService moviePreviewService;
 
     @Inject
-    public MovieWs(ConfigurationService configurationService, MovieDbService movieDBApiClient) {
+    public MovieWs(ConfigurationService configurationService, MoviePreviewService movieDBApiClient) {
         this.configurationService = configurationService;
-        this.movieDbService = movieDBApiClient;
+        this.moviePreviewService = movieDBApiClient;
     }
     @GET
     @Path("/top-rated")
     public List<Movie> getTopRated() {
-        return movieDbService.getTopRated();
+        return moviePreviewService.getTopRated();
     }
     @GET
     @Path("/netflix-originals")
     public List<Movie> getTopNetflixOriginals(){
-        return movieDbService.getTopNetflixOriginals();
+        return moviePreviewService.getTopNetflixOriginals();
     }
     @GET
     @Path("/trending")
     public List<Movie> getTrending(){
-        return movieDbService.getTrending();
+        return moviePreviewService.getTrending();
     }
     @GET
     @Path("/genre/{genre}")
     public List<Movie> getTopMovieByGenre(@PathParam("genre") int genre){
-        return movieDbService.getTopMoviesByGenre(genre);
+        return moviePreviewService.getTopMoviesByGenre(genre);
     }
 }

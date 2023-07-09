@@ -2,6 +2,8 @@ package com.netchill.api.moviedb;
 
 import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
+import com.netchill.api.moviedb.models.ResultTrailer;
+import com.netchill.api.moviedb.models.Trailer;
 import com.netchill.services.configuration.ConfigurationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Interceptor;
@@ -28,6 +30,7 @@ public class MovieDbApiClient {
   private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
   private static final int NETFLIX_ID = 213;
   private static final String language = "en-US";
+  private static final String videos = "videos";
   private final ObjectMapper objectMapper;
   private final MovieDbApiRetrofit movieDbApi;
   private final ConfigurationService configurationService;
@@ -102,6 +105,14 @@ public class MovieDbApiClient {
         this.configurationService.getMovieDbApiKey(),
         language,
         page
+    ));
+  }
+
+  public Trailer getTrailerById(Integer id){
+    return executeRequest(movieDbApi.getTrailerById(
+            id,
+            this.configurationService.getMovieDbApiKey(),
+            language
     ));
   }
   public <T> T executeRequest(Call<T> apiCall) {
