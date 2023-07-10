@@ -3,7 +3,11 @@ import '../../../../public/assets/css/row.css';
 import YouTube from 'react-youtube';
 import { Movie } from '../../../api/session/MovieApi';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
+import StreamingApi from '../../../api/session/StreamingApi';
+import ApiHttpClient from '../../../api/ApiHttpClient';
 
+const apiHttpClient = new ApiHttpClient();
+const streamingApi = new StreamingApi(apiHttpClient);
 function Row({
   title, movieList, isLargerRow,
 }: { title: string, movieList: Movie[], isLargerRow?: boolean }) {
@@ -22,7 +26,9 @@ function Row({
     if (trailerUrl) setTrailerUrl('');
 
     else {
-
+      movieLoader.monitor(streamingApi.getTrailerById(movieId)
+        .then((url) => setTrailerUrl(url.key))
+        .catch((err) => console.log(err)));
     }
   }
 
