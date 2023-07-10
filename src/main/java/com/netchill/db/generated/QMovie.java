@@ -30,11 +30,13 @@ public class QMovie extends com.querydsl.sql.RelationalPathBase<Movie> {
 
     public final StringPath imgUrl = createString("imgUrl");
 
+    public final StringPath movieUrl = createString("movieUrl");
+
     public final StringPath resume = createString("resume");
 
     public final StringPath title = createString("title");
 
-    public final StringPath url = createString("url");
+    public final StringPath trailerUrl = createString("trailerUrl");
 
     public final com.querydsl.sql.PrimaryKey<Movie> primary = createPrimaryKey(id);
 
@@ -68,10 +70,11 @@ public class QMovie extends com.querydsl.sql.RelationalPathBase<Movie> {
     public void addMetadata() {
         addMetadata(genreId, ColumnMetadata.named("genre_id").withIndex(3).ofType(Types.BIGINT).withSize(19));
         addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(imgUrl, ColumnMetadata.named("img_url").withIndex(6).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(resume, ColumnMetadata.named("resume").withIndex(5).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(imgUrl, ColumnMetadata.named("img_url").withIndex(7).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(movieUrl, ColumnMetadata.named("movie_url").withIndex(5).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(resume, ColumnMetadata.named("resume").withIndex(6).ofType(Types.VARCHAR).withSize(255));
         addMetadata(title, ColumnMetadata.named("title").withIndex(2).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(url, ColumnMetadata.named("url").withIndex(4).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(trailerUrl, ColumnMetadata.named("trailer_url").withIndex(4).ofType(Types.VARCHAR).withSize(255));
     }
 
 }

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import '../../../../public/assets/css/row.css';
 import YouTube from 'react-youtube';
-import movieTrailer from 'movie-trailer';
 import { Movie } from '../../../api/session/MovieApi';
+import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 
-function Row({ title, movieList, isLargerRow }: { title: string, movieList: Movie[], isLargerRow?: boolean }) {
+function Row({
+  title, movieList, isLargerRow,
+}: { title: string, movieList: Movie[], isLargerRow?: boolean }) {
   const BASE_URL = 'https://image.tmdb.org/t/p/original/';
   const [trailerUrl, setTrailerUrl] = useState('');
+  const movieLoader = useLoader();
   const opts = {
     height: '390',
     width: '100%',
@@ -15,16 +18,11 @@ function Row({ title, movieList, isLargerRow }: { title: string, movieList: Movi
     },
   };
 
-  function handleClick(movie: Movie): void {
+  function handleClick(movieId: number): void {
     if (trailerUrl) setTrailerUrl('');
 
     else {
-      movieTrailer(movie?.name || '')
-        .then((url: string) => {
-          const urlParams = new URLSearchParams(new URL(url).search);
-          setTrailerUrl(`${urlParams.get('v')}`);
-        })
-        .catch((err: string) => console.log(err));
+
     }
   }
 
@@ -34,7 +32,7 @@ function Row({ title, movieList, isLargerRow }: { title: string, movieList: Movi
       <div className="row_posters">
         {movieList.map((movie) => (
           <div key={movie.id} className={`row_poster ${isLargerRow && 'row_poster_large'}`}
-               onClick={() => handleClick(movie)}>
+               onClick={() => handleClick(movie.id)}>
             <img
               src={BASE_URL + (isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
               alt={movie.title}/>

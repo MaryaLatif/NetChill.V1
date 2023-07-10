@@ -1,4 +1,4 @@
-import {HttpMethod} from 'simple-http-request-builder';
+import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
 
 export type AllMovies = {
@@ -54,13 +54,15 @@ export default class MovieApi {
       .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
       .execute();
   }
-  getTrendingMovies(){
+
+  getTrendingMovies() {
     return this
       .httpClient
       .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/trending`)
       .execute();
   }
-  getTopRatedMovies(){
+
+  getTopRatedMovies() {
     return this
       .httpClient
       .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)

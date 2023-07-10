@@ -21,14 +21,17 @@ public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl 
     @Column("img_url")
     private String imgUrl;
 
+    @Column("movie_url")
+    private String movieUrl;
+
     @Column("resume")
     private String resume;
 
     @Column("title")
     private String title;
 
-    @Column("url")
-    private String url;
+    @Column("trailer_url")
+    private String trailerUrl;
 
     public Long getGenreId() {
         return genreId;
@@ -54,6 +57,14 @@ public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl 
         this.imgUrl = imgUrl;
     }
 
+    public String getMovieUrl() {
+        return movieUrl;
+    }
+
+    public void setMovieUrl(String movieUrl) {
+        this.movieUrl = movieUrl;
+    }
+
     public String getResume() {
         return resume;
     }
@@ -70,12 +81,12 @@ public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl 
         this.title = title;
     }
 
-    public String getUrl() {
-        return url;
+    public String getTrailerUrl() {
+        return trailerUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setTrailerUrl(String trailerUrl) {
+        this.trailerUrl = trailerUrl;
     }
 
     @Override

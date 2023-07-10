@@ -36,11 +36,19 @@ public class MovieDao {
     // EXEMPLE TUPLE
     public MovieTitleWithUrl getMovieNameAndURL(Long idMovie) {
         Tuple tuple = transactionManager.selectQuery()
-                .select(QMovie.movie.title, QMovie.movie.url)
+                .select(QMovie.movie.title, QMovie.movie.movieUrl)
                 .from(QMovie.movie)
                 .where(QMovie.movie.id.eq(idMovie))
                 .fetchOne();
 
-        return new MovieTitleWithUrl(tuple.get(QMovie.movie.title), tuple.get(QMovie.movie.url));
+        return new MovieTitleWithUrl(tuple.get(QMovie.movie.title), tuple.get(QMovie.movie.movieUrl));
+    }
+    public String getTrailerById(Long idMovie){
+        return transactionManager.selectQuery()
+                .select(QMovie.movie.trailerUrl)
+                .from(QMovie.movie)
+                .where(QMovie.movie.id.eq(idMovie))
+                .fetchOne();
     }
 }
+

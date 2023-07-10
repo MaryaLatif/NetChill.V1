@@ -107,7 +107,7 @@ public class MovieDbApiClient {
         page
     ));
   }
-
+/*
   public Trailer getTrailerById(Integer id){
     return executeRequest(movieDbApi.getTrailerById(
             id,
@@ -115,6 +115,8 @@ public class MovieDbApiClient {
             language
     ));
   }
+
+ */
   public <T> T executeRequest(Call<T> apiCall) {
     retrofit2.Response<T> response;
     try {

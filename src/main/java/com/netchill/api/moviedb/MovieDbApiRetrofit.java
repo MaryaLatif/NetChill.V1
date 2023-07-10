@@ -36,11 +36,13 @@ public interface MovieDbApiRetrofit {
       @Query("with_networks") Integer networks,
       @Query("page") Integer page
   );
+  /*
   @GET("/3/movie/{movie_id}/videos")
   Call<Trailer> getTrailerById(
           @Path("movie_id") Integer id,
           @Query("api_key") String apiKey,
           @Query("language") String language
   );
+   */
 }
 

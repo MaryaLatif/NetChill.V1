@@ -2,6 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.api.moviedb.models.ResultTrailer;
+import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.moviepreview.MoviePreviewService;
 import com.netchill.services.moviepreview.MovieStreamingService;
@@ -21,17 +22,16 @@ import java.util.List;
 @Singleton
 public class StreamingWs {
     private final ConfigurationService configurationService;
-    private  final MovieStreamingService movieStreamingService;
+    private  final MovieDao movieDao;
 
     @Inject
-    public StreamingWs(ConfigurationService configurationService, MovieStreamingService movieStreamingService){
+    public StreamingWs(ConfigurationService configurationService, MovieDao movieDao){
         this.configurationService = configurationService;
-        this.movieStreamingService = movieStreamingService;
+        this.movieDao = movieDao;
     }
-
     @GET
     @Path("/{id}")
-    public List<ResultTrailer> getTrailerById(@PathParam("id") Integer id){
-        return movieStreamingService.getTrailerById(id);
+    public String getTrailerById(@PathParam("id") Long id){
+        return movieDao.getTrailerById(id);
     }
 }

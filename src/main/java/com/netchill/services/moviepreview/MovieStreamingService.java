@@ -14,8 +14,11 @@ public class MovieStreamingService {
         this.movieDbApiClient = movieDbApiClient;
     }
 
+    /*
     public List<ResultTrailer> getTrailerById(Integer id){
         return this.movieDbApiClient.getTrailerById(id).getResults();
     }
+
+     */
 
 }
