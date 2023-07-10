@@ -22,16 +22,16 @@ import java.util.List;
 @Singleton
 public class StreamingWs {
     private final ConfigurationService configurationService;
-    private  final MovieDao movieDao;
+    private  final MovieStreamingService movieStreamingService;
 
     @Inject
-    public StreamingWs(ConfigurationService configurationService, MovieDao movieDao){
+    public StreamingWs(ConfigurationService configurationService, MovieStreamingService movieStreamingService){
         this.configurationService = configurationService;
-        this.movieDao = movieDao;
+        this.movieStreamingService = movieStreamingService;
     }
     @GET
     @Path("/{id}")
-    public String getTrailerById(@PathParam("id") Long id){
-        return movieDao.getTrailerById(id);
+    public ResultTrailer getTrailerById(@PathParam("id") Long id){
+        return movieStreamingService.getTrailerById(id);
     }
 }

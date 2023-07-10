@@ -1,6 +1,8 @@
 package com.netchill.db.dao.movie;
 
 import com.coreoz.plume.db.querydsl.transaction.TransactionManagerQuerydsl;
+import com.netchill.api.moviedb.models.ResultTrailer;
+import com.netchill.api.moviedb.models.Trailer;
 import com.netchill.db.generated.Movie;
 import com.netchill.db.generated.QGenre;
 import com.netchill.db.generated.QMovie;
@@ -43,12 +45,13 @@ public class MovieDao {
 
         return new MovieTitleWithUrl(tuple.get(QMovie.movie.title), tuple.get(QMovie.movie.movieUrl));
     }
-    public String getTrailerById(Long idMovie){
-        return transactionManager.selectQuery()
+    public ResultTrailer getTrailerById(Long idMovie){
+        String trailer = transactionManager.selectQuery()
                 .select(QMovie.movie.trailerUrl)
                 .from(QMovie.movie)
                 .where(QMovie.movie.id.eq(idMovie))
                 .fetchOne();
+        return new ResultTrailer(trailer);
     }
 }
 
