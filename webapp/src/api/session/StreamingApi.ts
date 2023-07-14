@@ -1,12 +1,9 @@
 import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
 
-type Trailer = {
-  id: number,
-  keys: TrailerKey[]
-};
-export type TrailerKey = {
-  key: string
+export type Trailer = {
+  key: string,
+  type: string
 };
 
 export default class StreamingApi {
@@ -15,10 +12,17 @@ export default class StreamingApi {
   constructor(private readonly httpClient: ApiHttpClient) {
   }
 
-  getTrailerById(movieId: number) {
+  getMovieTrailerById(id: number) {
     return this
       .httpClient
-      .restRequest<TrailerKey>(HttpMethod.GET, `${this.baseUrl}/${movieId}`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movie/${id}`)
+      .execute();
+  }
+
+  getSerieTrailerById(id: number) {
+    return this
+      .httpClient
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/serie/${id}`)
       .execute();
   }
 }

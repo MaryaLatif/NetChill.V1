@@ -1,0 +1,40 @@
+.selected_movie{
+  display: block;
+}
+#parent-show-movie{
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  top:0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.show-movie{
+  width: 50%;
+  background: black;
+}
+.cross{
+  height: 30px;
+  object-fit: contain;
+  cursor: pointer;
+}
+.cross-parent{
+  background: white;
+  display: flex;
+  justify-content: flex-end;
+}
+.overview-parent{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  color: white;
+  width: 50%;
+  margin: 20px;
+}
+.overview{
+  margin-top: 10px;
+  line-height: 20px;
+}

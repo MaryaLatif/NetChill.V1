@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import MovieApi, { Movie } from '../../../api/session/MovieApi';
+import MoviePreviewApi, { Movie } from '../../../api/session/MoviePreviewApi';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import ApiHttpClient from '../../../api/ApiHttpClient';
 import Row from '../style/Row';
 
 const apiHttpClient = new ApiHttpClient();
-const movieApi = new MovieApi(apiHttpClient);
+const movieApi = new MoviePreviewApi(apiHttpClient);
 function NetflixMovies() {
   const [movie, setMovie] = useState<Movie[]>([]);
   const movieLoader = useLoader();

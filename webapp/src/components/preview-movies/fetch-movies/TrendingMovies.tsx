@@ -1,29 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import Row from "../style/Row";
-import ApiHttpClient from "../../../api/ApiHttpClient";
-import MovieApi, {Movie} from "../../../api/session/MovieApi";
-import useLoader from "../../../lib/plume-http-react-hook-loader/promiseLoaderHook";
+import React, { useEffect, useState } from 'react';
+import Row from '../style/Row';
+import ApiHttpClient from '../../../api/ApiHttpClient';
+import MoviePreviewApi, { Movie } from '../../../api/session/MoviePreviewApi';
+import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 
 const apiHttpClient = new ApiHttpClient();
-const movieApi = new MovieApi(apiHttpClient);
+const movieApi = new MoviePreviewApi(apiHttpClient);
 
 function TrendingMovies() {
-  const [movie, setMovie] = useState<Movie[]>([])
+  const [movie, setMovie] = useState<Movie[]>([]);
   const movieLoading = useLoader();
 
   function fetchMovie() {
     movieLoading.monitor(movieApi.getTrendingMovies()
       .then((res) => setMovie(res))
-      .catch((err) => console.log(err)
+      .catch((err) => console.log(err),
       ));
   }
 
   useEffect(() => {
     fetchMovie();
-  }, [setMovie])
+  }, [setMovie]);
 
-  if(movieLoading.isLoading) return <div>chargement en cours...</div>
-  return <Row title={'Trending'} movieList={movie}/>
+  if (movieLoading.isLoading) return <div>chargement en cours...</div>;
+  return <Row title={'Trending'} movieList={movie}/>;
 }
 
 export default TrendingMovies;
