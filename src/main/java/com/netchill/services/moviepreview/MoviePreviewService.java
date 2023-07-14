@@ -1,6 +1,6 @@
 package com.netchill.services.moviepreview;
 
-import com.netchill.api.moviedb.models.Movie;
+import com.netchill.api.moviedb.models.Preview;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.MovieDbApiClient;
 
@@ -17,22 +17,22 @@ public class MoviePreviewService {
     this.movieDbApiClient = movieDbApiClient;
   }
 
-  public List<Movie> getTopNetflixOriginals(){
+  public List<Preview> getTopNetflixOriginals(){
     return this.movieDbApiClient.getNetflixOriginals(null).getResults();
   }
-  public MovieDbPaginatedResponse<Movie> getMoviesByGenre(int genre, int page){
+  public MovieDbPaginatedResponse<Preview> getMoviesByGenre(int genre, int page){
     return this.movieDbApiClient.getMoviesByGenre(genre, page);
   }
-  public List<Movie> getTopRated(){
+  public List<Preview> getTopRated(){
     return this.movieDbApiClient.getTopRated(null).getResults();
   }
-  public List<Movie> getTrending(){
+  public List<Preview> getTrending(){
     return this.movieDbApiClient.getTrending(null).getResults();
   }
-  public MovieDbPaginatedResponse<Movie> getAllNetflixOriginals(Integer page){
+  public MovieDbPaginatedResponse<Preview> getAllNetflixOriginals(Integer page){
     return this.movieDbApiClient.getNetflixOriginals(page);
   }
-  public List<Movie> getTopMoviesByGenre(int genre){
+  public List<Preview> getTopMoviesByGenre(int genre){
     return this.movieDbApiClient.getMoviesByGenre(genre, null).getResults();
   }
 }

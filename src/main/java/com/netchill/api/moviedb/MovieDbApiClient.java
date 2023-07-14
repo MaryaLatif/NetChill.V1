@@ -1,12 +1,8 @@
 package com.netchill.api.moviedb;
 
-import com.netchill.api.moviedb.models.Movie;
-import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
-import com.netchill.api.moviedb.models.ResultTrailer;
-import com.netchill.api.moviedb.models.Trailer;
+import com.netchill.api.moviedb.models.*;
 import com.netchill.services.configuration.ConfigurationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -74,7 +70,7 @@ public class MovieDbApiClient {
     System.out.println(retrofit.baseUrl());
   }
 
-  public MovieDbPaginatedResponse<Movie> getMoviesByGenre(int genre, @Nullable Integer page) {
+  public MovieDbPaginatedResponse<Preview> getMoviesByGenre(int genre, @Nullable Integer page) {
     return executeRequest(movieDbApi.getMovieByGenre(
             this.configurationService.getMovieDbApiKey(),
             genre,
@@ -83,7 +79,7 @@ public class MovieDbApiClient {
     );
   }
 
-  public MovieDbPaginatedResponse<Movie> getTopRated(@Nullable Integer page) {
+  public MovieDbPaginatedResponse<Preview> getTopRated(@Nullable Integer page) {
     return executeRequest(movieDbApi.getTopRated(
             this.configurationService.getMovieDbApiKey(),
             language,
@@ -92,7 +88,7 @@ public class MovieDbApiClient {
     );
   }
 
-  public MovieDbPaginatedResponse<Movie> getNetflixOriginals(@Nullable Integer page) {
+  public MovieDbPaginatedResponse<Preview> getNetflixOriginals(@Nullable Integer page) {
     return executeRequest(movieDbApi.getNetflixOriginals(
         this.configurationService.getMovieDbApiKey(),
         NETFLIX_ID,
@@ -100,23 +96,39 @@ public class MovieDbApiClient {
     ));
   }
 
-  public MovieDbPaginatedResponse<Movie> getTrending(@Nullable Integer page){
+  public MovieDbPaginatedResponse<Preview> getTrending(@Nullable Integer page){
     return executeRequest(movieDbApi.getTrending(
         this.configurationService.getMovieDbApiKey(),
         language,
         page
     ));
   }
-/*
-  public Trailer getTrailerById(Integer id){
-    return executeRequest(movieDbApi.getTrailerById(
+
+  public Movie getMovieById(Long id){
+    return executeRequest(movieDbApi.getMovieById(
             id,
-            this.configurationService.getMovieDbApiKey(),
-            language
+            this.configurationService.getMovieDbApiKey()
+    ));
+  }
+  public Trailer getMovieTrailerById(Long id){
+    return executeRequest(movieDbApi.getMovieTrailerById(
+            id,
+            this.configurationService.getMovieDbApiKey()
+    ));
+  }
+  public Serie getSerieById(Long id){
+    return executeRequest(movieDbApi.getSerieById(
+            id,
+            this.configurationService.getMovieDbApiKey()
     ));
   }
 
- */
+  public Trailer getSerieTrailerById(Long id){
+    return executeRequest(movieDbApi.getSerieTrailerById(
+            id,
+            this.configurationService.getMovieDbApiKey()
+    ));
+  }
   public <T> T executeRequest(Call<T> apiCall) {
     retrofit2.Response<T> response;
     try {

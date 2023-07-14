@@ -35,8 +35,8 @@ export type AllNetflixMovies = {
   total_results: number,
 };
 
-export default class MovieApi {
-  private baseUrl = '/movies';
+export default class MoviePreviewApi {
+  private baseUrl = '/movies-preview';
 
   constructor(private readonly httpClient: ApiHttpClient) {
   }

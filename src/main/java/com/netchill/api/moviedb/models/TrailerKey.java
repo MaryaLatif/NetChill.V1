@@ -1,12 +1,11 @@
 package com.netchill.api.moviedb.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class ResultTrailer {
+public class TrailerKey {
     private String key;
+    private String type;
 }

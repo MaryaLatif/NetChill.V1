@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ApiHttpClient from '../../../api/ApiHttpClient';
-import MovieApi, { Movie } from '../../../api/session/MovieApi';
+import MoviePreviewApi, { Movie } from '../../../api/session/MoviePreviewApi';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import Row from '../style/Row';
 
 const apiHttpClient = new ApiHttpClient();
-const movieApi = new MovieApi(apiHttpClient);
+const movieApi = new MoviePreviewApi(apiHttpClient);
 
 function MoviesByGenre({ genre, id_genre }:{ genre:string, id_genre: number }) {
   const [movie, setMovie] = useState<Movie[]>([]);
@@ -21,7 +21,6 @@ function MoviesByGenre({ genre, id_genre }:{ genre:string, id_genre: number }) {
   useEffect(() => {
     fetchMovies();
   }, [id_genre]);
-
   if (movieLoader.isLoading) return <div>chargement en cours...</div>;
   return <Row title={genre} movieList={movie} />;
 }

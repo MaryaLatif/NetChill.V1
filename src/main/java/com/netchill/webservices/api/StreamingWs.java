@@ -1,18 +1,16 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.ResultTrailer;
-import com.netchill.db.dao.movie.MovieDao;
+import com.netchill.api.moviedb.models.Trailer;
+import com.netchill.api.moviedb.models.TrailerKey;
 import com.netchill.services.configuration.ConfigurationService;
-import com.netchill.services.moviepreview.MoviePreviewService;
-import com.netchill.services.moviepreview.MovieStreamingService;
+import com.netchill.services.moviepreview.StreamingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Path("/stream")
 @Tag(name = "Streaming", description = "Trailer and movies")
@@ -22,16 +20,29 @@ import java.util.List;
 @Singleton
 public class StreamingWs {
     private final ConfigurationService configurationService;
-    private  final MovieStreamingService movieStreamingService;
+    private  final StreamingService movieStreamingService;
 
     @Inject
-    public StreamingWs(ConfigurationService configurationService, MovieStreamingService movieStreamingService){
+    public StreamingWs(ConfigurationService configurationService, StreamingService movieStreamingService){
         this.configurationService = configurationService;
         this.movieStreamingService = movieStreamingService;
     }
+    /*
     @GET
-    @Path("/{id}")
-    public ResultTrailer getTrailerById(@PathParam("id") Long id){
-        return movieStreamingService.getTrailerById(id);
+    @Path("/movie/{id}")
+    public Trailer getTrailerById(@PathParam("id") Long id){
+        return this.movieStreamingService.getTrailerById(id);
+    }
+
+     */
+    @GET
+    @Path("/serie/{id}")
+    public TrailerKey getSerieTrailerById(@PathParam("id") Long id){
+        return this.movieStreamingService.getSerieTrailerById(id);
+    }
+    @GET
+    @Path("/movie/{id}")
+    public TrailerKey getMovieTrailerById(@PathParam("id") Long id){
+        return this.movieStreamingService.getMovieTrailerById(id);
     }
 }
