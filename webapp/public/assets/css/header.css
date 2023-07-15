@@ -1,0 +1,25 @@
+.logo{
+  object-fit: contain;
+  height: 100px;
+}
+.scroll{
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+}
+#header{
+  background: linear-gradient(rgba(0,0,0,0.5), #282c34);
+  transition: box-shadow 1s;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-family: 'Montserrat';
+  font-size: small;
+  font-weight: lighter;
+  padding-bottom: 20px;
+}
+#header > ul{
+  list-style: none;
+  display: flex;
+}
+#header li{
+  margin-right: 50px;
+}
