@@ -1,5 +1,5 @@
 import { HttpMethod } from 'simple-http-request-builder';
-import ApiHttpClient from '../ApiHttpClient';
+import ApiHttpClient from './ApiHttpClient';
 
 export type AllMovies = {
   page: number,
@@ -35,7 +35,7 @@ export type AllNetflixMovies = {
   total_results: number,
 };
 
-export default class MoviePreviewApi {
+export default class PreviewApi {
   private baseUrl = '/movies-preview';
 
   constructor(private readonly httpClient: ApiHttpClient) {

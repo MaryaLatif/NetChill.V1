@@ -31,12 +31,4 @@ public class MovieWs {
         return this.movieService.getMovieById(id);
     }
 
-    /*
-    @GET
-    @Path("/genre/{id}")
-    public Genre getGenreById(@PathParam("id") Long id){
-        return this.movieService.getGenreById(id);
-    }
-
-     */
 }

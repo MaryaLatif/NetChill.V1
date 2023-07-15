@@ -24,7 +24,11 @@ public class QMovie extends com.querydsl.sql.RelationalPathBase<Movie> {
 
     public static final QMovie movie = new QMovie("ntc_movie");
 
-    public final NumberPath<Long> genreId = createNumber("genreId", Long.class);
+    public final NumberPath<Long> genre1Id = createNumber("genre1Id", Long.class);
+
+    public final NumberPath<Long> genre2Id = createNumber("genre2Id", Long.class);
+
+    public final NumberPath<Long> genre3Id = createNumber("genre3Id", Long.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -40,7 +44,11 @@ public class QMovie extends com.querydsl.sql.RelationalPathBase<Movie> {
 
     public final com.querydsl.sql.PrimaryKey<Movie> primary = createPrimaryKey(id);
 
-    public final com.querydsl.sql.ForeignKey<Genre> ntcMovieNtcGenreIdFk = createForeignKey(genreId, "id");
+    public final com.querydsl.sql.ForeignKey<Genre> ntcMovieNtcGenre1IdFk = createForeignKey(genre1Id, "id");
+
+    public final com.querydsl.sql.ForeignKey<Genre> ntcMovieNtcGenre2IdFk = createForeignKey(genre2Id, "id");
+
+    public final com.querydsl.sql.ForeignKey<Genre> ntcMovieNtcGenre3IdFk = createForeignKey(genre3Id, "id");
 
     public QMovie(String variable) {
         super(Movie.class, forVariable(variable), "null", "ntc_movie");
@@ -68,13 +76,15 @@ public class QMovie extends com.querydsl.sql.RelationalPathBase<Movie> {
     }
 
     public void addMetadata() {
-        addMetadata(genreId, ColumnMetadata.named("genre_id").withIndex(3).ofType(Types.BIGINT).withSize(19));
+        addMetadata(genre1Id, ColumnMetadata.named("genre1_id").withIndex(3).ofType(Types.BIGINT).withSize(19));
+        addMetadata(genre2Id, ColumnMetadata.named("genre2_id").withIndex(4).ofType(Types.BIGINT).withSize(19));
+        addMetadata(genre3Id, ColumnMetadata.named("genre3_id").withIndex(5).ofType(Types.BIGINT).withSize(19));
         addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(imgUrl, ColumnMetadata.named("img_url").withIndex(7).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(movieUrl, ColumnMetadata.named("movie_url").withIndex(5).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(resume, ColumnMetadata.named("resume").withIndex(6).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(imgUrl, ColumnMetadata.named("img_url").withIndex(9).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(movieUrl, ColumnMetadata.named("movie_url").withIndex(7).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(resume, ColumnMetadata.named("resume").withIndex(8).ofType(Types.VARCHAR).withSize(255));
         addMetadata(title, ColumnMetadata.named("title").withIndex(2).ofType(Types.VARCHAR).withSize(255));
-        addMetadata(trailerUrl, ColumnMetadata.named("trailer_url").withIndex(4).ofType(Types.VARCHAR).withSize(255));
+        addMetadata(trailerUrl, ColumnMetadata.named("trailer_url").withIndex(6).ofType(Types.VARCHAR).withSize(255));
     }
 
 }

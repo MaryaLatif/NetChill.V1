@@ -30,7 +30,13 @@ public class QGenre extends com.querydsl.sql.RelationalPathBase<Genre> {
 
     public final com.querydsl.sql.PrimaryKey<Genre> primary = createPrimaryKey(id);
 
-    public final com.querydsl.sql.ForeignKey<Movie> _ntcMovieNtcGenreIdFk = createInvForeignKey(id, "genre_id");
+    public final com.querydsl.sql.ForeignKey<Movie> _ntcMovieNtcGenre1IdFk = createInvForeignKey(id, "genre1_id");
+
+    public final com.querydsl.sql.ForeignKey<Movie> _ntcMovieNtcGenre2IdFk = createInvForeignKey(id, "genre2_id");
+
+    public final com.querydsl.sql.ForeignKey<Movie> _ntcMovieNtcGenre3IdFk = createInvForeignKey(id, "genre3_id");
+
+    public final com.querydsl.sql.ForeignKey<PreviewGenreMovie> _ntcPreviewGenreMovieNtcGenreIdFk = createInvForeignKey(id, "id");
 
     public QGenre(String variable) {
         super(Genre.class, forVariable(variable), "null", "ntc_genre");

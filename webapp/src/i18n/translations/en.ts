@@ -1,6 +1,10 @@
 import { Translations } from './Translations';
 
 const enMessages: Translations = {
+  movieRow: {
+    netflix: 'NETFLIX ORIGINALS',
+    toprated: 'top',
+  },
   // actions
   'action.back': 'Back',
   'action.cancel': 'Cancel',

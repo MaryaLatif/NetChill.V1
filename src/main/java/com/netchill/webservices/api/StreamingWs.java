@@ -1,8 +1,9 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Trailer;
+import com.netchill.api.moviedb.models.Genre;
 import com.netchill.api.moviedb.models.TrailerKey;
+import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.moviepreview.StreamingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,20 +22,14 @@ import javax.ws.rs.core.MediaType;
 public class StreamingWs {
     private final ConfigurationService configurationService;
     private  final StreamingService movieStreamingService;
+    private final MovieDao movieDao;
 
     @Inject
-    public StreamingWs(ConfigurationService configurationService, StreamingService movieStreamingService){
+    public StreamingWs(ConfigurationService configurationService, StreamingService movieStreamingService, MovieDao movieDao){
         this.configurationService = configurationService;
         this.movieStreamingService = movieStreamingService;
+        this.movieDao = movieDao;
     }
-    /*
-    @GET
-    @Path("/movie/{id}")
-    public Trailer getTrailerById(@PathParam("id") Long id){
-        return this.movieStreamingService.getTrailerById(id);
-    }
-
-     */
     @GET
     @Path("/serie/{id}")
     public TrailerKey getSerieTrailerById(@PathParam("id") Long id){
@@ -44,5 +39,10 @@ public class StreamingWs {
     @Path("/movie/{id}")
     public TrailerKey getMovieTrailerById(@PathParam("id") Long id){
         return this.movieStreamingService.getMovieTrailerById(id);
+    }
+    @GET
+    @Path("/genre/{id}")
+    public Genre getGenreById(@PathParam("id") Long id){
+        return this.movieDao.getGenreById(id);
     }
 }

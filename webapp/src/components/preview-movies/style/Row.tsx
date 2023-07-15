@@ -1,73 +1,110 @@
 import React, { useEffect, useState } from 'react';
 import '../../../../public/assets/css/row.css';
-import { Movie } from '../../../api/session/MoviePreviewApi';
+import { getGlobalInstance } from 'plume-ts-di';
+import classNames from 'classnames';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import StreamingApi, { Trailer } from '../../../api/session/StreamingApi';
-import ApiHttpClient from '../../../api/ApiHttpClient';
 import ShowTrailer from './streaming/trailer/ShowTrailer';
+import StreamingService from '../../../services/streaming/StreamingService';
+import { MediaType, Trailer } from '../../../api/types/MovieDbTypes';
+import { Movie } from '../../../api/PreviewApi';
 
-const apiHttpClient = new ApiHttpClient();
-const streamingApi = new StreamingApi(apiHttpClient);
+type Props = {
+  title: string,
+  movieList: Movie[],
+  isLargerRow?: boolean,
+  isDataLoading?: boolean
+};
+
+type MovieInfo = {
+  id: number,
+  overview: string,
+  type: MediaType,
+  genreIds: number[]
+};
 
 function Row({
-  title, movieList, isLargerRow,
-}: { title: string, movieList: Movie[], isLargerRow?: boolean }) {
-  const BASE_URL = 'https://image.tmdb.org/t/p/original/';
+  title, movieList, isLargerRow, isDataLoading,
+}: Props) {
+  const streamingService = getGlobalInstance(StreamingService);
+
   const [trailer, setTrailer] = useState<Trailer>();
-  const [movieInfo, setMovieInfo] = useState<{ id: number, overview: string, type: string }>();
+  const [movieInfo, setMovieInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
+
   const movieLoader = useLoader();
-  function handleClick(movieId: number, movieResume: string, type: string): void {
-    setMovieInfo({ id: movieId, overview: movieResume, type });
+
+  const BASE_URL = 'https://image.tmdb.org/t/p/original/';
+
+  function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
+    setMovieInfo({
+      id: movieId,
+      overview: movieResume,
+      type,
+      genreIds,
+    });
     setVisible(true);
   }
 
-  function handleRemoveComponent() {
+  function handleCloseTrailerPopIn() {
     setVisible(false);
+    setTrailer(undefined);
   }
 
   useEffect(() => {
-    if (movieInfo) {
-      if (movieInfo.type === 'movie') {
-        movieLoader.monitor(streamingApi.getMovieTrailerById(movieInfo.id)
-          .then((url) => {
-            setTrailer(url);
-          })
-          .catch((err) => console.log(err)));
-      } else {
-        movieLoader.monitor(streamingApi.getSerieTrailerById(movieInfo.id)
-          .then((url) => {
-            setTrailer(url);
-          })
-          .catch((err) => console.log(err)));
-      }
+    if (!movieInfo) {
+      return;
     }
+
+    const apiCall = movieInfo.type === 'movie'
+      ? streamingService.getMovieTrailerById
+      : streamingService.getSerieTrailerById;
+
+    movieLoader.monitor(apiCall(movieInfo.id)
+      .then(setTrailer));
   }, [movieInfo]);
 
   return (
     <div className="row">
       <h2>{title}</h2>
-      <div className="row_posters">
-        {movieList.map((movie) => (
-          <div key={movie.id} className={
-            `row_poster ${isLargerRow && 'row_poster_large'}`
-          }
-               onClick={() => {
-                 handleClick(movie.id, movie.overview, movie.name ? 'serie' : 'movie');
-               }
-               }>
-            <img
-              src={BASE_URL + (isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
-              alt={movie.title}/>
+      {
+        isDataLoading
+          ? (<div>chargement en cours...</div>)
+          : (
+            <div className="row_posters">
+              {movieList.map((movie) => (
+                <div
+                  key={movie.id}
+                  className={classNames('row_poster', { row_poster_large: isLargerRow })}
+                  onClick={() => handleClick(
+                    movie.id,
+                    movie.overview,
+                    movie.name ? MediaType.SERIE : MediaType.MOVIE,
+                    movie.genre_ids,
+                  )}
+                  aria-hidden="true"
+                >
+                  <img
+                    src={BASE_URL + (isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
+                    alt={movie.title}/>
 
-            <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
-          </div>
-        ))}
-      </div>
-      {visible && trailer && movieInfo && <ShowTrailer
-        url={trailer.key}
-        overview={movieInfo.overview}
-        onRemove={handleRemoveComponent}/>}
+                  <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
+                </div>
+              ))}
+            </div>
+          )
+      }
+      {
+        visible
+        && trailer
+        && movieInfo
+        && (
+          <ShowTrailer
+            url={trailer.key}
+            overview={movieInfo.overview}
+            genreIds={movieInfo.genreIds}
+            onClose={handleCloseTrailerPopIn}
+          />
+        )}
     </div>
   );
 }

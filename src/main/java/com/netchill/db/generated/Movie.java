@@ -11,8 +11,16 @@ import com.querydsl.sql.Column;
 public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl {
 
     @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
-    @Column("genre_id")
-    private Long genreId;
+    @Column("genre1_id")
+    private Long genre1Id;
+
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
+    @Column("genre2_id")
+    private Long genre2Id;
+
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
+    @Column("genre3_id")
+    private Long genre3Id;
 
     @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("id")
@@ -33,12 +41,28 @@ public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl 
     @Column("trailer_url")
     private String trailerUrl;
 
-    public Long getGenreId() {
-        return genreId;
+    public Long getGenre1Id() {
+        return genre1Id;
     }
 
-    public void setGenreId(Long genreId) {
-        this.genreId = genreId;
+    public void setGenre1Id(Long genre1Id) {
+        this.genre1Id = genre1Id;
+    }
+
+    public Long getGenre2Id() {
+        return genre2Id;
+    }
+
+    public void setGenre2Id(Long genre2Id) {
+        this.genre2Id = genre2Id;
+    }
+
+    public Long getGenre3Id() {
+        return genre3Id;
+    }
+
+    public void setGenre3Id(Long genre3Id) {
+        this.genre3Id = genre3Id;
     }
 
     public Long getId() {

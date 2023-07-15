@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Row from '../style/Row';
 import ApiHttpClient from '../../../api/ApiHttpClient';
-import MoviePreviewApi, { Movie } from '../../../api/session/MoviePreviewApi';
+import PreviewApi, { Movie } from '../../../api/session/PreviewApi';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 
 const apiHttpClient = new ApiHttpClient();
-const movieApi = new MoviePreviewApi(apiHttpClient);
+const movieApi = new PreviewApi(apiHttpClient);
 
 function TrendingMovies() {
   const [movie, setMovie] = useState<Movie[]>([]);

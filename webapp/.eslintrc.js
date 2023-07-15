@@ -49,7 +49,7 @@ module.exports = {
     ]
   },
   rules: {
-    'max-len': ["error", { "code": 120 }],
+    'max-len': ["error", {"code": 120}],
     'react/require-default-props': 0,
     'import/no-absolute-path': 'off',
     'function-paren-newline': 'off',
@@ -73,5 +73,6 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': ['error', {
       'functions': false,
     }],
+    '@typescript-eslint/no-throw-literal': 'off'
   },
 };

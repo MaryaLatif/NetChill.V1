@@ -1,12 +1,9 @@
 import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
+import { Genre } from '../types/MovieDbTypes';
 
-export type Genre = {
-  id: number,
-  name: string
-};
-export default class MovieApi {
-  private baseUrl: string = '/movies';
+export default class GeneralApi {
+  private baseUrl = '/stream';
 
   constructor(private readonly httpClient: ApiHttpClient) {
   }
