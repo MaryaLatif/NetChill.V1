@@ -1,5 +1,6 @@
 import { HttpMethod } from 'simple-http-request-builder';
-import ApiHttpClient from './ApiHttpClient';
+import ApiHttpClient from '../ApiHttpClient';
+import { Genre } from '../types/MovieDbTypes';
 
 export type AllMovies = {
   page: number,
@@ -66,6 +67,13 @@ export default class PreviewApi {
     return this
       .httpClient
       .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
+      .execute();
+  }
+
+  getPreviewGenre() {
+    return this
+      .httpClient
+      .restRequest<Genre[]>(HttpMethod.GET, `${this.baseUrl}/list-genres`)
       .execute();
   }
 }

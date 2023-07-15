@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { getGlobalInstance } from 'plume-ts-di';
+import { set } from 'react-hook-form';
 import ApiHttpClient from '../../../api/ApiHttpClient';
-import PreviewApi, { Movie } from '../../../api/session/PreviewApi';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import Row from '../style/Row';
-
-const apiHttpClient = new ApiHttpClient();
-const movieApi = new PreviewApi(apiHttpClient);
+import { Movie } from '../../../api/preview-movies/PreviewApi';
+import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
 
 function TopRatedMovies() {
+  const previewMoviesServices: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
+
   const [movie, setMovie] = useState<Movie[]>([]);
   const movieLoading = useLoader();
 
   function fetchMovie() {
-    movieLoading.monitor(movieApi.getTopRatedMovies()
-      .then((res) => setMovie(res))
-      .catch((err) => console.log(err)),
-    );
+    movieLoading.monitor(previewMoviesServices.getTopRatedMovies()
+      .then(setMovie));
   }
 
   useEffect(() => {
     fetchMovie();
   }, [setMovie]);
 
-  if (movieLoading.isLoading) return <div>chargement en cours...</div>;
-  return <Row title={'Top Rated'} movieList={movie}/>;
+  return (
+    <Row
+      title={'Top Rated'}
+      movieList={movie}
+      isDataLoading={movieLoading.isLoading}
+    />
+  );
 }
 
 export default TopRatedMovies;

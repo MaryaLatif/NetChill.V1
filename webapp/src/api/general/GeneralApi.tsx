@@ -3,15 +3,13 @@ import ApiHttpClient from '../ApiHttpClient';
 import { Genre } from '../types/MovieDbTypes';
 
 export default class GeneralApi {
-  private baseUrl = '/stream';
-
   constructor(private readonly httpClient: ApiHttpClient) {
   }
 
   getGenreById(id: number) {
     return this
       .httpClient
-      .restRequest<Genre>(HttpMethod.GET, `${this.baseUrl}/genre/${id}`)
+      .restRequest<Genre>(HttpMethod.GET, `/genre/${id}`)
       .execute();
   }
 }
