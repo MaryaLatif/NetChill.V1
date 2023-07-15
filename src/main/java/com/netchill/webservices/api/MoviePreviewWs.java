@@ -6,7 +6,9 @@ import javax.inject.Singleton;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 
 import com.netchill.api.moviedb.models.Preview;
+import com.netchill.db.generated.Genre;
 import com.netchill.services.moviepreview.MoviePreviewService;
+import com.querydsl.core.Tuple;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.ws.rs.Consumes;
@@ -55,4 +57,10 @@ public class MoviePreviewWs {
     public List<Preview> getTopMovieByGenre(@PathParam("genre") int genre){
         return moviePreviewService.getTopMoviesByGenre(genre);
     }
+    @GET
+    @Path("/list-genres")
+    public List<Genre> getPreviewGenres(){
+        return moviePreviewService.getPreviewGenres();
+    }
+
 }

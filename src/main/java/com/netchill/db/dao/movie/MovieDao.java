@@ -1,13 +1,9 @@
 package com.netchill.db.dao.movie;
 
 import com.coreoz.plume.db.querydsl.transaction.TransactionManagerQuerydsl;
-import com.netchill.api.moviedb.models.Genre;
-import com.netchill.db.generated.Movie;
+import com.netchill.db.generated.Genre;
 import com.netchill.db.generated.QGenre;
-import com.netchill.db.generated.QMovie;
 import com.netchill.db.generated.QPreviewGenreMovie;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.OrderSpecifier;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -47,18 +43,19 @@ public class MovieDao {
 
      */
     public Genre getGenreById(Long id){
-        String genre = transactionManager.selectQuery()
-                .select(QGenre.genre.name)
+         return transactionManager.selectQuery()
+                .select(QGenre.genre)
                 .from(QGenre.genre)
                 .where(QGenre.genre.id.eq(id))
                 .fetchOne();
-        return new Genre(id, genre);
     }
 
-    public List<Long> getPreviewGenreMovie(){
+    public List<Genre> getPreviewGenres(){
         return transactionManager.selectQuery()
-                .select(QPreviewGenreMovie.previewGenreMovie.id)
-                .from(QPreviewGenreMovie.previewGenreMovie)
+                .select(QGenre.genre)
+                .from(QGenre.genre)
+                .join(QPreviewGenreMovie.previewGenreMovie)
+                .on(QGenre.genre.id.eq(QPreviewGenreMovie.previewGenreMovie.id))
                 .orderBy(QPreviewGenreMovie.previewGenreMovie.order.asc())
                 .fetch();
     }

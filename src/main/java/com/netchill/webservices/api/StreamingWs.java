@@ -5,7 +5,7 @@ import com.netchill.api.moviedb.models.Genre;
 import com.netchill.api.moviedb.models.TrailerKey;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
-import com.netchill.services.moviepreview.StreamingService;
+import com.netchill.services.streaming.StreamingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -39,10 +39,5 @@ public class StreamingWs {
     @Path("/movie/{id}")
     public TrailerKey getMovieTrailerById(@PathParam("id") Long id){
         return this.movieStreamingService.getMovieTrailerById(id);
-    }
-    @GET
-    @Path("/genre/{id}")
-    public Genre getGenreById(@PathParam("id") Long id){
-        return this.movieDao.getGenreById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.netchill.services.moviepreview;
+package com.netchill.services.streaming;
 
 import com.netchill.api.moviedb.MovieDbApiClient;
 import com.netchill.api.moviedb.models.Trailer;

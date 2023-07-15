@@ -1,10 +1,8 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Genre;
 import com.netchill.api.moviedb.models.Movie;
-import com.netchill.api.moviedb.models.Preview;
-import com.netchill.services.moviepreview.MovieService;
+import com.netchill.services.movie.MovieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
