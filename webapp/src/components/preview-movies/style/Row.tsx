@@ -6,7 +6,8 @@ import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHo
 import ShowTrailer from './streaming/trailer/ShowTrailer';
 import StreamingService from '../../../services/streaming/StreamingService';
 import { MediaType, Trailer } from '../../../api/types/MovieDbTypes';
-import { Movie } from '../../../api/PreviewApi';
+import { Movie } from '../../../api/preview-movies/PreviewApi';
+import RowLoading from './loading/RowLoading';
 
 type Props = {
   title: string,
@@ -68,7 +69,7 @@ function Row({
       <h2>{title}</h2>
       {
         isDataLoading
-          ? (<div>chargement en cours...</div>)
+          ? (<RowLoading isLargerRow={isLargerRow}/>)
           : (
             <div className="row_posters">
               {movieList.map((movie) => (
