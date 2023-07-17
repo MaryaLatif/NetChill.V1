@@ -2,22 +2,28 @@ import React from 'react';
 import '../../../../public/assets/css/header.css';
 import classNames from 'classnames';
 
-function Header({ logo, scrollOk }:{ logo:string, scrollOk: boolean }) {
+type Props = {
+  logo: string,
+  list: string[],
+  scrollOk: boolean
+};
+
+function Header({ logo, list, scrollOk }: Props) {
   return (
     <div id={'header'} className={classNames({ scroll: scrollOk })}>
-      <img src={logo} alt={'logo Netchill'} className={'logo'}/>
-      <ul>
-        <li>
-          Home
-        </li>
-        <li>
-          Serie
-        </li>
-        <li>
-          Film
-        </li>
-      </ul>
+      <div id={'left'}>
+        <img src={logo} alt={'logo'} className={'logo'}/>
+        <ul>
+          {list.map((element) => (
+            <li key={element}>{element}</li>),
+          )}
+        </ul>
+      </div>
+      <div id={'right'}>
+        Recherche
+      </div>
     </div>
   );
 }
+
 export default Header;

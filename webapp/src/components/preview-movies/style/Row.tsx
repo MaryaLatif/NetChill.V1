@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import ShowTrailer from './streaming/trailer/ShowTrailer';
 import StreamingService from '../../../services/streaming/StreamingService';
-import { MediaType, Trailer } from '../../../api/types/MovieDbTypes';
-import { Movie } from '../../../api/preview-movies/PreviewApi';
+import { MediaType, Movie, Trailer } from '../../../api/types/MovieDbTypes';
 import RowLoading from './loading/RowLoading';
 
 type Props = {
@@ -33,8 +32,6 @@ function Row({
   const [visible, setVisible] = useState(false);
 
   const movieLoader = useLoader();
-
-  const BASE_URL = 'https://image.tmdb.org/t/p/original/';
 
   function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
     setMovieInfo({
@@ -85,10 +82,12 @@ function Row({
                   aria-hidden="true"
                 >
                   <img
-                    src={BASE_URL + (isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
+                    src={(isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
                     alt={movie.title}/>
-
+                  <div className={'info'}>
                   <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
+                    <p>Recommendation : {movie.vote_average}%</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -98,13 +97,23 @@ function Row({
         visible
         && trailer
         && movieInfo
-        && (
-          <ShowTrailer
-            url={trailer.key}
-            overview={movieInfo.overview}
-            genreIds={movieInfo.genreIds}
-            onClose={handleCloseTrailerPopIn}
-          />
+        && (<div onClick={(event) => {
+          let element = event.target;
+          while (element.parentNode
+            && (element.parentNode !== document.getElementById('show-movie'))) {
+            element = element.parentNode;
+          }
+          if (element.parentNode !== document.getElementById('show-movie')) {
+            handleCloseTrailerPopIn();
+          }
+        }}>
+            <ShowTrailer
+              url={trailer.key}
+              overview={movieInfo.overview}
+              genreIds={movieInfo.genreIds}
+              onClose={handleCloseTrailerPopIn}
+            />
+          </div>
         )}
     </div>
   );

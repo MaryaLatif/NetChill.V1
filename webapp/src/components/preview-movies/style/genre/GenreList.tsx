@@ -4,7 +4,11 @@ import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoade
 import { Genre } from '../../../../api/types/MovieDbTypes';
 import GeneralService from '../../../../services/general/GeneralService';
 
-function GenreList({ genreId }: { genreId: number[] }) {
+type Props = {
+  genreId: number[],
+  className?: string,
+};
+function GenreList({ genreId, className } : Props) {
   const generalService = getGlobalInstance(GeneralService);
 
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -21,7 +25,8 @@ function GenreList({ genreId }: { genreId: number[] }) {
   }, [genreId]);
 
   return (
-    <div>
+    <div className={className}>
+      <h4>Genre :</h4>
       {
         movieLoader.isLoaded
         && genres.map((genre) => (

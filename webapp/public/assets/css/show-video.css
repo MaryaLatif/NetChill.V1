@@ -12,9 +12,10 @@
   justify-content: center;
   align-items: center;
 }
-.show-movie{
+#show-movie{
   width: 50%;
   background: black;
+  border-radius: 10px;
 }
 .cross{
   height: 30px;
@@ -22,7 +23,6 @@
   cursor: pointer;
 }
 .cross-parent{
-  background: white;
   display: flex;
   justify-content: flex-end;
 }
@@ -30,11 +30,33 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  color: white;
   width: 50%;
-  margin: 20px;
 }
 .overview{
   margin-top: 10px;
   line-height: 20px;
+}
+.about-it{
+  background: linear-gradient(rgba(0,0,0,0.5), #282c34);
+  display: flex;
+  padding: 30px;
+  color: white;
+  justify-content: space-between;
+}
+.genre-list{
+  list-style: none;
+}
+.genre-list > h4{
+  margin: 16px 0px 10px 0px;
+}
+.genre-list li{
+  margin-bottom: 5px;
+}
+.error-trailer{
+  height: 500px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }

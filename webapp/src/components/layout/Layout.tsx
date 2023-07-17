@@ -18,7 +18,7 @@ export default function Layout({ children }: Props) {
     else setScrollOk(true);
   }
   return <GlobalErrorBoundary>
-    <Header logo={logo} scrollOk={scrollOk} />
+    <Header logo={logo} list={['Home', 'Serie', 'Movie']} scrollOk={scrollOk} />
     {/* <Header /> */}
     <div className="content-layout" ref={boxRef} onScroll={handleScroll}>
       {children}
