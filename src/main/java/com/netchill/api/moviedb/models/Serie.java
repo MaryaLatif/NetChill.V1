@@ -17,4 +17,5 @@ public class Serie {
     private String first_air_date;
     private String name;
     private String media_type;
+    private Float vote_average;
 }

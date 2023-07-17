@@ -18,4 +18,5 @@ public class Preview {
   private String title;
   private String name;
   private String media_type;
+  private Float vote_average;
 }
