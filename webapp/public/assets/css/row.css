@@ -85,6 +85,16 @@ img{
   min-width: 200px;
 }
 
+.top_rated{
+  display: flex;
+}
+.top_rated_img{
+  height: 50px;
+  object-fit: contain;
+  position: absolute;
+  background: rgba(255,255,255,0.75);
+}
+
 @media only screen and (max-width: 600px) {
   .row>h2{
     font-size: 20px;
