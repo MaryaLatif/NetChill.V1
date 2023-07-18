@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../../../public/assets/css/header.css';
 import classNames from 'classnames';
+import Search from './search/Search';
 
 type Props = {
   logo: string,
@@ -20,7 +21,7 @@ function Header({ logo, list, scrollOk }: Props) {
         </ul>
       </div>
       <div id={'right'}>
-        Recherche
+        <Search/>
       </div>
     </div>
   );
