@@ -33,5 +33,8 @@ public class ConfigurationService {
 	public String getMovieDbApiKey(){
 		return "a0c1e55338f3c5d80fc1e6fbef225e0e";
 	}
+	public String getImageBaseUrl(){
+		return "https://image.tmdb.org/t/p/original/";
+	}
 }
 

@@ -4,18 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+
 @Getter
 @Setter
 public class Movie {
-  public boolean adult;
-  public String backdrop_path;
-  public ArrayList<Integer> genre_ids;
-  public int id;
-  public String overview;
-  public String poster_path;
-  public String release_date;
-  public String first_air_date;
-  public String title;
-  public String name;
-  public String media_type;
+    private boolean adult;
+    private String backdrop_path;
+    private ArrayList<Long> genre_ids;
+    private int id;
+    private String overview;
+    private String poster_path;
+    private String release_date;
+    private String title;
+    private String media_type;
+    private Float vote_average;
 }

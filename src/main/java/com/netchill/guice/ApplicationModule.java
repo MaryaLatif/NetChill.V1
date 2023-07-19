@@ -1,5 +1,7 @@
 package com.netchill.guice;
 
+import com.coreoz.plume.db.guice.DataSourceModule;
+import com.coreoz.plume.db.querydsl.guice.GuiceQuerydslModule;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import com.netchill.jersey.JerseyConfigProvider;
@@ -18,7 +20,8 @@ public class ApplicationModule extends AbstractModule {
 		install(new GuiceConfModule());
 		install(new GuiceJacksonModule());
 		// database & Querydsl installation
-		//install(new GuiceQuerydslModule());
+		install(new GuiceQuerydslModule());
+		install(new DataSourceModule());
 
 		// prepare Jersey configuration
 		bind(ResourceConfig.class).toProvider(JerseyConfigProvider.class);

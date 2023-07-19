@@ -107,15 +107,20 @@
             <artifactId>plume-db-querydsl-codegen</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- PUT YOUR DATABASE CONNECTOR HERE -->
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.0.4</version>
+            <version>3.1.4</version>
         </dependency>
+
+        <!-- flyway -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
         </dependency>
 
         <!-- jersey -->

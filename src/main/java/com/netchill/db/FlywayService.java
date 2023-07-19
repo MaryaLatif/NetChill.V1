@@ -1,26 +1,27 @@
 package com.netchill.db;
 
-import com.coreoz.plume.db.transaction.TransactionManager;
 import org.flywaydb.core.Flyway;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.sql.DataSource;
 
 @Singleton
 public class FlywayService {
-  private final TransactionManager transactionManager;
+    private final DataSource dataSource;
 
-  @Inject
-  public FlywayService(TransactionManager transactionManager) {
-    this.transactionManager = transactionManager;
-  }
+    @Inject
+    public FlywayService(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-  public void migrate() {
-    Flyway
-        .configure()
-        .dataSource(transactionManager.dataSource())
-        .outOfOrder(true)
-        .load()
-        .migrate();
-  }
+    public void migrate() {
+        Flyway
+                .configure()
+                .dataSource(dataSource)
+                .outOfOrder(true)
+                .baselineOnMigrate(true)
+                .load()
+                .migrate();
+    }
 }

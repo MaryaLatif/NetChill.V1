@@ -2,7 +2,10 @@ export interface ErrorFunction {
   (...args: string[]): string;
 }
 
+type DefaultGenre = 'netflix' | 'toprated';
+
 export type Translations = {
+  movieRow : { [key in DefaultGenre | number]: string }
   // actions
   'action.back': string,
   'action.cancel': string,
