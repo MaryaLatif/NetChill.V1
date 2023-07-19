@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../../../../public/assets/css/search.css';
-import logo from '../../../../../assets/icons/search.png';
+import '../../../../public/assets/css/search.css';
+import logo from '../../../../assets/icons/search.png';
 
 function Search() {
   return (
