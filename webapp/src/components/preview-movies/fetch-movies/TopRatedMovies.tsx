@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
-import { set } from 'react-hook-form';
-import ApiHttpClient from '../../../api/ApiHttpClient';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import Row from '../style/Row';
-import { Movie } from '../../../api/preview-movies/PreviewApi';
 import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
+import { Movie } from '../../../api/types/MovieDbTypes';
+import Row from '../style/row/Row';
 
 function TopRatedMovies() {
   const previewMoviesServices: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
@@ -28,6 +26,7 @@ function TopRatedMovies() {
       movieList={movie}
       topRated={true}
       isDataLoading={movieLoading.isLoading}
+      classType={'top_rated'}
     />
   );
 }

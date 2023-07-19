@@ -1,8 +1,13 @@
+.row{
+  position: relative;
+  margin-top: 50px;
+}
 .row_posters{
   display: flex;
   overflow-y:hidden;
   overflow-x: scroll;
-  padding: 20px;
+  padding: 20px 20px 15px 20px;
+  scroll-behavior: smooth;
 }
 .row_posters::-webkit-scrollbar{
   display: none;
@@ -16,7 +21,6 @@
   transition: transform 450ms;
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
 }
-
 .row_poster:hover{
   transform: scale(1.08);
 }
@@ -92,7 +96,7 @@ img{
   height: 50px;
   object-fit: contain;
   position: absolute;
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.9);
 }
 
 @media only screen and (max-width: 600px) {

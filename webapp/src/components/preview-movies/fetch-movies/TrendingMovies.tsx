@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
-import Row from '../style/Row';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import { Movie } from '../../../api/preview-movies/PreviewApi';
 import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
+import { Movie } from '../../../api/types/MovieDbTypes';
+import Row from '../style/row/Row';
 
 function TrendingMovies() {
   const previewMoviesService: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
@@ -25,6 +25,7 @@ function TrendingMovies() {
       title={'Trending'}
       movieList={movie}
       isDataLoading={movieLoading.isLoading}
+      classType={'trending'}
     />
   );
 }

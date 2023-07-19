@@ -10,6 +10,7 @@ import com.querydsl.core.Tuple;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Singleton
@@ -38,7 +39,7 @@ public class MoviePreviewService {
     private void recomandation(List<Preview> previews){
         for(int i = 0; i <previews.size(); i++){
             Float vote = previews.get(i).getVote_average();
-            previews.get(i).setVote_average(vote*10);
+            previews.get(i).setVote_average(Math.round(vote*1000)/100f);
         }
     }
     public List<Preview> getTopNetflixOriginals() {
