@@ -26,6 +26,7 @@ function TopRatedMovies() {
     <Row
       title={'Top Rated'}
       movieList={movie}
+      topRated={true}
       isDataLoading={movieLoading.isLoading}
     />
   );
