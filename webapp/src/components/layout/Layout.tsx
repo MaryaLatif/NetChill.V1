@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ScrollRestoration } from 'react-router-dom';
 import GlobalErrorBoundary from '../theme/GlobalErrorBoundary';
 import logo from '../../../assets/icons/logo_transparent.png';
-import Header from '../preview-movies/style/Header';
+import Header from './Header';
 
 type Props = {
   children: React.ReactNode;
