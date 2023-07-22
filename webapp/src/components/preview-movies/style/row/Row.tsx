@@ -7,13 +7,13 @@ import top1 from '../../../../../assets/icons/top1.png';
 import top2 from '../../../../../assets/icons/top2.png';
 import top3 from '../../../../../assets/icons/top3.png';
 import Arrow from './Arrow';
-import RowLoading from '../loading/RowLoading';
 import { MediaType, Movie, Trailer } from '../../../../api/types/MovieDbTypes';
 import StreamingService from '../../../../services/streaming/StreamingService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import ShowTrailer from '../streaming/trailer/ShowTrailer';
 import arrow_right from '../../../../../assets/icons/arrow-right.png';
 import arrow_left from '../../../../../assets/icons/arrow-left.png';
+import RowLoading from '../../../general/loading/RowLoading';
+import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
 
 type Props = {
   title: string,
@@ -45,7 +45,6 @@ function Row({
   const top: any[] = [top1, top2, top3];
 
   let i = 0;
-  const cardLeft = 0;
 
   function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
     setMovieInfo({

@@ -1,0 +1,16 @@
+.play{
+  background: white;
+  height: 30px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0 0 50px;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+}
+.play_icon{
+  height: 100%;
+  object-fit: contain;
+}

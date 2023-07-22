@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import YouTube from 'react-youtube';
-import logo from '../../../../../../assets/icons/fermer.png';
-import '../../../../../../public/assets/css/show-video.css';
-import GenreList from '../../genre/GenreList';
+import logo from '../../../../../assets/icons/fermer.png';
+import '../../../../../public/assets/css/show-video.css';
+import GenreList from '../../../preview-movies/style/genre/GenreList';
 import ErrorTrailer from './ErrorTrailer';
+import Player from '../movie/Player';
 
 type Props = {
   url: string,
@@ -31,6 +32,7 @@ function ShowTrailer({
         { url ? <YouTube videoId={url} opts={opts}/>
           : <ErrorTrailer />
         }
+        <Player />
         <div className={'about-it'}>
           <div className={'overview-parent'}>
             <h3>Overview</h3>
