@@ -18,3 +18,5 @@ bin/
 log/
 target/
 
+# logs
+hs_err*
