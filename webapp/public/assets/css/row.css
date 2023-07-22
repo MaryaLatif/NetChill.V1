@@ -20,7 +20,7 @@
 .row_poster:hover{
   transform: scale(1.08);
 }
-.row_poster:hover .title{
+.row_poster:hover .info{
   display: flex;
 }
 .row_poster:hover img{
@@ -35,19 +35,23 @@
   font-family: "Helvetica Neue";
   font-weight: 500;
 }
-.title{
-  color: white;
-  background-color: rgba(0,0,0,0.25);
+.info{
   position: absolute;
   height: 100%;
   top: 0;
   width: 100%;
   margin: 0;
   text-align: center;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
   display: none;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 10px;
+}
+.title{
+  margin-bottom: 10px;
 }
 img{
   object-fit: contain; /*img pas déformée selon sa taille*/
@@ -79,6 +83,16 @@ img{
 .row_poster_large_loading{
   height: 300px;
   min-width: 200px;
+}
+
+.top_rated{
+  display: flex;
+}
+.top_rated_img{
+  height: 50px;
+  object-fit: contain;
+  position: absolute;
+  background: rgba(255,255,255,0.75);
 }
 
 @media only screen and (max-width: 600px) {

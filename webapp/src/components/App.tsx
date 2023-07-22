@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import '../../public/assets/css/app.css';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { Logger } from 'simple-logging-system';
