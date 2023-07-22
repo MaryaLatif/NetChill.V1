@@ -4,8 +4,8 @@ import { useObservable } from 'micro-observables';
 import classNames from 'classnames';
 import LocaleSelector from '../theme/LocaleSelector';
 import LocaleService from '../../i18n/locale/LocaleService';
-import Search from '../preview-movies/style/search/Search';
 import '../../../public/assets/css/header.css';
+import Search from '../general/search/Search';
 
 type Props = {
   logo: string,
