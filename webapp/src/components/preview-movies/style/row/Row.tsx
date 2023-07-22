@@ -14,6 +14,7 @@ import arrow_right from '../../../../../assets/icons/arrow-right.png';
 import arrow_left from '../../../../../assets/icons/arrow-left.png';
 import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
+import PlayMovie from '../../../general/streaming/movie/PlayMovie';
 
 type Props = {
   title: string,
@@ -124,8 +125,8 @@ function Row({
             )
         }
         <div className={'arrow_parent'}>
-          <Arrow left={true} img={arrow_left} onClick={hundleClickArrowLeft}/>
-          <Arrow right={true} img={arrow_right} onClick={hundleClickArrowRight}/>
+          <Arrow left={true} onClick={hundleClickArrowLeft}/>
+          <Arrow right={true} onClick={hundleClickArrowRight}/>
         </div>
       </div>
       {
