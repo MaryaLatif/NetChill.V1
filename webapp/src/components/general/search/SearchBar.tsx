@@ -1,14 +1,14 @@
 import React from 'react';
 import '../../../../public/assets/css/search.css';
-import logo from '../../../../assets/icons/search.png';
+import { Search } from 'react-feather';
 
-function Search() {
+function SearchBar() {
   return (
     <div className={'search'}>
       <input type={'search'} id={'site-search'} placeholder={'Search'} />
-      <button><img src={logo} alt={'search icon'} className={'search-icon'}/></button>
+      <button> <Search color={'white'} height={'20px'}/> </button>
     </div>
   );
 }
 
-export default Search;
+export default SearchBar;

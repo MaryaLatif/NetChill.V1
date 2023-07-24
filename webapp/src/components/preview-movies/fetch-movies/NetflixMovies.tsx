@@ -6,6 +6,7 @@ import MessageService from '../../../i18n/messages/MessageService';
 import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
 import { Movie } from '../../../api/types/MovieDbTypes';
 import Row from '../style/row/Row';
+import TopRow from '../style/row/TopRow';
 
 function NetflixMovies() {
   const previewMoviesServices: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
@@ -24,13 +25,8 @@ function NetflixMovies() {
     fetchMovies();
   }, [setMovie]);
   return (
-  <Row
-    title={messages.movieRow.netflix}
-    movieList={movie}
-    isLargerRow={true}
-    isDataLoading={movieLoader.isLoading}
-    classType={'netflix_originals'}
-  />);
+    <TopRow title={'NETFLIX ORIGINALS'} movieList={movie} isDataLoading={movieLoader.isLoading} />
+  );
 }
 
 export default NetflixMovies;

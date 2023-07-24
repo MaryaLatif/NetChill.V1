@@ -1,11 +1,11 @@
 import React from 'react';
-import icon from '../../../../../assets/icons/play.png';
 import '../../../../../public/assets/css/player.css';
+import { Play } from 'react-feather';
 
 function Player() {
   return (
     <button className={'play'}>
-      <img src={icon} alt={'play icon'} className={'play_icon'}/>
+      <Play color={'white'} />
     </button>
   );
 }

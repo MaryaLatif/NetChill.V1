@@ -10,8 +10,6 @@ import Arrow from './Arrow';
 import { MediaType, Movie, Trailer } from '../../../../api/types/MovieDbTypes';
 import StreamingService from '../../../../services/streaming/StreamingService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import arrow_right from '../../../../../assets/icons/arrow-right.png';
-import arrow_left from '../../../../../assets/icons/arrow-left.png';
 import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
 
@@ -63,11 +61,12 @@ function Row({
 
   function hundleClickArrowRight() {
     const slider = document.getElementById(classType);
-    slider.scrollLeft += window.innerWidth;
+    slider.scrollLeft += window.innerWidth - 150;
   }
+
   function hundleClickArrowLeft() {
     const slider = document.getElementById(classType);
-    slider.scrollLeft -= window.innerWidth;
+    slider.scrollLeft -= window.innerWidth - 150;
   }
 
   useEffect(() => {
@@ -112,20 +111,21 @@ function Row({
                     {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
                     {i < 3 && <noscript>{i++}</noscript>}
                     <img
+                      className={'row_img'}
                       src={(isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
                       alt={movie.title}/>
-                    <div className={'info'}>
-                      <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
-                      <p>Recommendation : {movie.vote_average}%</p>
-                    </div>
+                      <div className={'info'}>
+                        <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
+                        <p>Recommendation : {movie.vote_average}%</p>
+                      </div>
                   </div>
                 ))}
               </div>
             )
         }
-        <div className={'arrow_parent'}>
-          <Arrow left={true} img={arrow_left} onClick={hundleClickArrowLeft}/>
-          <Arrow right={true} img={arrow_right} onClick={hundleClickArrowRight}/>
+        <div className={'arrow_parent'} style={{ height: '140px', bottom: '1rem' }}>
+          <Arrow left={true} onClick={hundleClickArrowLeft}/>
+          <Arrow right={true} onClick={hundleClickArrowRight}/>
         </div>
       </div>
       {

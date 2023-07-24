@@ -25,8 +25,9 @@
   cursor: pointer;
   color: white;
   padding: 0 5px 0 5px;
-  background: white;
+  background: rgba(255, 255, 255, 0.25);
   height: 30px;
+  width: 40px;
 }
 .search-icon{
   object-fit: contain;
