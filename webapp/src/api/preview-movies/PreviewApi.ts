@@ -11,7 +11,7 @@ export default class PreviewApi {
   getTopOfMoviesByGenre(genre: number) {
     return this
       .httpClient
-      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/genre/${genre}`)
+      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/genre?genre=${genre}`)
       .execute();
   }
 

@@ -1,6 +1,7 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
+import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.serie.SerieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,13 +19,15 @@ import javax.ws.rs.core.MediaType;
 @Singleton
 public class SerieWs {
     private SerieService serieService;
+
     @Inject
-    private SerieWs(SerieService serieService){
+    private SerieWs(SerieService serieService) {
         this.serieService = serieService;
     }
+
     @GET
     @Path("/{id}")
-    public Serie getSerieById(@PathParam("id") Long id){
+    public Production getSerieById(@PathParam("id") Long id) {
         return this.serieService.getSerieById(id);
     }
 }

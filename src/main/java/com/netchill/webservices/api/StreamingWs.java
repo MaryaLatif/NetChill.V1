@@ -1,7 +1,6 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Genre;
 import com.netchill.api.moviedb.models.TrailerKey;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
@@ -21,23 +20,25 @@ import javax.ws.rs.core.MediaType;
 @Singleton
 public class StreamingWs {
     private final ConfigurationService configurationService;
-    private  final StreamingService movieStreamingService;
+    private final StreamingService movieStreamingService;
     private final MovieDao movieDao;
 
     @Inject
-    public StreamingWs(ConfigurationService configurationService, StreamingService movieStreamingService, MovieDao movieDao){
+    public StreamingWs(ConfigurationService configurationService, StreamingService movieStreamingService, MovieDao movieDao) {
         this.configurationService = configurationService;
         this.movieStreamingService = movieStreamingService;
         this.movieDao = movieDao;
     }
+
     @GET
     @Path("/serie/{id}")
-    public TrailerKey getSerieTrailerById(@PathParam("id") Long id){
+    public TrailerKey getSerieTrailerById(@PathParam("id") Long id) {
         return this.movieStreamingService.getSerieTrailerById(id);
     }
+
     @GET
     @Path("/movie/{id}")
-    public TrailerKey getMovieTrailerById(@PathParam("id") Long id){
+    public TrailerKey getMovieTrailerById(@PathParam("id") Long id) {
         return this.movieStreamingService.getMovieTrailerById(id);
     }
 }

@@ -3,7 +3,7 @@ package com.netchill.webservices.api;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.db.generated.Genre;
 import com.netchill.services.configuration.ConfigurationService;
-import com.netchill.services.general.GeneralService;
+import com.netchill.services.genre.GenreService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -11,25 +11,26 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("")
-@Tag(name = "General", description = "things that are same in movie and serie")
+@Path("/")
+@Tag(name = "Genre", description = "WS about genres")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
 @Singleton
-public class GeneralWs {
+public class GenreWs {
     private final ConfigurationService configurationService;
-    private  final GeneralService generalService;
+    private final GenreService genreService;
 
     @Inject
-    public GeneralWs(ConfigurationService configurationService, GeneralService generalService){
+    public GenreWs(ConfigurationService configurationService, GenreService genreService) {
         this.configurationService = configurationService;
-        this.generalService = generalService;
+        this.genreService = genreService;
     }
+
     @GET
     @Path("/genre/{id}")
-    public Genre getGenreById(@PathParam("id") Long id){
-        return this.generalService.getGenreById(id);
+    public Genre getGenreById(@PathParam("id") Long id) {
+        return this.genreService.getGenreById(id);
     }
 
 }

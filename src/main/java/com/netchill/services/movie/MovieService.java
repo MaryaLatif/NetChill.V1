@@ -1,38 +1,65 @@
 package com.netchill.services.movie;
 
 import com.netchill.api.moviedb.MovieDbApiClient;
-import com.netchill.api.moviedb.models.Genre;
 import com.netchill.api.moviedb.models.Movie;
-import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Preview;
+import com.netchill.api.moviedb.models.Production;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
+import java.util.List;
+
 @Singleton
 public class MovieService {
     private MovieDao movieDao;
     private MovieDbApiClient movieDbApiClient;
     private ConfigurationService configurationService;
+
     @Inject
-    private MovieService(MovieDao movieDao, MovieDbApiClient movieDbApiClient, ConfigurationService configurationService){
+    private MovieService(MovieDao movieDao, MovieDbApiClient movieDbApiClient, ConfigurationService configurationService) {
         this.movieDao = movieDao;
         this.movieDbApiClient = movieDbApiClient;
         this.configurationService = configurationService;
     }
+    public void updateImageUrl(List<Production>  prod) {
+        String imgKey;
+        String IMG_URL = this.configurationService.getImageBaseUrl();
+        for(Production element:  prod){
+            imgKey = element.getBackdrop_path();
+            if (imgKey != null) {
+                element.setBackdrop_path(IMG_URL + imgKey);
+            }
 
-    public Movie getMovieById(Long movieId){
-        Movie movie = this.movieDbApiClient.getMovieById(movieId);
+            imgKey = element.getPoster_path();
+            if (imgKey != null) {
+                element.setPoster_path(IMG_URL + imgKey);
+            }
+        }
+    }
+
+    public void recomandation(List<Production> prod) {
+        for (Production element: prod) {
+            Float vote = element.getVote_average();
+            element.setVote_average(Math.round(vote * 1000) / 100f);
+        }
+    }
+
+    public Production getMovieById(Long movieId) {
+        Production movie = this.movieDbApiClient.getMovieById(movieId);
         String imageKey = movie.getBackdrop_path();
-        if(imageKey != null) movie.setBackdrop_path(this.configurationService.getImageBaseUrl()+imageKey);
-        imageKey = movie.getPoster_path();
-        if(imageKey != null) movie.setPoster_path(this.configurationService.getImageBaseUrl()+imageKey);
+        List<Production> movies = List.of(movie);
+
+        this.updateImageUrl(movies);
+        this.recomandation(movies);
+
         return movie;
     }
-    public ArrayList<Long> getMovieGenres(Long movieId) {
+
+    public List<Long> getMovieGenres(Long movieId) {
         return this.movieDbApiClient.getMovieById(movieId).getGenre_ids();
     }
+
 
 }

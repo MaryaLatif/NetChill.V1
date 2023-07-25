@@ -2,6 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.api.moviedb.models.Movie;
+import com.netchill.api.moviedb.models.Production;
 import com.netchill.services.movie.MovieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -18,14 +19,15 @@ import javax.ws.rs.core.MediaType;
 @Singleton
 public class MovieWs {
     private MovieService movieService;
+
     @Inject
-    private MovieWs(MovieService movieService){
+    private MovieWs(MovieService movieService) {
         this.movieService = movieService;
     }
 
     @GET
     @Path("/{id}")
-    public Movie getMovieById(@PathParam("id") Long id){
+    public Production getMovieById(@PathParam("id") Long id) {
         return this.movieService.getMovieById(id);
     }
 

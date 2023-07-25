@@ -6,16 +6,13 @@ import javax.inject.Singleton;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 
 import com.netchill.api.moviedb.models.Preview;
+import com.netchill.api.moviedb.models.Production;
 import com.netchill.db.generated.Genre;
 import com.netchill.services.moviepreview.MoviePreviewService;
 import com.querydsl.core.Tuple;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.netchill.services.configuration.ConfigurationService;
@@ -37,29 +34,35 @@ public class MoviePreviewWs {
         this.configurationService = configurationService;
         this.moviePreviewService = movieDBApiClient;
     }
+
     @GET
     @Path("/top-rated")
-    public List<Preview> getTopRated() {
+    public List<Production> getTopRated() {
         return moviePreviewService.getTopRated();
     }
+
     @GET
     @Path("/netflix-originals")
-    public List<Preview> getTopNetflixOriginals(){
+    public List<Production> getTopNetflixOriginals() {
         return moviePreviewService.getTopNetflixOriginals();
     }
+
     @GET
     @Path("/trending")
-    public List<Preview> getTrending(){
+    public List<Production> getTrending() {
         return moviePreviewService.getTrending();
     }
+
     @GET
-    @Path("/genre/{genre}")
-    public List<Preview> getTopMovieByGenre(@PathParam("genre") int genre){
+    @Path("/genre/")
+    public List<Production> getTopMovieByGenre(
+            @QueryParam("genre") int genre) {
         return moviePreviewService.getTopMoviesByGenre(genre);
     }
+
     @GET
     @Path("/list-genres")
-    public List<Genre> getPreviewGenres(){
+    public List<Genre> getPreviewGenres() {
         return moviePreviewService.getPreviewGenres();
     }
 
