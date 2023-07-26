@@ -7,7 +7,7 @@ import top1 from '../../../../../assets/icons/top1.png';
 import top2 from '../../../../../assets/icons/top2.png';
 import top3 from '../../../../../assets/icons/top3.png';
 import Arrow from './Arrow';
-import { MediaType, Movie, Trailer } from '../../../../api/types/MovieDbTypes';
+import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import StreamingService from '../../../../services/streaming/StreamingService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import RowLoading from '../../../general/loading/RowLoading';
@@ -15,7 +15,7 @@ import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
 
 type Props = {
   title: string,
-  movieList: Movie[],
+  movieList: Production[],
   isLargerRow?: boolean,
   topRated?: boolean,
   isDataLoading?: boolean

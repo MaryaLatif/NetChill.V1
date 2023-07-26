@@ -1,5 +1,5 @@
 import React from 'react';
-import { Movie } from '../../../../api/types/MovieDbTypes';
+import { Production } from '../../../../api/types/MovieDbTypes';
 import RowLoading from '../../../general/loading/RowLoading';
 import '../../../../../public/assets/css/row.css';
 import '../../../../../public/assets/css/arrow.css';
@@ -9,7 +9,7 @@ import Arrow from './Arrow';
 
 type Props = {
   title?: string,
-  movieList: Movie[],
+  movieList: Production[],
   isDataLoading?: boolean
 };
 
@@ -32,10 +32,10 @@ function TopRow({ movieList, isDataLoading }: Props) {
 
           : <div className={'row_posters'} id={'top_posters'}>
             {movieList.map((movie) => (
-              <div>
+              <div key={movie.title}>
                 <div className={'top_card'} style={{ width: `${window.innerWidth}px` }}>
                   <div>
-                    <h2>{movie.name}</h2>
+                    <h2>{movie.title}</h2>
                     <p>{movie.overview}</p>
                     <Player />
                   </div>

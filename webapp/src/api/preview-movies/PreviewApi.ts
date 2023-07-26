@@ -1,6 +1,6 @@
 import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
-import { Genre, Movie } from '../types/MovieDbTypes';
+import { Genre, Production } from '../types/MovieDbTypes';
 
 export default class PreviewApi {
   private baseUrl = '/movies-preview';
@@ -11,28 +11,28 @@ export default class PreviewApi {
   getTopOfMoviesByGenre(genre: number) {
     return this
       .httpClient
-      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/genre?genre=${genre}`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/genre?genre=${genre}`)
       .execute();
   }
 
   getNetflixOriginals() {
     return this
       .httpClient
-      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
       .execute();
   }
 
   getTrendingMovies() {
     return this
       .httpClient
-      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/trending`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/trending`)
       .execute();
   }
 
   getTopRatedMovies() {
     return this
       .httpClient
-      .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
       .execute();
   }
 }

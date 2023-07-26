@@ -4,14 +4,14 @@ import { getGlobalInstance } from 'plume-ts-di';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import MessageService from '../../../i18n/messages/MessageService';
 import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
-import { Movie } from '../../../api/types/MovieDbTypes';
+import { Production } from '../../../api/types/MovieDbTypes';
 import Row from '../style/row/Row';
 import TopRow from '../style/row/TopRow';
 
 function NetflixMovies() {
   const previewMoviesServices: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
 
-  const [movie, setMovie] = useState<Movie[]>([]);
+  const [movie, setMovie] = useState<Production[]>([]);
 
   const messages = useObservable(getGlobalInstance(MessageService).getMessages());
   const movieLoader = useLoader();
