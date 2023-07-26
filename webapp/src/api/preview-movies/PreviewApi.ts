@@ -35,11 +35,4 @@ export default class PreviewApi {
       .restRequest<Movie[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
       .execute();
   }
-
-  getPreviewGenre() {
-    return this
-      .httpClient
-      .restRequest<Genre[]>(HttpMethod.GET, `${this.baseUrl}/list-genres`)
-      .execute();
-  }
 }

@@ -29,10 +29,4 @@ export default class PreviewMoviesService {
       logger.error('Error', error);
       throw error;
     });
-
-  getPreviewGenres = () => this.previewApi.getPreviewGenre()
-    .catch((error) => {
-      logger.error('Error', error);
-      throw error;
-    });
 }

@@ -60,10 +60,4 @@ public class MoviePreviewWs {
         return moviePreviewService.getTopMoviesByGenre(genre);
     }
 
-    @GET
-    @Path("/list-genres")
-    public List<Genre> getPreviewGenres() {
-        return moviePreviewService.getPreviewGenres();
-    }
-
 }

@@ -10,8 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
-@Path("/")
+@Path("/genre")
 @Tag(name = "Genre", description = "WS about genres")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,9 +29,14 @@ public class GenreWs {
     }
 
     @GET
-    @Path("/genre/{id}")
-    public Genre getGenreById(@PathParam("id") Long id) {
+    @Path("/id")
+    public Genre getGenreById(@QueryParam("id") Long id) {
         return this.genreService.getGenreById(id);
     }
 
+    @GET
+    @Path("/list-genres")
+    public List<Genre> getPreviewGenres() {
+        return this.genreService.getPreviewGenres();
+    }
 }

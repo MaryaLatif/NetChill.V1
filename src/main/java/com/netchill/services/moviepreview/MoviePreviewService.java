@@ -67,9 +67,6 @@ public class MoviePreviewService {
         return movies;
     }
 
-    public List<Genre> getPreviewGenres() {
-        return this.genreDao.getPreviewGenres();
-    }
 
 }
 
