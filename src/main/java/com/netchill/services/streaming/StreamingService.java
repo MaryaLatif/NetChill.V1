@@ -12,6 +12,7 @@ import java.util.List;
 @Singleton
 public class StreamingService {
     private MovieDbApiClient movieDbApiClient;
+    private static final String TRAILER_TYPE = "Trailer";
 
     @Inject
     private StreamingService(MovieDbApiClient movieDbApiClient) {
@@ -27,7 +28,7 @@ public class StreamingService {
         }
 
         for (TrailerKey key : trailerKeys) {
-            if (key.getType().equals("Trailer")) {
+            if (key.getType().equals(TRAILER_TYPE)) {
                 return key;
             }
         }
@@ -44,7 +45,7 @@ public class StreamingService {
         }
 
         for (TrailerKey key : trailerKeys) {
-            if (key.getType().equals("Trailer")) {
+            if (key.getType().equals(TRAILER_TYPE)) {
                 return key;
             }
         }
