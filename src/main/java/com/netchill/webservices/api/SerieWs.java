@@ -26,8 +26,16 @@ public class SerieWs {
     }
 
     @GET
-    @Path("/{id}")
-    public Production getSerieById(@PathParam("id") Long id) {
-        return this.serieService.getSerieById(id);
+    @Path("/id")
+    public Production getSerieById(
+            @QueryParam("id") Long id) {
+
+        Production result = this.serieService.getSerieById(id);
+
+        if (result == null){
+            throw new NullPointerException();
+        }
+
+        return result ;
     }
 }

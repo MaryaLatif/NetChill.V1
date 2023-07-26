@@ -31,14 +31,30 @@ public class StreamingWs {
     }
 
     @GET
-    @Path("/serie/{id}")
-    public TrailerKey getSerieTrailerById(@PathParam("id") Long id) {
-        return this.movieStreamingService.getSerieTrailerById(id);
+    @Path("/serie/id")
+    public TrailerKey getSerieTrailerById(
+            @QueryParam("id") Long id) {
+
+        TrailerKey result = this.movieStreamingService.getSerieTrailerById(id);
+
+        if (result == null) {
+            throw new NullPointerException();
+        }
+
+        return result;
     }
 
     @GET
-    @Path("/movie/{id}")
-    public TrailerKey getMovieTrailerById(@PathParam("id") Long id) {
-        return this.movieStreamingService.getMovieTrailerById(id);
+    @Path("/movie/id")
+    public TrailerKey getMovieTrailerById(
+            @QueryParam("id") Long id) {
+
+        TrailerKey result = this.movieStreamingService.getMovieTrailerById(id);
+
+        if (result == null) {
+            throw new NullPointerException();
+        }
+
+        return result;
     }
 }

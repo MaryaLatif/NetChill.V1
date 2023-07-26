@@ -57,7 +57,13 @@ public class MoviePreviewWs {
     @Path("/genre/")
     public List<Production> getTopMovieByGenre(
             @QueryParam("genre") int genre) {
-        return moviePreviewService.getTopMoviesByGenre(genre);
+
+        List<Production> results = moviePreviewService.getTopMoviesByGenre(genre);
+
+        if (results == null){
+            throw new NullPointerException();
+        }
+        return results;
     }
 
 }

@@ -26,9 +26,17 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/{id}")
-    public Production getMovieById(@PathParam("id") Long id) {
-        return this.movieService.getMovieById(id);
+    @Path("/id")
+    public Production getMovieById(
+            @QueryParam("id") Long id) {
+
+        Production result = this.movieService.getMovieById(id);
+
+        if (result == null){
+            throw new NullPointerException();
+        }
+
+        return result;
     }
 
 }

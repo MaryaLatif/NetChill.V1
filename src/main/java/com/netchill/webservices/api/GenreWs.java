@@ -30,8 +30,15 @@ public class GenreWs {
 
     @GET
     @Path("/id")
-    public Genre getGenreById(@QueryParam("id") Long id) {
-        return this.genreService.getGenreById(id);
+    public Genre getGenreById(
+            @QueryParam("id") Long id) {
+        Genre result = this.genreService.getGenreById(id);
+
+        if (result == null){
+            throw new NullPointerException();
+        }
+
+        return result;
     }
 
     @GET
