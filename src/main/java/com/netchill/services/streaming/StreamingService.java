@@ -22,13 +22,16 @@ public class StreamingService {
         Trailer trailer = movieDbApiClient.getSerieTrailerById(id);
         List<TrailerKey> trailerKeys = trailer.getKeyList();
 
-        if (trailerKeys.isEmpty()) return new TrailerKey();
+        if (trailerKeys.isEmpty()) {
+            return new TrailerKey();
+        }
 
         for (TrailerKey key : trailerKeys) {
             if (key.getType().equals("Trailer")) {
                 return key;
             }
         }
+
         return trailerKeys.get(0);
     }
 
@@ -36,7 +39,9 @@ public class StreamingService {
         Trailer trailer = movieDbApiClient.getMovieTrailerById(id);
         List<TrailerKey> trailerKeys = trailer.getKeyList();
 
-        if (trailerKeys.isEmpty()) return new TrailerKey();
+        if (trailerKeys.isEmpty()) {
+            return new TrailerKey();
+        }
 
         for (TrailerKey key : trailerKeys) {
             if (key.getType().equals("Trailer")) {
