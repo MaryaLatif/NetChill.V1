@@ -12,6 +12,7 @@ type Props = {
   genreIds: number[],
   onClose: () => void,
 };
+
 function ShowTrailer({
   url, overview, genreIds, onClose,
 }: Props) {
@@ -29,10 +30,10 @@ function ShowTrailer({
         <div className={'cross-parent'}>
           <img className={'cross'} src={logo} alt={'cross'} onClick={onClose}/>
         </div>
-        { url ? <YouTube videoId={url} opts={opts}/>
-          : <ErrorTrailer />
+        {url ? <YouTube videoId={url} opts={opts}/>
+          : <ErrorTrailer/>
         }
-        <Player />
+        <Player/>
         <div className={'about-it'}>
           <div className={'overview-parent'}>
             <h3>Overview</h3>

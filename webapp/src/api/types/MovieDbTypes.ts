@@ -1,6 +1,6 @@
-export type Productions = {
+export type PaginatedResult<T> = {
   page: number,
-  results: Production[],
+  results: T[],
   total_page: number,
   total_results: number,
 };

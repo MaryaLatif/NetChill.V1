@@ -12,6 +12,7 @@ type Props = {
   list: string[],
   scrollOk: boolean
 };
+
 function LocaleSelectorContainer() {
   const localeService = getGlobalInstance(LocaleService);
   const currentLocale = useObservable(localeService.getCurrentLocale());
@@ -27,15 +28,15 @@ export default function Header({ logo, list, scrollOk }: Props) {
   return (
     <header id="header" className={classNames({ scroll: scrollOk })}>
       {/* <LocaleSelectorContainer /> */}
-      <div id={'left'}>
-        <img src={logo} alt={'logo'} className={'logo'}/>
+      <div id='left'>
+        <img src={logo} alt={'logo'} className='logo'/>
         <ul>
           {list.map((element) => (
             <li key={element}>{element}</li>),
           )}
         </ul>
       </div>
-      <div id={'right'}>
+      <div id='right'>
         <SearchBar/>
       </div>
     </header>

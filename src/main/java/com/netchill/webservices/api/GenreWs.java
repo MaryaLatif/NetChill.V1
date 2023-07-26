@@ -34,7 +34,7 @@ public class GenreWs {
             @QueryParam("id") Long id) {
         Genre result = this.genreService.getGenreById(id);
 
-        if (result == null){
+        if (result == null) {
             throw new NullPointerException();
         }
 
