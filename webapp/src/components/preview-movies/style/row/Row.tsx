@@ -8,10 +8,12 @@ import top2 from '../../../../../assets/icons/top2.png';
 import top3 from '../../../../../assets/icons/top3.png';
 import Arrow from './Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
-import StreamingService from '../../../../services/streaming/StreamingService';
+import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
+import Poster from '../image/Poster';
+import Recommendation from '../recommendation/Recommendation';
 
 type Props = {
   title: string,
@@ -32,7 +34,7 @@ type MovieInfo = {
 function Row({
   title, movieList, isLargerRow, topRated, isDataLoading, classType,
 }: Props) {
-  const streamingService = getGlobalInstance(StreamingService);
+  const streamingService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
   const [movieInfo, setMovieInfo] = useState<MovieInfo>();
@@ -103,21 +105,22 @@ function Row({
                     onClick={() => handleClick(
                       movie.id,
                       movie.overview,
-                      movie.name ? MediaType.SERIE : MediaType.MOVIE,
+                      movie.title ? MediaType.SERIE : MediaType.MOVIE,
                       movie.genre_ids,
                     )}
                     aria-hidden="true"
                   >
                     {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
                     {i < 3 && <noscript>{i++}</noscript>}
-                    <img
+                    <Poster
+                      path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
+                      title={movie.title}
                       className={'row_img'}
-                      src={(isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path)}
-                      alt={movie.title}/>
-                      <div className={'info'}>
-                        <h3 className={'title'}>{movie.title ? movie.title : movie.name}</h3>
-                        <p>Recommendation : {movie.vote_average}%</p>
-                      </div>
+                    />
+                    <div className={'info'}>
+                      <h3 className={'title'}>{movie.title ? movie.title : movie.title}</h3>
+                      < Recommendation average={movie.vote_average}/>
+                    </div>
                   </div>
                 ))}
               </div>
