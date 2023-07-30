@@ -1,10 +1,10 @@
 import { Logger } from 'simple-logging-system';
-import StreamingApi from '../../api/streaming/StreamingApi';
+import TrailerApi from '../../api/streaming/TrailerApi';
 
 const logger = new Logger('StreamingService');
 
-export default class StreamingService {
-  constructor(private readonly streamingApi: StreamingApi) {}
+export default class TrailerService {
+  constructor(private readonly streamingApi: TrailerApi) {}
 
   getMovieTrailerById = (id: number) => this.streamingApi.getMovieTrailerById(id)
     .catch((error) => {

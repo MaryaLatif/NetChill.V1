@@ -1,5 +1,6 @@
 package com.netchill.api.moviedb.models;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,5 +10,6 @@ import java.util.List;
 @Setter
 public class Trailer {
     private Long id;
-    private List<TrailerKey> results;
+    @JsonAlias({"results"})
+    private List<TrailerKey> keyList;
 }

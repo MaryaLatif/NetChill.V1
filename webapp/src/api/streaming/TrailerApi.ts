@@ -2,7 +2,7 @@ import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
 import { Trailer } from '../types/MovieDbTypes';
 
-export default class StreamingApi {
+export default class TrailerApi {
   private baseUrl = '/stream';
 
   constructor(private readonly httpClient: ApiHttpClient) {

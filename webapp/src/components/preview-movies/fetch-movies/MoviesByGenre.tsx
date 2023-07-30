@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
 import { Production } from '../../../api/types/MovieDbTypes';
 import Row from '../style/row/Row';
+import MovieService from '../../../services/movie/MovieService';
 
 function MoviesByGenre({ genre, id_genre }:{ genre:string, id_genre: number }) {
-  const previewMoviesService: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
+  const movieService: MovieService = getGlobalInstance(MovieService);
   const [movie, setMovie] = useState<Production[]>([]);
   const movieLoader = useLoader(); // permet d'avoir des infos sur l'état de la requête
 
   function fetchMovies() {
-    movieLoader.monitor(previewMoviesService.getMoviesByGenre(id_genre)
+    movieLoader.monitor(movieService.getMoviesByGenre(id_genre)
       .then(setMovie));
   }
   useEffect(() => {

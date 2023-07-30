@@ -6,6 +6,7 @@ import '../../../../../public/assets/css/arrow.css';
 import '../../../../../public/assets/css/top-row.css';
 import Player from '../../../general/streaming/movie/Player';
 import Arrow from './Arrow';
+import Poster from '../image/Poster';
 
 type Props = {
   title?: string,
@@ -39,7 +40,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                     <p>{movie.overview}</p>
                     <Player />
                   </div>
-                  <img src={movie.backdrop_path} alt={movie.title} className={'top_img'}/>
+                  <Poster title={movie.title} path={movie.backdrop_path} className={'top_img'}/>
                 </div>
               </div>
             ))}

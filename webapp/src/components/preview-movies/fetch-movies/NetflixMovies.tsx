@@ -3,13 +3,12 @@ import { useObservable } from 'micro-observables';
 import { getGlobalInstance } from 'plume-ts-di';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import MessageService from '../../../i18n/messages/MessageService';
-import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
 import { Production } from '../../../api/types/MovieDbTypes';
-import Row from '../style/row/Row';
 import TopRow from '../style/row/TopRow';
+import SerieService from '../../../services/serie/SerieService';
 
 function NetflixMovies() {
-  const previewMoviesServices: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
+  const serieService: SerieService = getGlobalInstance(SerieService);
 
   const [movie, setMovie] = useState<Production[]>([]);
 
@@ -17,7 +16,7 @@ function NetflixMovies() {
   const movieLoader = useLoader();
 
   function fetchMovies() {
-    movieLoader.monitor(previewMoviesServices.getNetflixOriginals()
+    movieLoader.monitor(serieService.getNetflixOriginals()
       .then(setMovie));
   }
 

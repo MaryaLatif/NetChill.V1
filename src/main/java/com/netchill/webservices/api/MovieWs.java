@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/movies")
 @Tag(name = "Movie", description = "MovieDB API")
@@ -27,9 +28,7 @@ public class MovieWs {
 
     @GET
     @Path("/id")
-    public Production getMovieById(
-            @QueryParam("id") Long id) {
-
+    public Production getMovieById(@QueryParam("id") Long id) {
         Production result = this.movieService.getMovieById(id);
 
         if (result == null){
@@ -39,4 +38,20 @@ public class MovieWs {
         return result;
     }
 
+    @GET
+    @Path("/top-rated")
+    public List<Production> getTopRated() {
+        return movieService.getTopRated();
+    }
+
+    @GET
+    @Path("/genre/")
+    public List<Production> getTopMovieByGenre(@QueryParam("genre") int genre) {
+        List<Production> results = movieService.getTopMoviesByGenre(genre);
+
+        if (results == null){
+            throw new NullPointerException();
+        }
+        return results;
+    }
 }

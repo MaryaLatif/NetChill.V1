@@ -1,10 +1,8 @@
 package com.netchill.api.moviedb;
 
-import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
-import com.netchill.api.moviedb.models.Production;
-import com.netchill.api.moviedb.models.Trailer;
 import com.netchill.services.configuration.ConfigurationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -14,7 +12,6 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.HttpHeaders;
@@ -22,22 +19,21 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Singleton
-public class MovieDbApiClient {
+public class MovieDBApiService {
     // Logger pour ecrire des logs plusieur niveau .info .debug .error .warn
-    private static final Logger LOGGER = LoggerFactory.getLogger(MovieDbApiClient.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MovieDBApiService.class);
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-    private static final int NETFLIX_ID = 213;
-    private static final String LANGUAGE = "en-US";
-
     private final ObjectMapper objectMapper;
-    private final MovieDbApiRetrofit movieDbApi;
+
+    @Getter
+    private final Retrofit retrofitClient;
     private final ConfigurationService configurationService;
 
     @Inject
-    private MovieDbApiClient(ObjectMapper objectMapper, ConfigurationService configurationService) {
+    private MovieDBApiService(ObjectMapper objectMapper, ConfigurationService configurationService) {
         this.configurationService = configurationService;
         JacksonConverterFactory jacksonConverterFactory = JacksonConverterFactory.create(objectMapper);
-        Retrofit retrofit = new Retrofit.Builder()
+        this.retrofitClient = new Retrofit.Builder()
                 .baseUrl(this.configurationService.getMovieDbApiBaseUrl())
                 .client(
                         new OkHttpClient
@@ -67,70 +63,6 @@ public class MovieDbApiClient {
                 .build();
 
         this.objectMapper = objectMapper;
-        // Crée l'api grace à l'interface retrofit
-        this.movieDbApi = retrofit.create(MovieDbApiRetrofit.class);
-    }
-
-    public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, @Nullable Integer page) {
-        return executeRequest(movieDbApi.getMovieByGenre(
-                        this.configurationService.getMovieDbApiKey(),
-                        genre,
-                        page
-                )
-        );
-    }
-
-    public MovieDbPaginatedResponse<Production> getTopRated(@Nullable Integer page) {
-        return executeRequest(movieDbApi.getTopRated(
-                        this.configurationService.getMovieDbApiKey(),
-                LANGUAGE,
-                        page
-                )
-        );
-    }
-
-    public MovieDbPaginatedResponse<Production> getNetflixOriginals(@Nullable Integer page) {
-        return executeRequest(movieDbApi.getNetflixOriginals(
-                this.configurationService.getMovieDbApiKey(),
-                NETFLIX_ID,
-                page
-        ));
-    }
-
-    public MovieDbPaginatedResponse<Production> getTrending(@Nullable Integer page) {
-        return executeRequest(movieDbApi.getTrending(
-                this.configurationService.getMovieDbApiKey(),
-                LANGUAGE,
-                page
-        ));
-    }
-
-    public Production getMovieById(Long id) {
-        return executeRequest(movieDbApi.getMovieById(
-                id,
-                this.configurationService.getMovieDbApiKey()
-        ));
-    }
-
-    public Trailer getMovieTrailerById(Long id) {
-        return executeRequest(movieDbApi.getMovieTrailerById(
-                id,
-                this.configurationService.getMovieDbApiKey()
-        ));
-    }
-
-    public Production getSerieById(Long id) {
-        return executeRequest(movieDbApi.getSerieById(
-                id,
-                this.configurationService.getMovieDbApiKey()
-        ));
-    }
-
-    public Trailer getSerieTrailerById(Long id) {
-        return executeRequest(movieDbApi.getSerieTrailerById(
-                id,
-                this.configurationService.getMovieDbApiKey()
-        ));
     }
 
     public <T> T executeRequest(Call<T> apiCall) {
