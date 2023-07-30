@@ -76,7 +76,7 @@ function Row({
       return;
     }
 
-    const apiCall = movieInfo.type === 'movie'
+    const apiCall = movieInfo.type === MediaType.MOVIE
       ? streamingService.getMovieTrailerById
       : streamingService.getSerieTrailerById;
 
@@ -105,7 +105,7 @@ function Row({
                     onClick={() => handleClick(
                       movie.id,
                       movie.overview,
-                      movie.title ? MediaType.SERIE : MediaType.MOVIE,
+                      movie.type,
                       movie.genre_ids,
                     )}
                     aria-hidden="true"
