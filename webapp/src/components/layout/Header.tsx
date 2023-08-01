@@ -4,7 +4,7 @@ import { useObservable } from 'micro-observables';
 import classNames from 'classnames';
 import LocaleSelector from '../theme/LocaleSelector';
 import LocaleService from '../../i18n/locale/LocaleService';
-import '../../../public/assets/css/header.css';
+import '../../../assets/scss/layouts/_header.scss';
 import SearchBar from '../general/search/SearchBar';
 
 type Props = {

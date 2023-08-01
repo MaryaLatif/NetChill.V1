@@ -1,0 +1,79 @@
+@use '../variables' as *;
+
+.selected_movie {
+  display: block;
+}
+
+#parent-show-movie {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#show-movie {
+  width: 50%;
+  background: black;
+  border-radius: $border-radius-poster;
+}
+
+.cross {
+  height: $height-cross;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.cross-parent {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.overview-parent {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 50%;
+}
+
+.overview {
+  margin-top: $spacer-1;
+  line-height: $spacer-2;
+}
+
+.about-it {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), #282c34);
+  display: flex;
+  padding: $spacer-2-5;
+  color: $color-p;
+  justify-content: space-between;
+}
+
+.genre-list {
+  list-style: none;
+}
+
+.genre-list {
+  h4 {
+    margin: $spacer-1 0px $spacer-1 0px;
+  }
+}
+
+.genre-list {
+  li {
+    margin-bottom: $spacer-0-5;
+  }
+}
+
+.error-trailer {
+  height: $height-top-card;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-p;
+}

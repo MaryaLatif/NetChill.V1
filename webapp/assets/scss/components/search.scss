@@ -1,0 +1,51 @@
+@use '../variables' as *;
+
+.search {
+  width: $width-search-bar;
+  position: relative;
+  border-radius: $button-border-radius;
+  overflow: hidden;
+  border: $border;
+}
+
+.search {
+  input {
+    margin: 0px;
+    padding: $spacer-1;
+    width: 100%;
+    outline: none;
+    height: $height-search-bar;
+    background: none;
+    border: none;
+    color: $color-p;
+  }
+}
+
+.search {
+  button {
+    position: absolute;
+    top: 0;
+    border-radius: $button-border-radius;
+    right: 0px;
+    border: none;
+    cursor: pointer;
+    color: $color-p;
+    padding: 0 $spacer-0-5 0 $spacer-0-5;
+    background: $button-background;
+    height: 30px;
+    width: 40px;
+    border-left: $border;
+  }
+  button:hover{
+    background: $button-background-hover;
+  }
+}
+
+.search-icon {
+  object-fit: contain;
+  height: 100%;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}

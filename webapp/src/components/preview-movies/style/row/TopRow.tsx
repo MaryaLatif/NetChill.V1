@@ -1,9 +1,9 @@
 import React from 'react';
 import { Production } from '../../../../api/types/MovieDbTypes';
 import RowLoading from '../../../general/loading/RowLoading';
-import '../../../../../public/assets/css/row.css';
-import '../../../../../public/assets/css/arrow.css';
-import '../../../../../public/assets/css/top-row.css';
+import '../../../../../assets/scss/components/row.scss';
+import '../../../../../assets/scss/components/arrow.scss';
+import '../../../../../assets/scss/components/top-row.scss';
 import Player from '../../../general/streaming/movie/Player';
 import Arrow from './Arrow';
 import Poster from '../image/Poster';

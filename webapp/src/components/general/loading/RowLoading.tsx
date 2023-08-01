@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import '../../../../public/assets/css/row.css';
+import '../../../../assets/scss/components/row.scss';
 
 function RowLoading({ isLargerRow }: { isLargerRow?: boolean }) {
   const renderPosters = () => {
     const posters = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 8; i += 1) {
       posters.push(
         <div
           key={i}

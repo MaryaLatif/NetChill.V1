@@ -1,0 +1,33 @@
+@use '../variables' as *;
+
+.arrow {
+  cursor: pointer;
+  background: $background-arrow;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  opacity: 0;
+}
+
+.arrow_img {
+  width: $width-arrow;
+  object-fit: contain;
+  box-shadow: $box-shadow;
+}
+.arrow:hover{
+  opacity: 1;
+}
+.arrow_parent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+}
+.arrow_right{
+  border-radius: $border-radius-arrow-right;
+}
+.arrow_left{
+  border-radius: $border-radius-arrow-left;
+}

@@ -2,8 +2,8 @@ import { Injector } from 'plume-ts-di';
 import ApiHttpClient from './ApiHttpClient';
 import SampleApi from './session/SampleApi';
 import TrailerApi from './streaming/TrailerApi';
-import GenreApi from './general/GenreApi';
-import GlobalApi from './preview-movies/GlobalApi';
+import GenreApi from './genre/GenreApi';
+import GlobalApi from './global/GlobalApi';
 import MovieApi from './movie/MovieApi';
 import SerieApi from './serie/SerieApi';
 

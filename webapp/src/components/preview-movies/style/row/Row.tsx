@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../../../../../public/assets/css/row.css';
-import '../../../../../public/assets/css/arrow.css';
+import '../../../../../assets/scss/components/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
 import top1 from '../../../../../assets/icons/top1.png';

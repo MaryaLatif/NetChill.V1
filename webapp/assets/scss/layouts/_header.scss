@@ -5,3 +5,54 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.logo {
+  object-fit: contain;
+  height: 100px;
+}
+
+.scroll {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+#header {
+  background: $background-header;
+  transition: box-shadow 1s;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-family: 'Montserrat';
+  font-size: small;
+  font-weight: lighter;
+  padding-bottom: 20px;
+  justify-content: space-between;
+  /*
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+   */
+}
+
+#header {
+  ul {
+    list-style: none;
+    display: flex;
+  }
+}
+
+#header {
+  li {
+    margin-right: 50px;
+  }
+}
+
+#left {
+  display: flex;
+  align-items: center;
+}
+
+#right {
+  margin-right: 30px;
+}
+
+

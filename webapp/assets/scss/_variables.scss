@@ -1,12 +1,50 @@
 $base-font-family: 'Roboto', sans-serif;
 $base-font-size: 14px;
 
-$background-color: #eeeeee;
+$background-color: radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,0.7301514355742297) 100%);
 $separator-color: #dddddd;
+$background-header: linear-gradient(rgba(0, 0, 0, 0.5), rgba(40, 44, 52, 0));
+$background-arrow: rgba(0,0,0, 0.1);
+$background-gradient-loading: linear-gradient(110deg, #282c34 10%, rgb(50, 53, 63) 20%, #282c34 50%);
+$background-loading: #eee;
 
 $primary-color: #282c34;
 $secondary-color: #efefef;
 
 $box-padding: 16px;
+$box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
 
-$button-height: 24px;
+$button-height: 30px;
+$button-padding: 5px;
+$button-border-radius: 15px;
+$button-background: rgba(255,255,255,0.075);
+$button-background-hover: rgba(255,255,255,0.25);
+
+$border: rgba(255, 255, 255, 0.25) solid 1px;
+$border-radius-arrow-right: 20px 0px 0px 20px;
+$border-radius-arrow-left: 0px 20px 20px 0px;
+$border-radius-poster: 10px;
+$border-radius-large-poster: 20px;
+
+$width-arrow:  2rem;
+$width-poster: 250px;
+$width-player: 100px;
+$width-search-bar: 300px;
+
+$height-top-card: 500px;
+$height-poster: 140px;
+$height-player: 40px;
+$height-cross: 30px;
+$height-search-bar: 30px;
+
+$color-p: #FFFFFF;
+
+$spacer-0-5: 0.5rem;
+$spacer-1: 1rem;
+$spacer-2: 2rem;
+$spacer-2-5: 2.5rem;
+$spacer-5: 5rem;
+
+
+/* Phone */
+$title-row-font-size: 2rem;

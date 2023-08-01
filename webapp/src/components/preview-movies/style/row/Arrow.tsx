@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import '../../../../../public/assets/css/arrow.css';
+import '../../../../../assets/scss/components/arrow.scss';
 import { ChevronRight, ChevronLeft } from 'react-feather';
 
 type Props = {

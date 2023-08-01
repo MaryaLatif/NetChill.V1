@@ -1,5 +1,5 @@
 import { Logger } from 'simple-logging-system';
-import GenreApi from '../../api/general/GenreApi';
+import GenreApi from '../../api/genre/GenreApi';
 import { Genre } from '../../api/types/MovieDbTypes';
 
 const logger = new Logger('GenreService');
