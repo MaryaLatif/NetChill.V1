@@ -20,14 +20,15 @@
 .arrow_parent {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   position: absolute;
   bottom: 0;
-  height: 100%;
+  margin-bottom: $spacer-1;
 }
 .arrow_right{
-  border-radius: $border-radius-arrow-right;
+  border-radius: $border-radius-poster;
 }
 .arrow_left{
-  border-radius: $border-radius-arrow-left;
+  border-radius: $border-radius-poster;
+  display: none;
 }

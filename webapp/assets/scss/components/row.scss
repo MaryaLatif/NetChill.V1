@@ -4,14 +4,16 @@
   position: relative;
   margin-top: 50px;
 }
-
+.row_poster_parent{
+  position: relative;
+  margin: $spacer-2;
+}
 .row_posters {
   display: flex;
   overflow-y: hidden;
   overflow-x: scroll;
   scroll-behavior: smooth;
   gap: $spacer-1;
-  margin: $spacer-2;
   padding: $spacer-1;
 }
 

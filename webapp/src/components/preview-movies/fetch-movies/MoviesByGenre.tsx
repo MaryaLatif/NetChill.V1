@@ -23,7 +23,7 @@ function MoviesByGenre({ genre, id_genre }:{ genre:string, id_genre: number }) {
     title={genre}
     movieList={movie}
     isDataLoading={movieLoader.isLoading}
-    classType={`${id_genre}`}
+    classType={`${genre}`}
   />;
 }
 

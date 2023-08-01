@@ -42,6 +42,10 @@ function Row({
   const movieLoader = useLoader();
 
   const top: any[] = [top1, top2, top3];
+  const slider = document.getElementById(classType);
+  const arrowLeft = document.querySelector(`#${classType} + .arrow_parent > .arrow_left`);
+  const arrowRight = document.querySelector(`#${classType} + .arrow_parent > .arrow_right`);
+  const arrow = document.querySelector(`#${classType} + .arrow_parent`);
 
   let i = 0;
 
@@ -61,14 +65,33 @@ function Row({
   }
 
   function hundleClickArrowRight() {
-    const slider = document.getElementById(classType);
-    slider.scrollLeft += window.innerWidth - 150;
+    if (slider) {
+      slider.scrollLeft += window.innerWidth - 150;
+    }
   }
 
   function hundleClickArrowLeft() {
-    const slider = document.getElementById(classType);
-    slider.scrollLeft -= window.innerWidth - 150;
+    if (slider) {
+      slider.scrollLeft -= window.innerWidth - 150;
+    }
   }
+
+  useEffect(() => {
+    if (slider && arrowLeft && arrowRight && arrow) {
+      if (slider.scrollLeft !== 0) {
+        arrowLeft.style.display = 'flex';
+        arrow.style.justifyContent = 'space-between';
+      } else {
+        arrowLeft.style.display = 'none';
+        arrow.style.justifyContent = 'end';
+      }
+      if (slider.scrollWidth - slider.scrollLeft <= window.innerWidth) {
+        arrowRight.style.display = 'none';
+      } else {
+        arrowRight.style.display = 'flex';
+      }
+    }
+  }, [slider?.scrollLeft]);
 
   useEffect(() => {
     if (!movieInfo) {
@@ -91,44 +114,46 @@ function Row({
           isDataLoading
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
-              <div className={'row_posters'} id={classType}>
-                {movieList.map((movie) => (
-                  <div
-                    key={movie.id}
-                    className={classNames(
-                      'row_poster',
-                      { row_poster_large: isLargerRow },
-                      { top_rated: topRated },
-                      `${classType}`,
-                    )}
-                    onClick={() => handleClick(
-                      movie.id,
-                      movie.overview,
-                      movie.type,
-                      movie.genre_ids,
-                    )}
-                    aria-hidden="true"
-                  >
-                    {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
-                    {i < 3 && <noscript>{i++}</noscript>}
-                    <Poster
-                      path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
-                      title={movie.title}
-                      className={'row_img'}
-                    />
-                    <div className={'info'}>
-                      <h3 className={'title'}>{movie.title ? movie.title : movie.title}</h3>
-                      < Recommendation average={movie.vote_average}/>
+              <div className={'row_poster_parent'}>
+                <div className={'row_posters'} id={classType}>
+                  {movieList.map((movie) => (
+                    <div
+                      key={movie.id}
+                      className={classNames(
+                        'row_poster',
+                        { row_poster_large: isLargerRow },
+                        { top_rated: topRated },
+                        `${classType}`,
+                      )}
+                      onClick={() => handleClick(
+                        movie.id,
+                        movie.overview,
+                        movie.type,
+                        movie.genre_ids,
+                      )}
+                      aria-hidden="true"
+                    >
+                      {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
+                      {i < 3 && <noscript>{i++}</noscript>}
+                      <Poster
+                        path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
+                        title={movie.title}
+                        className={'row_img'}
+                      />
+                      <div className={'info'}>
+                        <h3 className={'title'}>{movie.title ? movie.title : movie.title}</h3>
+                        < Recommendation average={movie.vote_average}/>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className={'arrow_parent'} style={{ height: '140px' }}>
+                  <Arrow left={true} onClick={hundleClickArrowLeft}/>
+                  <Arrow right={true} onClick={hundleClickArrowRight}/>
+                </div>
               </div>
             )
         }
-        <div className={'arrow_parent'} style={{ height: '140px', bottom: '1rem' }}>
-          <Arrow left={true} onClick={hundleClickArrowLeft}/>
-          <Arrow right={true} onClick={hundleClickArrowRight}/>
-        </div>
       </div>
       {
         visible
