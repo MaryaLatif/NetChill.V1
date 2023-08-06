@@ -7,6 +7,8 @@ $background-header: linear-gradient(rgba(0, 0, 0, 0.5), rgba(40, 44, 52, 0));
 $background-arrow: rgba(0,0,0, 0.25);
 $background-gradient-loading: linear-gradient(110deg, #282c34 10%, rgb(50, 53, 63) 20%, #282c34 50%);
 $background-loading: #eee;
+$background-filter: rgba(0,0,0,0.075);
+$background-filter-top-poster: linear-gradient(90deg, #141415 0%, rgba(0,0,0,0) 50%);
 
 $primary-color: #282c34;
 $secondary-color: #efefef;
@@ -31,7 +33,7 @@ $width-poster: 250px;
 $width-player: 100px;
 $width-search-bar: 300px;
 
-$height-top-card: 500px;
+$height-top-card: 700px;
 $height-poster: 140px;
 $height-player: 40px;
 $height-cross: 30px;
@@ -43,6 +45,7 @@ $spacer-0-5: 0.5rem;
 $spacer-1: 1rem;
 $spacer-2: 2rem;
 $spacer-2-5: 2.5rem;
+$spacer-3: 3rem;
 $spacer-5: 5rem;
 
 

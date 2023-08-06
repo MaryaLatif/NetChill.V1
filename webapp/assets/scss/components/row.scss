@@ -3,6 +3,7 @@
 .row {
   position: relative;
   margin-top: 50px;
+
 }
 .row_poster_parent{
   position: relative;
@@ -55,7 +56,7 @@
 }
 
 .row > h2 {
-  margin-left: 20px;
+  margin-left: $spacer-2;
   color: $color-p;
   font-family: "Helvetica Neue";
   font-weight: 500;

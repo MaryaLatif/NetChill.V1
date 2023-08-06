@@ -7,6 +7,15 @@
   align-items: center;
   z-index: 2;
   opacity: 0;
+  border-radius: $border-radius-poster;
+
+  &--right {
+    margin-left: auto;
+  }
+
+  &--left {
+    margin-right: auto;
+  }
 }
 
 .arrow_img {
@@ -20,15 +29,8 @@
 .arrow_parent {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   position: absolute;
   bottom: 0;
   margin-bottom: $spacer-1;
-}
-.arrow_right{
-  border-radius: $border-radius-poster;
-}
-.arrow_left{
-  border-radius: $border-radius-poster;
-  display: none;
 }

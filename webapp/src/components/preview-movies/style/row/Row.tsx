@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../../../../assets/scss/components/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
-import top1 from '../../../../../assets/icons/top1.png';
-import top2 from '../../../../../assets/icons/top2.png';
-import top3 from '../../../../../assets/icons/top3.png';
 import Arrow from './Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
@@ -38,16 +35,12 @@ function Row({
   const [trailer, setTrailer] = useState<Trailer>();
   const [movieInfo, setMovieInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
+  const [currentSliderLeft, setCurrentSliderLeft] = useState(0);
+  const [sliderWidth, setSliderWidth] = useState(0);
+
+  const slider = useRef<HTMLDivElement>(null);
 
   const movieLoader = useLoader();
-
-  const top: any[] = [top1, top2, top3];
-  const slider = document.getElementById(classType);
-  const arrowLeft = document.querySelector(`#${classType} + .arrow_parent > .arrow_left`);
-  const arrowRight = document.querySelector(`#${classType} + .arrow_parent > .arrow_right`);
-  const arrow = document.querySelector(`#${classType} + .arrow_parent`);
-
-  let i = 0;
 
   function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
     setMovieInfo({
@@ -65,33 +58,26 @@ function Row({
   }
 
   function hundleClickArrowRight() {
-    if (slider) {
-      slider.scrollLeft += window.innerWidth - 150;
+    if (!slider.current) {
+      return;
     }
+    slider.current.scrollLeft += window.innerWidth - 150;
   }
 
   function hundleClickArrowLeft() {
-    if (slider) {
-      slider.scrollLeft -= window.innerWidth - 150;
+    if (!slider.current) {
+      return;
     }
+    slider.current.scrollLeft -= window.innerWidth - 150;
   }
 
   useEffect(() => {
-    if (slider && arrowLeft && arrowRight && arrow) {
-      if (slider.scrollLeft !== 0) {
-        arrowLeft.style.display = 'flex';
-        arrow.style.justifyContent = 'space-between';
-      } else {
-        arrowLeft.style.display = 'none';
-        arrow.style.justifyContent = 'end';
-      }
-      if (slider.scrollWidth - slider.scrollLeft <= window.innerWidth) {
-        arrowRight.style.display = 'none';
-      } else {
-        arrowRight.style.display = 'flex';
-      }
+    if (!slider.current) {
+      return;
     }
-  }, [slider?.scrollLeft]);
+    setCurrentSliderLeft(slider.current.scrollLeft);
+    setSliderWidth(slider.current.scrollWidth);
+  }, [slider.current?.scrollLeft]);
 
   useEffect(() => {
     if (!movieInfo) {
@@ -115,7 +101,7 @@ function Row({
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
               <div className={'row_poster_parent'}>
-                <div className={'row_posters'} id={classType}>
+                <div ref={slider} className={'row_posters'} id={classType}>
                   {movieList.map((movie) => (
                     <div
                       key={movie.id}
@@ -133,8 +119,6 @@ function Row({
                       )}
                       aria-hidden="true"
                     >
-                      {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
-                      {i < 3 && <noscript>{i++}</noscript>}
                       <Poster
                         path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                         title={movie.title}
@@ -148,8 +132,14 @@ function Row({
                   ))}
                 </div>
                 <div className={'arrow_parent'} style={{ height: '140px' }}>
-                  <Arrow left={true} onClick={hundleClickArrowLeft}/>
-                  <Arrow right={true} onClick={hundleClickArrowRight}/>
+                  {
+                    currentSliderLeft > 0
+                    && <Arrow left={true} onClick={hundleClickArrowLeft}/>
+                  }
+                  {
+                    sliderWidth - currentSliderLeft > window.innerWidth
+                    && <Arrow right={true} onClick={hundleClickArrowRight}/>
+                  }
                 </div>
               </div>
             )

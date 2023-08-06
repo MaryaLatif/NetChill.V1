@@ -12,7 +12,7 @@ function Arrow({
   left, right, onClick,
 } : Props) {
   return (
-    <div className={classNames('arrow', { arrow_right: right }, { arrow_left: left })} onClick={onClick}>
+    <div className={classNames('arrow', { 'arrow--right': right }, { 'arrow--left': left })} onClick={onClick}>
       {left ? <ChevronLeft color={'white'}/> : < ChevronRight color={'white'} /> }
     </div>
   );
