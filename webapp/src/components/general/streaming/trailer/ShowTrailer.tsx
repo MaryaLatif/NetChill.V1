@@ -5,6 +5,7 @@ import '../../../../../assets/scss/components/show-video.scss';
 import GenreList from '../../../preview-movies/style/genre/GenreList';
 import ErrorTrailer from './ErrorTrailer';
 import Player from '../movie/Player';
+import { XCircle } from 'react-feather';
 
 type Props = {
   url: string,
@@ -28,7 +29,7 @@ function ShowTrailer({
     <div id={'parent-show-movie'}>
       <div id={'show-movie'}>
         <div className={'cross-parent'}>
-          <img className={'cross'} src={logo} alt={'cross'} onClick={onClose}/>
+          <XCircle color={'grey'} onClick={onClose} className={'cross'}/>
         </div>
         {url ? <YouTube videoId={url} opts={opts}/>
           : <ErrorTrailer/>

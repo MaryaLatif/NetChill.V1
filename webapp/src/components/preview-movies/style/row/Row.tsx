@@ -8,7 +8,7 @@ import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
-import Poster from '../image/Poster';
+import PosterBackground from '../poster/PosterBackground';
 import Recommendation from '../recommendation/Recommendation';
 
 type Props = {
@@ -119,7 +119,7 @@ function Row({
                       )}
                       aria-hidden="true"
                     >
-                      <Poster
+                      <PosterBackground
                         path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                         title={movie.title}
                         className={'row_img'}

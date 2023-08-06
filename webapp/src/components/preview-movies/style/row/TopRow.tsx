@@ -4,10 +4,8 @@ import RowLoading from '../../../general/loading/RowLoading';
 import '../../../../../assets/scss/components/row.scss';
 import '../../../../../assets/scss/components/arrow.scss';
 import '../../../../../assets/scss/components/top-row.scss';
-import Player from '../../../general/streaming/movie/Player';
 import Arrow from './Arrow';
-import Poster from '../image/Poster';
-import classNames from 'classnames';
+import Poster from '../poster/Poster';
 
 type Props = {
   title?: string,
@@ -27,7 +25,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
     }
     return clearInterval(sliderInterval);
   }
-  function hundleClickArrowRight() {
+
+  function nextPosterRight() {
     setCurrentPoster((prevPoster) => {
       if (!slider.current) {
         return prevPoster;
@@ -43,7 +42,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
     });
   }
 
-  function hundleClickArrowLeft() {
+  function nextPosterLeft() {
     if (!slider.current) {
       return;
     }
@@ -54,8 +53,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      hundleClickArrowRight(); // Appeler directement la fonction pour déplacer le slider vers la droite
-    }, 5000);
+      nextPosterRight(); // Appeler directement la fonction pour déplacer le slider vers la droite
+    }, 8000);
 
     setSliderInterval(interval);
 
@@ -70,24 +69,19 @@ function TopRow({ movieList, isDataLoading }: Props) {
       {
         isDataLoading
           ? <RowLoading/>
-
           : <div ref={slider} className={'row_posters'} id={'top_posters'}>
             {movieList.map((movie, index) => {
               const isSelected = currentPoster === index;
               return (
                 <div key={movie.title}>
-                  <div
-                    className={classNames('top_card', { 'top_card--selected': isSelected })}
-                    style={{ width: `${window.innerWidth}px` }}
-                  >
-                    <div id={'info'}>
-                      <h2>{movie.title}</h2>
-                      <p>{movie.overview}</p>
-                      <Player/>
-                    </div>
-                    <div className={'filter'}></div>
-                    <Poster title={movie.title} path={movie.backdrop_path} className={'top_img'}/>
-                  </div>
+                  <Poster title={movie.title}
+                          overview={movie.overview}
+                          id={movie.id}
+                          type={movie.type}
+                          backdrop_path={movie.backdrop_path}
+                          isSelected={isSelected}
+                          stopInterval={stopSliderInterval}
+                  />
                 </div>
               );
             })}
@@ -98,14 +92,14 @@ function TopRow({ movieList, isDataLoading }: Props) {
           currentPoster > 0
           && <Arrow left onClick={() => {
             stopSliderInterval();
-            hundleClickArrowLeft();
+            nextPosterLeft();
           }}/>
         }
         {
           currentPoster < movieList.length - 1
           && <Arrow right onClick={() => {
             stopSliderInterval();
-            hundleClickArrowRight();
+            nextPosterRight();
           }}/>
         }
       </div>
