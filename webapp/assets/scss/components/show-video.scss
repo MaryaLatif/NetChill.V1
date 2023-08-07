@@ -46,11 +46,13 @@
   }
 
   .about-it {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), #282c34);
+    background: linear-gradient(rgba(40, 44, 52, 0.1), #282c34 30%);
     display: flex;
     padding: $spacer-2-5;
     color: $color-p;
     justify-content: space-between;
+    height: auto;
+    bottom: 0px;
   }
 
   .genre-list {

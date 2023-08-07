@@ -93,3 +93,9 @@
   }
 }
 
+.trailer--large{
+  height: $height-top-card;
+  position: relative;
+  border-radius: $border-radius-large-poster;
+  overflow: hidden;
+}
