@@ -18,7 +18,7 @@ export default class GenreApi {
   getPreviewGenre() {
     return this
       .httpClient
-      .restRequest<Genre[]>(HttpMethod.GET, `${this.BASE_URL}/list-genres`)
+      .restRequest<Genre[]>(HttpMethod.GET, `${this.BASE_URL}/featured`)
       .execute();
   }
 }
