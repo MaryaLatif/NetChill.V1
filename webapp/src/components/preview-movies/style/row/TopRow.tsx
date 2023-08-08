@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Production } from '../../../../api/types/MovieDbTypes';
 import RowLoading from '../../../general/loading/RowLoading';
-import '../../../../../assets/scss/components/row.scss';
-import '../../../../../assets/scss/components/arrow.scss';
-import '../../../../../assets/scss/components/top-row.scss';
-import Arrow from './Arrow';
+import '../../../../../assets/scss/components/style/row/row.scss';
+import '../../../../../assets/scss/components/style/arrow/arrow.scss';
+import '../../../../../assets/scss/components/style/row/top-row.scss';
+import Arrow from '../arrow/Arrow';
 import Poster from '../poster/Poster';
 
 type Props = {

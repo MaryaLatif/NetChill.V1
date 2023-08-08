@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import '../../../../assets/scss/components/row.scss';
+import '../../../../assets/scss/components/style/row/row.scss';
 
 function RowLoading({ isLargerRow }: { isLargerRow?: boolean }) {
   const renderPosters = () => {

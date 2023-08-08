@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../../../assets/scss/components/player.scss';
+import '../../../../../assets/scss/components/general/streaming/movie/player.scss';
 import { Play } from 'react-feather';
 
 function Player({ offset }: { offset?: string }) {

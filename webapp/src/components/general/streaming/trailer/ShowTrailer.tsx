@@ -1,6 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import '../../../../../assets/scss/components/show-trailer.scss';
+import '../../../../../assets/scss/components/general/streaming/trailer/show-trailer.scss';
 import { XCircle } from 'react-feather';
 import GenreList from '../../../preview-movies/style/genre/GenreList';
 import ErrorTrailer from './ErrorTrailer';

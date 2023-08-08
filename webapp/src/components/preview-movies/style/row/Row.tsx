@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../../../../../assets/scss/components/row.scss';
+import '../../../../../assets/scss/components/style/row/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
-import Arrow from './Arrow';
+import Arrow from '../arrow/Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';

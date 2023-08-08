@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../../assets/scss/components/search.scss';
+import '../../../../assets/scss/components/general/search/search.scss';
 import { Search } from 'react-feather';
 
 function SearchBar() {
