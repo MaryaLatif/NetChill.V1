@@ -29,14 +29,14 @@ public class GenreWs {
     }
 
     @GET
-    @Path("/id")
-    public Genre getGenreById(@QueryParam("id") Long id) {
+    @Path("/{id}")
+    public Genre getGenreById(@PathParam("id") Long id) {
         return this.genreService.getGenreById(id);
     }
 
     @GET
-    @Path("/list-genres")
+    @Path("/featured")
     public List<Genre> getPreviewGenres() {
-        return this.genreService.getPreviewGenres();
+        return this.genreService.featuredGenre();
     }
 }

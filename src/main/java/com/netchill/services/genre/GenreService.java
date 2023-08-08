@@ -2,7 +2,6 @@ package com.netchill.services.genre;
 
 import com.netchill.api.moviedb.MovieDbApiClient;
 import com.netchill.db.dao.movie.GenreDao;
-import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.db.generated.Genre;
 
 import javax.inject.Inject;
@@ -25,7 +24,7 @@ public class GenreService {
         return this.genreDao.getGenreById(id);
     }
 
-    public List<Genre> getPreviewGenres() {
+    public List<Genre> featuredGenre() {
         return this.genreDao.getPreviewGenres();
     }
 
