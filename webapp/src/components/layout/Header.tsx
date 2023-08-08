@@ -26,9 +26,9 @@ function LocaleSelectorContainer() {
 
 export default function Header({ logo, list, scrollOk }: Props) {
   return (
-    <header id="header" className={classNames({ scroll: scrollOk })}>
+    <header className={classNames('header', { scroll: scrollOk })}>
       {/* <LocaleSelectorContainer /> */}
-      <div id='left'>
+      <div className='header__left'>
         <img src={logo} alt={'logo'} className='logo'/>
         <ul>
           {list.map((element) => (
@@ -36,7 +36,7 @@ export default function Header({ logo, list, scrollOk }: Props) {
           )}
         </ul>
       </div>
-      <div id='right'>
+      <div className='header__right'>
         <SearchBar/>
       </div>
     </header>

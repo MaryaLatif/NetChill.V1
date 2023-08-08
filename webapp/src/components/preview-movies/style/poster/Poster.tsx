@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import YouTube from 'react-youtube';
 import { getGlobalInstance } from 'plume-ts-di';
 import * as worker_threads from 'worker_threads';
+import { preview } from 'vite';
 import Player from '../../../general/streaming/movie/Player';
 import PosterBackground from './PosterBackground';
 import TrailerService from '../../../../services/streaming/TrailerService';
@@ -26,6 +27,7 @@ function Poster({
 
   const [showTrailer, setShowTrailer] = useState<boolean>(false);
   const [trailerUrl, setTrailerUrl] = useState<Trailer>();
+  const [trailerOpacityOne, setTrailerOpacityOne] = useState(false);
 
   const trailer = useRef<HTMLDivElement>(null);
 
@@ -60,6 +62,10 @@ function Poster({
   }, [trailer.current]);
 
   useEffect(() => {
+    console.log(showTrailer);
+  }, [showTrailer]);
+
+  useEffect(() => {
     const apiCall = type === MediaType.MOVIE
       ? trailerService.getMovieTrailerById
       : trailerService.getSerieTrailerById;
@@ -69,37 +75,49 @@ function Poster({
   }, [id]);
 
   return (
-    showTrailer && trailerUrl && isSelected
-      ? <div ref={trailer} className={'trailer--large'} style={{ width: `${window.innerWidth}px` }}>
-        <YouTube
-          opts={opts}
-          videoId={trailerUrl.key}
-          onPause={() => {
-            setShowTrailer(false);
-          }}
-          onEnd={() => {
-            setShowTrailer(false);
-          }}
-          style={{
-            position: 'absolute', zIndex: 5,
-          }}
-        />
+    <div
+      ref={trailer}
+      className={classNames('top_card', { 'top_card--selected': isSelected })}
+      style={{ width: `${window.innerWidth}px` }}
+    >
+      <div id={'info'}>
+        <h2>{title}</h2>
+        <p>{overview}</p>
+        <Player/>
       </div>
-      : <div
-        className={classNames('top_card', { 'top_card--selected': isSelected })}
-        style={{ width: `${window.innerWidth}px` }}
-      >
-        <div id={'info'}>
-          <h2>{title}</h2>
-          <p>{overview}</p>
-          <Player/>
-        </div>
-        <div className={'filter'} onClick={() => {
-          stopInterval();
-          setShowTrailer((prevState) => !prevState);
-        }}></div>
-        <PosterBackground title={title} path={backdrop_path} className={'top_img'}/>
+
+      <div className={'top_card--filter'} onClick={() => {
+        stopInterval();
+        setShowTrailer((prevState) => !prevState);
+        setInterval(() => {
+          setTrailerOpacityOne(true);
+        }, 1000);
+      }}>
       </div>
+      <PosterBackground title={title} path={backdrop_path} className={'top_card__img'}/>
+      {showTrailer && trailerUrl
+        && <div
+          className={classNames('trailer_large',
+            { 'trailer_large--hiden': !trailerOpacityOne },
+            { 'trailer_large--show': trailerOpacityOne })}
+        >
+          <YouTube
+            opts={opts}
+            videoId={trailerUrl.key}
+            onPause={() => {
+              setTrailerOpacityOne(false);
+              setInterval(() => {
+                setShowTrailer((prevState) => !prevState);
+              }, 1000);
+            }}
+            onEnd={() => {
+              setShowTrailer(false);
+            }}
+            style={{
+              position: 'absolute', zIndex: 5,
+            }}
+          /></div>}
+    </div>
   );
 }
 

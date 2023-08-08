@@ -16,7 +16,7 @@ function RowLoading({ isLargerRow }: { isLargerRow?: boolean }) {
     return posters;
   };
   return (
-    <div className="row_posters">
+    <div className="row__posters">
       {renderPosters()}
     </div>
   );

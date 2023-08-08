@@ -1,11 +1,10 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import logo from '../../../../../assets/icons/fermer.png';
-import '../../../../../assets/scss/components/show-video.scss';
+import '../../../../../assets/scss/components/show-trailer.scss';
+import { XCircle } from 'react-feather';
 import GenreList from '../../../preview-movies/style/genre/GenreList';
 import ErrorTrailer from './ErrorTrailer';
 import Player from '../movie/Player';
-import { XCircle } from 'react-feather';
 
 type Props = {
   url: string,
@@ -26,21 +25,21 @@ function ShowTrailer({
   };
 
   return (
-    <div id={'parent-show-movie'}>
-      <div id={'show-movie'}>
-        <div className={'cross-parent'}>
-          <XCircle color={'grey'} onClick={onClose} className={'cross'}/>
+    <div className='show-movie__parent'>
+      <div className='show-movie'>
+        <div className={'cross'}>
+          <XCircle onClick={onClose} className='cross__icon'/>
         </div>
         {url ? <YouTube videoId={url} opts={opts}/>
           : <ErrorTrailer/>
         }
-        <Player offset={'3rem 0px 0px 3rem'}/>
-        <div className={'about-it'}>
-          <div className={'overview-parent'}>
+        <Player offset='3rem 0px 0px 3rem'/>
+        <div className='about-it'>
+          <div className='about-it__overview__parent'>
             <h3>Overview</h3>
-            <p className={'overview'}>{overview}</p>
+            <p className='about-it__overview'>{overview}</p>
           </div>
-          <GenreList genreId={genreIds} className={'genre-list'}/>
+          <GenreList genreId={genreIds} className='about-it__genre-list'/>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@
   justify-content: flex-end;
 }
 
-#header {
+.header {
   transition: box-shadow 1s, background 1s;
   display: flex;
   align-items: center;
@@ -40,13 +40,13 @@
     background: linear-gradient(rgba(0, 0, 0, 1), rgba(40, 44, 52, 0.9));
   }
 
-  #left {
+  .header__left {
     display: flex;
     align-items: center;
     margin-left: $spacer-1;
   }
 
-  #right {
+  .header__right {
     margin-right: $spacer-3;
   }
 }

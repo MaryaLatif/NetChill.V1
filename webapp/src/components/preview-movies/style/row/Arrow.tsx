@@ -4,16 +4,18 @@ import '../../../../../assets/scss/components/arrow.scss';
 import { ChevronRight, ChevronLeft } from 'react-feather';
 
 type Props = {
-  left?: boolean,
-  right?: boolean,
+  orientation: 'left' | 'right',
   onClick: ()=> void
 };
 function Arrow({
-  left, right, onClick,
+  orientation, onClick,
 } : Props) {
   return (
-    <div className={classNames('arrow', { 'arrow--right': right }, { 'arrow--left': left })} onClick={onClick}>
-      {left ? <ChevronLeft color={'white'}/> : < ChevronRight color={'white'} /> }
+    <div className={classNames('arrow',
+      { arrow__right: orientation === 'right' },
+      { arrow__left: orientation === 'left' })}
+         onClick={onClick}>
+      {orientation === 'left' ? <ChevronLeft className='arrow__icon'/> : < ChevronRight className='arrow__icon' /> }
     </div>
   );
 }

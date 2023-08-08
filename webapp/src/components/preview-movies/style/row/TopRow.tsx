@@ -65,11 +65,10 @@ function TopRow({ movieList, isDataLoading }: Props) {
   }, [movieList]);
 
   return (
-    <div className={'top_row'}>
+    <div className='row-top'>
       {
-        isDataLoading
-          ? <RowLoading/>
-          : <div ref={slider} className={'row_posters'} id={'top_posters'}>
+        isDataLoading ? <RowLoading/>
+          : <div ref={slider} className='row__posters row__posters--top'>
             {movieList.map((movie, index) => {
               const isSelected = currentPoster === index;
               return (
@@ -87,17 +86,17 @@ function TopRow({ movieList, isDataLoading }: Props) {
             })}
           </div>
       }
-      <div className={'arrow_parent'}>
+      <div className='arrow__parent'>
         {
           currentPoster > 0
-          && <Arrow left onClick={() => {
+          && <Arrow orientation={'left'} onClick={() => {
             stopSliderInterval();
             nextPosterLeft();
           }}/>
         }
         {
           currentPoster < movieList.length - 1
-          && <Arrow right onClick={() => {
+          && <Arrow orientation={'right'} onClick={() => {
             stopSliderInterval();
             nextPosterRight();
           }}/>

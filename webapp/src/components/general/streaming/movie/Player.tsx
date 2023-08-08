@@ -4,8 +4,8 @@ import { Play } from 'react-feather';
 
 function Player({ offset }: { offset?: string }) {
   return (
-    <button className={'play'} style={{ margin: offset }}>
-      <Play color={'white'} />
+    <button className='play' style={{ margin: offset }}>
+      <Play className='play__icon' />
     </button>
   );
 }

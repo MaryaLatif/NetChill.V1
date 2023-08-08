@@ -27,6 +27,8 @@ type MovieInfo = {
   genreIds: number[]
 };
 
+// TODO [REFACTO-SCSS]
+
 function Row({
   title, movieList, isLargerRow, topRated, isDataLoading, classType,
 }: Props) {
@@ -57,14 +59,14 @@ function Row({
     setTrailer(undefined);
   }
 
-  function hundleClickArrowRight() {
+  function handleClickArrowRight() {
     if (!slider.current) {
       return;
     }
     slider.current.scrollLeft += window.innerWidth - 150;
   }
 
-  function hundleClickArrowLeft() {
+  function handleClickArrowLeft() {
     if (!slider.current) {
       return;
     }
@@ -100,14 +102,14 @@ function Row({
           isDataLoading
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
-              <div className={'row_poster_parent'}>
-                <div ref={slider} className={'row_posters'} id={classType}>
+              <div className='row__poster-parent'>
+                <div ref={slider} className='row__posters' id={classType}>
                   {movieList.map((movie) => (
                     <div
                       key={movie.id}
                       className={classNames(
-                        'row_poster',
-                        { row_poster_large: isLargerRow },
+                        'poster',
+                        { poste__large: isLargerRow },
                         { top_rated: topRated },
                         `${classType}`,
                       )}
@@ -122,23 +124,23 @@ function Row({
                       <PosterBackground
                         path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                         title={movie.title}
-                        className={'row_img'}
+                        className='poster__img'
                       />
-                      <div className={'info'}>
-                        <h3 className={'title'}>{movie.title ? movie.title : movie.title}</h3>
+                      <div className='poster__info'>
+                        <h3 className='poster__title'>{movie.title ? movie.title : movie.title}</h3>
                         < Recommendation average={movie.vote_average}/>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className={'arrow_parent'} style={{ height: '140px' }}>
+                <div className='arrow__parent' style={{ height: '140px' }}>
                   {
                     currentSliderLeft > 0
-                    && <Arrow left={true} onClick={hundleClickArrowLeft}/>
+                    && <Arrow orientation='left' onClick={handleClickArrowLeft}/>
                   }
                   {
                     sliderWidth - currentSliderLeft > window.innerWidth
-                    && <Arrow right={true} onClick={hundleClickArrowRight}/>
+                    && <Arrow orientation='right' onClick={handleClickArrowRight}/>
                   }
                 </div>
               </div>
@@ -152,10 +154,10 @@ function Row({
         && (<div onClick={(event) => {
           let element = event.target;
           while (element.parentNode
-            && (element.parentNode !== document.getElementById('show-movie'))) {
+            && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
             element = element.parentNode;
           }
-          if (element.parentNode !== document.getElementById('show-movie')) {
+          if (element.parentNode !== document.getElementsByName('show-movie')) {
             handleCloseTrailerPopIn();
           }
         }}>

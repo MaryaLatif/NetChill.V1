@@ -9,24 +9,23 @@
   opacity: 0;
   border-radius: $border-radius-poster;
 
-  &--right {
+  &__right {
     margin-left: auto;
   }
 
-  &--left {
+  &__left {
     margin-right: auto;
+  }
+
+  &__icon {
+    color: white;
+  }
+  &:hover{
+    opacity: 1;
   }
 }
 
-.arrow_img {
-  width: $width-arrow;
-  object-fit: contain;
-  box-shadow: $box-shadow;
-}
-.arrow:hover{
-  opacity: 1;
-}
-.arrow_parent {
+.arrow__parent {
   width: 100%;
   display: flex;
   justify-content: space-between;
