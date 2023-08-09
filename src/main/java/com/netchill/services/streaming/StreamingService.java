@@ -11,14 +11,16 @@ import java.util.List;
 
 @Singleton
 public class StreamingService {
-    private MovieDbApiClient movieDbApiClient;
     private static final String TRAILER_TYPE = "Trailer";
+
+    private final MovieDbApiClient movieDbApiClient;
 
     @Inject
     private StreamingService(MovieDbApiClient movieDbApiClient) {
         this.movieDbApiClient = movieDbApiClient;
     }
 
+    // TODO [REDISCUTER]
     public TrailerKey getSerieTrailerById(Long id) {
         Trailer trailer = movieDbApiClient.getSerieTrailerById(id);
         List<TrailerKey> trailerKeys = trailer.getKeyList();

@@ -25,27 +25,31 @@ function TopRow({ movieList, isDataLoading }: Props) {
   }
 
   return (
-    <div className={'row'} >
+    <div className={'row'}>
       {
         isDataLoading
-          ? <RowLoading/>
+          ? (
+            <RowLoading/>
+          )
 
-          : <div className={'row_posters'} id={'top_posters'}>
-            {movieList.map((movie) => (
-              <div key={movie.title}>
-                <div className={'top_card'} style={{ width: `${window.innerWidth}px` }}>
-                  <div>
-                    <h2>{movie.title}</h2>
-                    <p>{movie.overview}</p>
-                    <Player />
+          : (
+            <div className={'row_posters'} id={'top_posters'}>
+              {movieList.map((movie) => (
+                <div key={movie.title}>
+                  <div className={'top_card'} style={{ width: `${window.innerWidth}px` }}>
+                    <div>
+                      <h2>{movie.title}</h2>
+                      <p>{movie.overview}</p>
+                      <Player/>
+                    </div>
+                    <img src={movie.backdrop_path} alt={movie.title} className={'top_img'}/>
                   </div>
-                  <img src={movie.backdrop_path} alt={movie.title} className={'top_img'}/>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )
       }
-      <div className={'arrow_parent'} >
+      <div className={'arrow_parent'}>
         <Arrow left={true} onClick={hundleClickArrowLeft}/>
         <Arrow right={true} onClick={hundleClickArrowRight}/>
       </div>
