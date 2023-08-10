@@ -19,13 +19,21 @@ function TopRow({ movieList, isDataLoading }: Props) {
   const slider = useRef<HTMLDivElement>(null);
 
   const [currentPoster, setCurrentPoster] = useState(0);
-  const [sliderInterval, setSliderInterval] = useState<NodeJS.Timeout | null>(null);
+
+  const sliderInterval = useRef<NodeJS.Timeout>(setInterval(() => {
+    goNextPoster();
+  }, SLIDER_TIMING));
+
+  function createSliderInterval() {
+    return sliderInterval.current;
+  }
 
   function stopSliderInterval() {
     if (!sliderInterval) {
       return;
     }
-    return clearInterval(sliderInterval);
+
+    return clearInterval(sliderInterval.current);
   }
 
   function goNextPoster() {
@@ -34,11 +42,15 @@ function TopRow({ movieList, isDataLoading }: Props) {
         return prevPoster;
       }
 
+      stopSliderInterval();
+
       if (prevPoster + 1 >= movieList.length) {
         slider.current.scrollLeft = 0;
         return 0;
       }
       slider.current.scrollLeft += window.innerWidth;
+
+      createSliderInterval();
 
       return prevPoster + 1;
     });
@@ -49,20 +61,20 @@ function TopRow({ movieList, isDataLoading }: Props) {
       return;
     }
 
+    stopSliderInterval();
+
     setCurrentPoster(currentPoster - 1);
     slider.current.scrollLeft -= window.innerWidth;
+
+    createSliderInterval();
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      goNextPoster(); // Appeler directement la fonction pour déplacer le slider vers la droite
-    }, SLIDER_TIMING);
-
-    setSliderInterval(interval);
+    createSliderInterval();
 
     // Nettoyer l'intervalle lorsque le composant est démonté pour éviter les fuites de mémoire
     return () => {
-      clearInterval(interval);
+      clearInterval(sliderInterval.current);
     };
   }, [movieList]);
 
@@ -93,14 +105,12 @@ function TopRow({ movieList, isDataLoading }: Props) {
         {
           currentPoster > 0
           && <Arrow orientation={'left'} onClick={() => {
-            stopSliderInterval();
             goPreviousPoster();
           }}/>
         }
         {
           currentPoster < movieList.length - 1
           && <Arrow orientation={'right'} onClick={() => {
-            stopSliderInterval();
             goNextPoster();
           }}/>
         }
