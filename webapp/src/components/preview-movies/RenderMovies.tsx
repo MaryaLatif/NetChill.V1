@@ -18,7 +18,7 @@ function RenderMovies() {
   useEffect(() => {
     movieLoader.monitor(genreService.getPreviewGenres()
       .then(setGenres));
-  }, [genres]);
+  }, []);
 
   return (
     <div className={'app'}>

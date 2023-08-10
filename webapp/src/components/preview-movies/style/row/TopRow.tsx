@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Production } from '../../../../api/types/MovieDbTypes';
 import RowLoading from '../../../general/loading/RowLoading';
-import '../../../../../assets/scss/components/row.scss';
-import '../../../../../assets/scss/components/arrow.scss';
-import '../../../../../assets/scss/components/top-row.scss';
-import Player from '../../../general/streaming/movie/Player';
-import Arrow from './Arrow';
-import Poster from '../image/Poster';
-import classNames from 'classnames';
+import '../../../../../assets/scss/components/style/row/row.scss';
+import '../../../../../assets/scss/components/style/arrow/arrow.scss';
+import '../../../../../assets/scss/components/style/row/top-row.scss';
+import Arrow from '../arrow/Arrow';
+import Poster from '../poster/Poster';
 
 type Props = {
   title?: string,
   movieList: Production[],
   isDataLoading?: boolean
 };
+
+const SLIDER_TIMING: number = 8000;
 
 function TopRow({ movieList, isDataLoading }: Props) {
   const slider = useRef<HTMLDivElement>(null);
@@ -27,7 +27,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
     }
     return clearInterval(sliderInterval);
   }
-  function hundleClickArrowRight() {
+
+  function goNextPoster() {
     setCurrentPoster((prevPoster) => {
       if (!slider.current) {
         return prevPoster;
@@ -43,7 +44,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
     });
   }
 
-  function hundleClickArrowLeft() {
+  function goPreviousPoster() {
     if (!slider.current) {
       return;
     }
@@ -54,8 +55,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      hundleClickArrowRight(); // Appeler directement la fonction pour déplacer le slider vers la droite
-    }, 5000);
+      goNextPoster(); // Appeler directement la fonction pour déplacer le slider vers la droite
+    }, SLIDER_TIMING);
 
     setSliderInterval(interval);
 
@@ -66,46 +67,41 @@ function TopRow({ movieList, isDataLoading }: Props) {
   }, [movieList]);
 
   return (
-    <div className={'top_row'}>
+    <div className='row-top'>
       {
-        isDataLoading
-          ? <RowLoading/>
-
-          : <div ref={slider} className={'row_posters'} id={'top_posters'}>
+        isDataLoading ? <RowLoading/>
+          : <div ref={slider} className='row__posters row__posters--top'>
             {movieList.map((movie, index) => {
               const isSelected = currentPoster === index;
               return (
                 <div key={movie.title}>
-                  <div
-                    className={classNames('top_card', { 'top_card--selected': isSelected })}
-                    style={{ width: `${window.innerWidth}px` }}
-                  >
-                    <div id={'info'}>
-                      <h2>{movie.title}</h2>
-                      <p>{movie.overview}</p>
-                      <Player/>
-                    </div>
-                    <div className={'filter'}></div>
-                    <Poster title={movie.title} path={movie.backdrop_path} className={'top_img'}/>
-                  </div>
+                  <Poster
+                    title={movie.title}
+                    overview={movie.overview}
+                    id={movie.id}
+                    type={movie.type}
+                    backdrop_path={movie.backdrop_path}
+                    isSelected={isSelected}
+                    stopInterval={stopSliderInterval}
+                  />
                 </div>
               );
             })}
           </div>
       }
-      <div className={'arrow_parent'}>
+      <div className='arrow__parent'>
         {
           currentPoster > 0
-          && <Arrow left onClick={() => {
+          && <Arrow orientation={'left'} onClick={() => {
             stopSliderInterval();
-            hundleClickArrowLeft();
+            goPreviousPoster();
           }}/>
         }
         {
           currentPoster < movieList.length - 1
-          && <Arrow right onClick={() => {
+          && <Arrow orientation={'right'} onClick={() => {
             stopSliderInterval();
-            hundleClickArrowRight();
+            goNextPoster();
           }}/>
         }
       </div>

@@ -12,6 +12,7 @@ export default function Layout({ children }: Props) {
   const [scrollOk, setScrollOk] = useState<boolean>(false);
 
   const scrollOff: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
+  const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
 
   function handleScroll() {
     if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= scrollOff) setScrollOk(false);
@@ -19,9 +20,9 @@ export default function Layout({ children }: Props) {
   }
 
   return <GlobalErrorBoundary>
-    <Header logo={logo} list={['Home', 'Serie', 'Movie', 'Genre']} scrollOk={scrollOk}/>
+    <Header logo={logo} list={navItems} scrollOk={scrollOk}/>
     {/* <Header /> */}
-    <div className="content-layout" onScroll={handleScroll}>
+    <div className='content-layout' onScroll={handleScroll}>
       {children}
     </div>
     <ScrollRestoration/>

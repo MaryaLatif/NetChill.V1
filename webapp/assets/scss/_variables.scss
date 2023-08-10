@@ -2,6 +2,7 @@ $base-font-family: 'Roboto', sans-serif;
 $base-font-size: 14px;
 
 $background-color: radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,0.7301514355742297) 100%);
+$background-popin : radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,1) 100%);
 $separator-color: #dddddd;
 $background-header: linear-gradient(rgba(0, 0, 0, 0.5), rgba(40, 44, 52, 0));
 $background-arrow: rgba(0,0,0, 0.25);
@@ -27,6 +28,7 @@ $border-radius-arrow-right: 20px 0px 0px 20px;
 $border-radius-arrow-left: 0px 20px 20px 0px;
 $border-radius-poster: 10px;
 $border-radius-large-poster: 20px;
+$border-color : rgba(255, 255, 255, 0.25);
 
 $width-arrow:  2rem;
 $width-poster: 250px;

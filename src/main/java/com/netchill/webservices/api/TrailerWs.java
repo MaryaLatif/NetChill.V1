@@ -31,9 +31,9 @@ public class TrailerWs {
     }
 
     @GET
-    @Path("/serie/id")
+    @Path("/serie/{id}")
     public TrailerKey getSerieTrailerById(
-            @QueryParam("id") Long id) {
+            @PathParam("id") Long id) {
 
         TrailerKey result = this.movieStreamingService.getSerieTrailerById(id);
 
@@ -45,9 +45,9 @@ public class TrailerWs {
     }
 
     @GET
-    @Path("/movie/id")
+    @Path("/movie/{id}")
     public TrailerKey getMovieTrailerById(
-            @QueryParam("id") Long id) {
+            @PathParam("id") Long id) {
 
         TrailerKey result = this.movieStreamingService.getMovieTrailerById(id);
 

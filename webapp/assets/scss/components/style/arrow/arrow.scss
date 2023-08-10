@@ -1,4 +1,4 @@
-@use '../variables' as *;
+@use '../../../variables' as *;
 
 .arrow {
   cursor: pointer;
@@ -16,17 +16,16 @@
   &--left {
     margin-right: auto;
   }
+
+  &__icon {
+    color: white;
+  }
+  &:hover{
+    opacity: 1;
+  }
 }
 
-.arrow_img {
-  width: $width-arrow;
-  object-fit: contain;
-  box-shadow: $box-shadow;
-}
-.arrow:hover{
-  opacity: 1;
-}
-.arrow_parent {
+.navigation__container {
   width: 100%;
   display: flex;
   justify-content: space-between;
