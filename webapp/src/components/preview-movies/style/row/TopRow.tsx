@@ -14,6 +14,8 @@ type Props = {
 };
 
 function TopRow({ movieList, isDataLoading }: Props) {
+  const SLIDER_TIMING: number = 8000;
+
   const slider = useRef<HTMLDivElement>(null);
 
   const [currentPoster, setCurrentPoster] = useState(0);
@@ -26,7 +28,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
     return clearInterval(sliderInterval);
   }
 
-  function nextPosterRight() {
+  function goNextPoster() {
     setCurrentPoster((prevPoster) => {
       if (!slider.current) {
         return prevPoster;
@@ -42,7 +44,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
     });
   }
 
-  function nextPosterLeft() {
+  function goPreviousPoster() {
     if (!slider.current) {
       return;
     }
@@ -53,8 +55,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      nextPosterRight(); // Appeler directement la fonction pour déplacer le slider vers la droite
-    }, 8000);
+      goNextPoster(); // Appeler directement la fonction pour déplacer le slider vers la droite
+    }, SLIDER_TIMING);
 
     setSliderInterval(interval);
 
@@ -91,14 +93,14 @@ function TopRow({ movieList, isDataLoading }: Props) {
           currentPoster > 0
           && <Arrow orientation={'left'} onClick={() => {
             stopSliderInterval();
-            nextPosterLeft();
+            goPreviousPoster();
           }}/>
         }
         {
           currentPoster < movieList.length - 1
           && <Arrow orientation={'right'} onClick={() => {
             stopSliderInterval();
-            nextPosterRight();
+            goNextPoster();
           }}/>
         }
       </div>

@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import YouTube from 'react-youtube';
 import { getGlobalInstance } from 'plume-ts-di';
-import * as worker_threads from 'worker_threads';
-import { preview } from 'vite';
 import Player from '../../../general/streaming/movie/Player';
 import PosterBackground from './PosterBackground';
 import TrailerService from '../../../../services/streaming/TrailerService';
@@ -77,8 +75,7 @@ function Poster({
   return (
     <div
       ref={trailer}
-      className={classNames('top_card', { 'top_card--selected': isSelected })}
-      style={{ width: `${window.innerWidth}px` }}
+      className={classNames('top-card', { 'top-card--selected': isSelected })}
     >
       <div id={'info'}>
         <h2>{title}</h2>
@@ -86,7 +83,7 @@ function Poster({
         <Player/>
       </div>
 
-      <div className={'top_card--filter'} onClick={() => {
+      <div className='top-card--filter' onClick={() => {
         stopInterval();
         setShowTrailer((prevState) => !prevState);
         setInterval(() => {
@@ -94,16 +91,17 @@ function Poster({
         }, 1000);
       }}>
       </div>
-      <PosterBackground title={title} path={backdrop_path} className={'top_card__img'}/>
+      <PosterBackground title={title} path={backdrop_path} className='top-card__img'/>
       {showTrailer && trailerUrl
         && <div
-          className={classNames('trailer_large',
-            { 'trailer_large--hiden': !trailerOpacityOne },
-            { 'trailer_large--show': trailerOpacityOne })}
+          className={classNames('trailer-large',
+            { 'trailer-large--hiden': !trailerOpacityOne },
+            { 'trailer-large--show': trailerOpacityOne })}
         >
           <YouTube
             opts={opts}
             videoId={trailerUrl.key}
+            // TODO [HOOK?]
             onPause={() => {
               setTrailerOpacityOne(false);
               setInterval(() => {
@@ -113,9 +111,7 @@ function Poster({
             onEnd={() => {
               setShowTrailer(false);
             }}
-            style={{
-              position: 'absolute', zIndex: 5,
-            }}
+            className='trailer-large__video'
           /></div>}
     </div>
   );
