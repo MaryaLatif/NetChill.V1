@@ -18,6 +18,8 @@ type Props = {
   stopInterval: () => void
 };
 
+const SHOW_TRAILER_TIMER: number = 1000;
+
 function Poster({
   title, overview, id, type, backdrop_path, isSelected, stopInterval,
 }: Props) {
@@ -89,31 +91,34 @@ function Poster({
 
              setInterval(() => {
                setTrailerOpacityOne(true);
-             }, 1000);
+             }, SHOW_TRAILER_TIMER);
            }}>
       </div>
       <PosterBackground title={title} path={backdrop_path} className='top-card__img'/>
       {showTrailer && trailerUrl
-        && <div
-          className={classNames('trailer-large',
-            { 'trailer-large--hiden': !trailerOpacityOne },
-            { 'trailer-large--show': trailerOpacityOne })}
-        >
-          <YouTube
-            opts={opts}
-            videoId={trailerUrl.key}
-            // TODO [HOOK?]
-            onPause={() => {
-              setTrailerOpacityOne(false);
-              setInterval(() => {
-                setShowTrailer((prevState) => !prevState);
-              }, 1000);
-            }}
-            onEnd={() => {
-              setShowTrailer(false);
-            }}
-            className='trailer-large__video'
-          /></div>}
+        && (
+          <div
+            className={classNames('trailer-large',
+              { 'trailer-large--hiden': !trailerOpacityOne },
+              { 'trailer-large--show': trailerOpacityOne })}
+          >
+            <YouTube
+              opts={opts}
+              videoId={trailerUrl.key}
+              // TODO [HOOK?]
+              onPause={() => {
+                setTrailerOpacityOne(false);
+                setInterval(() => {
+                  setShowTrailer((prevState) => !prevState);
+                }, SHOW_TRAILER_TIMER);
+              }}
+              onEnd={() => {
+                setShowTrailer(false);
+              }}
+              className='trailer-large__video'
+            />
+          </div>
+        )}
     </div>
   );
 }

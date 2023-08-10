@@ -5,17 +5,16 @@ import { ChevronRight, ChevronLeft } from 'react-feather';
 
 type Props = {
   orientation: 'left' | 'right',
-  onClick: ()=> void
+  onClick: () => void
 };
+
 function Arrow({
   orientation, onClick,
-} : Props) {
+}: Props) {
   return (
-    <div className={classNames('arrow',
-      { 'arrow--right': orientation === 'right' },
-      { 'arrow--left': orientation === 'left' })}
+    <div className={classNames(`arrow arrow--${orientation}`)}
          onClick={onClick}>
-      {orientation === 'left' ? <ChevronLeft className='arrow__icon'/> : < ChevronRight className='arrow__icon' /> }
+      {orientation === 'left' ? <ChevronLeft className='arrow__icon'/> : < ChevronRight className='arrow__icon'/>}
     </div>
   );
 }
