@@ -75,13 +75,14 @@ function TopRow({ movieList, isDataLoading }: Props) {
               const isSelected = currentPoster === index;
               return (
                 <div key={movie.title}>
-                  <Poster title={movie.title}
-                          overview={movie.overview}
-                          id={movie.id}
-                          type={movie.type}
-                          backdrop_path={movie.backdrop_path}
-                          isSelected={isSelected}
-                          stopInterval={stopSliderInterval}
+                  <Poster
+                    title={movie.title}
+                    overview={movie.overview}
+                    id={movie.id}
+                    type={movie.type}
+                    backdrop_path={movie.backdrop_path}
+                    isSelected={isSelected}
+                    stopInterval={stopSliderInterval}
                   />
                 </div>
               );
