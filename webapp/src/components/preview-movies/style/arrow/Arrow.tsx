@@ -12,8 +12,8 @@ function Arrow({
 } : Props) {
   return (
     <div className={classNames('arrow',
-      { arrow__right: orientation === 'right' },
-      { arrow__left: orientation === 'left' })}
+      { 'arrow--right': orientation === 'right' },
+      { 'arrow--left': orientation === 'left' })}
          onClick={onClick}>
       {orientation === 'left' ? <ChevronLeft className='arrow__icon'/> : < ChevronRight className='arrow__icon' /> }
     </div>

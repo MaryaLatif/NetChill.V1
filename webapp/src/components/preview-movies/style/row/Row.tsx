@@ -102,14 +102,14 @@ function Row({
           isDataLoading
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
-              <div className='row__poster-parent'>
+              <div className='row__poster-container'>
                 <div ref={slider} className='row__posters' id={classType}>
                   {movieList.map((movie) => (
                     <div
                       key={movie.id}
                       className={classNames(
                         'poster',
-                        { poste__large: isLargerRow },
+                        { 'poster--large': isLargerRow },
                         { top_rated: topRated },
                         `${classType}`,
                       )}
@@ -133,7 +133,7 @@ function Row({
                     </div>
                   ))}
                 </div>
-                <div className='arrow__parent' style={{ height: '140px' }}>
+                <div className='navigation__container' style={{ height: '140px' }}>
                   {
                     currentSliderLeft > 0
                     && <Arrow orientation='left' onClick={handleClickArrowLeft}/>

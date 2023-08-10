@@ -12,10 +12,9 @@ type Props = {
   movieList: Production[],
   isDataLoading?: boolean
 };
+const SLIDER_TIMING: number = 8000;
 
 function TopRow({ movieList, isDataLoading }: Props) {
-  const SLIDER_TIMING: number = 8000;
-
   const slider = useRef<HTMLDivElement>(null);
 
   const [currentPoster, setCurrentPoster] = useState(0);

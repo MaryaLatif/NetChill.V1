@@ -9,11 +9,11 @@
   opacity: 0;
   border-radius: $border-radius-poster;
 
-  &__right {
+  &--right {
     margin-left: auto;
   }
 
-  &__left {
+  &--left {
     margin-right: auto;
   }
 
@@ -25,7 +25,7 @@
   }
 }
 
-.arrow__parent {
+.navigation__container {
   width: 100%;
   display: flex;
   justify-content: space-between;

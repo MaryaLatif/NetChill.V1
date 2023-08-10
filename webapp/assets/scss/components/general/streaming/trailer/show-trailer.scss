@@ -4,7 +4,7 @@
   display: block;
 }
 
-.show-movie__parent {
+.show-movie__container {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
@@ -46,7 +46,7 @@
       min-height: 28%;
       bottom: 0px;
 
-      &__overview__parent {
+      &__overview__container {
         display: flex;
         flex-direction: column;
         width: 50%;

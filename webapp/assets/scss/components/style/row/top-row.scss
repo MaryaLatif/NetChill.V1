@@ -103,6 +103,8 @@
     &__video{
       position: absolute;
       z-index: 5;
+      width: 100vh;
+      height: $height-top-card;
     }
 
     &--hider {

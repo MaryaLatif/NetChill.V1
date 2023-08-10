@@ -32,8 +32,6 @@ function Poster({
   const movieLoader = useLoader();
 
   const opts = {
-    height: '700px',
-    width: `${window.innerWidth}px`,
     playerVars: {
       autoplay: 1,
       controls: 0,
@@ -77,19 +75,22 @@ function Poster({
       ref={trailer}
       className={classNames('top-card', { 'top-card--selected': isSelected })}
     >
-      <div id={'info'}>
+      <div id='info'>
         <h2>{title}</h2>
         <p>{overview}</p>
         <Player/>
       </div>
 
-      <div className='top-card--filter' onClick={() => {
-        stopInterval();
-        setShowTrailer((prevState) => !prevState);
-        setInterval(() => {
-          setTrailerOpacityOne(true);
-        }, 1000);
-      }}>
+      <div className='top-card--filter'
+           onClick={() => {
+             stopInterval();
+
+             setShowTrailer((prevState) => !prevState);
+
+             setInterval(() => {
+               setTrailerOpacityOne(true);
+             }, 1000);
+           }}>
       </div>
       <PosterBackground title={title} path={backdrop_path} className='top-card__img'/>
       {showTrailer && trailerUrl

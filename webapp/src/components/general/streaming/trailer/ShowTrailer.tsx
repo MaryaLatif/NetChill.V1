@@ -25,7 +25,7 @@ function ShowTrailer({
   };
 
   return (
-    <div className='show-movie__parent'>
+    <div className='show-movie__container'>
       <div className='show-movie'>
         <div className={'cross'}>
           <XCircle onClick={onClose} className='cross__icon'/>
@@ -35,7 +35,7 @@ function ShowTrailer({
         }
         <Player offset='3rem 0px 0px 3rem'/>
         <div className='about-it'>
-          <div className='about-it__overview__parent'>
+          <div className='about-it__overview__container'>
             <h3>Overview</h3>
             <p className='about-it__overview'>{overview}</p>
           </div>
