@@ -20,16 +20,18 @@ function TopRow({ movieList, isDataLoading }: Props) {
 
   const [currentPoster, setCurrentPoster] = useState(0);
 
-  const sliderInterval = useRef<NodeJS.Timeout>(setInterval(() => {
-    goNextPoster();
-  }, SLIDER_TIMING));
+  const sliderInterval = useRef<NodeJS.Timeout>();
 
   function createSliderInterval() {
-    return sliderInterval.current;
+    if (sliderInterval.current) {
+      stopSliderInterval();
+    }
+
+    sliderInterval.current = setInterval(() => goNextPoster(), SLIDER_TIMING);
   }
 
   function stopSliderInterval() {
-    if (!sliderInterval) {
+    if (!sliderInterval?.current) {
       return;
     }
 
@@ -73,46 +75,44 @@ function TopRow({ movieList, isDataLoading }: Props) {
     createSliderInterval();
 
     // Nettoyer l'intervalle lorsque le composant est démonté pour éviter les fuites de mémoire
-    return () => {
-      clearInterval(sliderInterval.current);
-    };
+    stopSliderInterval();
   }, [movieList]);
 
   return (
     <div className='row-top'>
       {
-        isDataLoading ? <RowLoading/>
-          : <div ref={slider} className='row__posters row__posters--top'>
-            {movieList.map((movie, index) => {
-              const isSelected = currentPoster === index;
-              return (
-                <div key={movie.title}>
-                  <Poster
-                    title={movie.title}
-                    overview={movie.overview}
-                    id={movie.id}
-                    type={movie.type}
-                    backdrop_path={movie.backdrop_path}
-                    isSelected={isSelected}
-                    stopInterval={stopSliderInterval}
-                  />
-                </div>
-              );
-            })}
-          </div>
+        isDataLoading ? (
+            <RowLoading/>
+        )
+          : (
+            <div ref={slider} className='row__posters row__posters--top'>
+              {movieList.map((movie, index) => {
+                const isSelected = currentPoster === index;
+                return (
+                  <div key={movie.title}>
+                    <Poster
+                      title={movie.title}
+                      overview={movie.overview}
+                      id={movie.id}
+                      type={movie.type}
+                      backdrop_path={movie.backdrop_path}
+                      isSelected={isSelected}
+                      stopInterval={stopSliderInterval}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )
       }
       <div className='arrow__parent'>
         {
           currentPoster > 0
-          && <Arrow orientation={'left'} onClick={() => {
-            goPreviousPoster();
-          }}/>
+          && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
         }
         {
           currentPoster < movieList.length - 1
-          && <Arrow orientation={'right'} onClick={() => {
-            goNextPoster();
-          }}/>
+          && <Arrow orientation={'right'} onClick={goNextPoster}/>
         }
       </div>
     </div>

@@ -45,6 +45,7 @@ function Poster({
       return;
     }
 
+    // TODO
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].intersectionRatio < 0.25) {
@@ -58,10 +59,6 @@ function Poster({
 
     return () => observer.disconnect();
   }, [trailer.current]);
-
-  useEffect(() => {
-    console.log(showTrailer);
-  }, [showTrailer]);
 
   useEffect(() => {
     const apiCall = type === MediaType.MOVIE
@@ -98,9 +95,7 @@ function Poster({
       {showTrailer && trailerUrl
         && (
           <div
-            className={classNames('trailer-large',
-              { 'trailer-large--hiden': !trailerOpacityOne },
-              { 'trailer-large--show': trailerOpacityOne })}
+            className={`trailer-large${!trailerOpacityOne && '--hiden'}`}
           >
             <YouTube
               opts={opts}

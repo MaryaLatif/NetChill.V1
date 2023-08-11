@@ -29,7 +29,7 @@ export default function Header({ logo, list, scrollOk }: Props) {
     <header className={classNames('header', { scroll: scrollOk })}>
       {/* <LocaleSelectorContainer /> */}
       <div className='header__left'>
-        <img src={logo} alt={'logo'} className='logo'/>
+        <img src={logo} alt='logo' className='logo'/>
         <ul>
           {list.map((element) => (
             <li key={element}>{element}</li>),

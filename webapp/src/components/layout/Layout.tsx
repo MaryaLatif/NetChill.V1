@@ -14,6 +14,7 @@ export default function Layout({ children }: Props) {
   const scrollOff: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
   const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
 
+  // TODO à revoir
   function handleScroll() {
     if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= scrollOff) setScrollOk(false);
     else setScrollOk(true);

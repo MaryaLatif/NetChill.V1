@@ -27,13 +27,13 @@ function ShowTrailer({
   return (
     <div className='show-movie__container'>
       <div className='show-movie'>
-        <div className={'cross'}>
+        <div className='cross'>
           <XCircle onClick={onClose} className='cross__icon'/>
         </div>
         {url ? <YouTube videoId={url} opts={opts}/>
           : <ErrorTrailer/>
         }
-        <Player offset='3rem 0px 0px 3rem'/>
+        <Player />
         <div className='about-it'>
           <div className='about-it__overview__container'>
             <h3>Overview</h3>

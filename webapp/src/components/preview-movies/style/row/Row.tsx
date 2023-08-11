@@ -28,7 +28,7 @@ type MovieInfo = {
 };
 
 // TODO [REFACTO-SCSS]
-
+// TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
   title, movieList, isLargerRow, topRated, isDataLoading, classType,
 }: Props) {
@@ -40,7 +40,7 @@ function Row({
   const [currentSliderLeft, setCurrentSliderLeft] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
 
-  const slider = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const movieLoader = useLoader();
 
@@ -59,27 +59,28 @@ function Row({
     setTrailer(undefined);
   }
 
+  // TODO à revoir slider.current.scrollLeft
   function handleClickArrowRight() {
-    if (!slider.current) {
+    if (!sliderRef.current) {
       return;
     }
-    slider.current.scrollLeft += window.innerWidth - 150;
+    sliderRef.current.scrollLeft += window.innerWidth - 150;
   }
 
   function handleClickArrowLeft() {
-    if (!slider.current) {
+    if (!sliderRef.current) {
       return;
     }
-    slider.current.scrollLeft -= window.innerWidth - 150;
+    sliderRef.current.scrollLeft -= window.innerWidth - 150;
   }
 
   useEffect(() => {
-    if (!slider.current) {
+    if (!sliderRef.current) {
       return;
     }
-    setCurrentSliderLeft(slider.current.scrollLeft);
-    setSliderWidth(slider.current.scrollWidth);
-  }, [slider.current?.scrollLeft]);
+    setCurrentSliderLeft(sliderRef.current.scrollLeft);
+    setSliderWidth(sliderRef.current.scrollWidth);
+  }, [sliderRef.current?.scrollLeft]);
 
   useEffect(() => {
     if (!movieInfo) {
@@ -103,7 +104,7 @@ function Row({
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
               <div className='row__poster-container'>
-                <div ref={slider} className='row__posters' id={classType}>
+                <div ref={sliderRef} className='row__posters' id={classType}>
                   {movieList.map((movie) => (
                     <div
                       key={movie.id}
