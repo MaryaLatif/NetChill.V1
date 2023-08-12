@@ -29,7 +29,7 @@ type MovieInfo = {
 // TODO [REFACTO-SCSS]
 // TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-  title, movieList, isLargerRow, topRated, isDataLoading, classType,
+  title, movieList, isLargerRow, topRated, isDataLoading,
 }: Props) {
   const streamingService = getGlobalInstance(TrailerService);
 
