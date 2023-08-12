@@ -7,6 +7,8 @@ import PosterBackground from './PosterBackground';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import { MediaType, Trailer } from '../../../../api/types/MovieDbTypes';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
+import MediaDetails from './MediaDetails';
+import ShowLargeTrailer from '../../../general/streaming/trailer/ShowLargeTrailer';
 
 type Props = {
   title: string,
@@ -25,7 +27,7 @@ function Poster({
 }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
-  const [showTrailer, setShowTrailer] = useState<boolean>(false);
+  const [showTrailer, setShowTrailer] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState<Trailer>();
   const [trailerOpacityOne, setTrailerOpacityOne] = useState(false);
 
@@ -74,11 +76,7 @@ function Poster({
       ref={trailer}
       className={classNames('top-card', { 'top-card--selected': isSelected })}
     >
-      <div id='info'>
-        <h2>{title}</h2>
-        <p>{overview}</p>
-        <Player/>
-      </div>
+      <MediaDetails title={title} overview={overview}/>
 
       <div className='top-card--filter'
            onClick={() => {
@@ -91,28 +89,27 @@ function Poster({
              }, SHOW_TRAILER_TIMER);
            }}>
       </div>
+
       <PosterBackground title={title} path={backdrop_path} className='top-card__img'/>
+
       {showTrailer && trailerUrl
         && (
-          <div
-            className={`trailer-large${!trailerOpacityOne && '--hiden'}`}
-          >
-            <YouTube
-              opts={opts}
-              videoId={trailerUrl.key}
-              // TODO [HOOK?]
-              onPause={() => {
-                setTrailerOpacityOne(false);
-                setInterval(() => {
-                  setShowTrailer((prevState) => !prevState);
-                }, SHOW_TRAILER_TIMER);
-              }}
-              onEnd={() => {
-                setShowTrailer(false);
-              }}
-              className='trailer-large__video'
+          <ShowLargeTrailer
+            opts={opts}
+            videoKey={trailerUrl.key}
+            isShown={trailerOpacityOne}
+
+            // TODO [HOOK?]
+            onPause={() => {
+              setTrailerOpacityOne(false);
+              setInterval(() => {
+                setShowTrailer((prevState) => !prevState);
+              }, SHOW_TRAILER_TIMER);
+            }}
+            onEnd={() => {
+              setShowTrailer(false);
+            }}
             />
-          </div>
         )}
     </div>
   );

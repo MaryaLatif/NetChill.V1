@@ -113,7 +113,6 @@ function Row({
                         'poster',
                         { 'poster--large': isLargerRow },
                         { top_rated: topRated },
-                        `${classType}`,
                       )}
                       onClick={() => handleClick(movie)}
                       aria-hidden="true"
@@ -121,10 +120,10 @@ function Row({
                       <PosterBackground
                         path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                         title={movie.title}
-                        className='poster__img'
+                        className='media__img'
                       />
-                      <div className='poster__info'>
-                        <h3 className='poster__title'>{movie.title ? movie.title : movie.title}</h3>
+                      <div className='media__info'>
+                        <h3 className='media__title'>{movie.title ? movie.title : movie.title}</h3>
                         < Recommendation average={movie.vote_average}/>
                       </div>
                     </div>

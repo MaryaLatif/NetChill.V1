@@ -89,7 +89,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
               {movieList.map((movie, index) => {
                 const isSelected = currentPoster === index;
                 return (
-                  <div key={movie.title}>
+                  <div key={movie.id}>
                     <Poster
                       title={movie.title}
                       overview={movie.overview}
@@ -105,6 +105,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
             </div>
           )
       }
+
+      //TODO créer un composant SLIDER
       <div className='arrow__parent'>
         {
           currentPoster > 0
