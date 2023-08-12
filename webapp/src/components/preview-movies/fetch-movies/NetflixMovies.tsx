@@ -22,7 +22,8 @@ function NetflixMovies() {
 
   useEffect(() => {
     fetchMovies();
-  }, [setMovie]);
+  }, []);
+
   return (
     <TopRow title={'NETFLIX ORIGINALS'} movieList={movie} isDataLoading={movieLoader.isLoading} />
   );
