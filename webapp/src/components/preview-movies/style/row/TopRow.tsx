@@ -75,7 +75,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
     createSliderInterval();
 
     // Nettoyer l'intervalle lorsque le composant est démonté pour éviter les fuites de mémoire
-    stopSliderInterval();
+    return stopSliderInterval;
   }, [movieList]);
 
   return (
@@ -107,7 +107,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
       }
 
       //TODO créer un composant SLIDER
-      <div className='arrow__parent'>
+      <div className='navigation__container'>
         {
           currentPoster > 0
           && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
