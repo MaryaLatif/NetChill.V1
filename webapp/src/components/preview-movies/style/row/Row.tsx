@@ -27,7 +27,7 @@ type MovieInfo = {
   id: number,
   overview: string,
   type: MediaType,
-  genreIds: number[]
+  genre_ids: number[]
 };
 
 function Row({
@@ -49,12 +49,14 @@ function Row({
 
   let i = 0;
 
-  function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
+  function handleClick({
+    id, overview, type, genre_ids,
+  }: Production): void {
     setMovieInfo({
-      id: movieId,
-      overview: movieResume,
+      id,
+      overview,
       type,
-      genreIds,
+      genre_ids,
     });
     setVisible(true);
   }
@@ -125,12 +127,7 @@ function Row({
                         { top_rated: topRated },
                         `${classType}`,
                       )}
-                      onClick={() => handleClick(
-                        movie.id,
-                        movie.overview,
-                        movie.type,
-                        movie.genre_ids,
-                      )}
+                      onClick={() => handleClick(movie)}
                       aria-hidden="true"
                     >
                       {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
@@ -172,7 +169,7 @@ function Row({
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}
-              genreIds={movieInfo.genreIds}
+              genreIds={movieInfo.genre_ids}
               onClose={handleCloseTrailerPopIn}
             />
           </div>
