@@ -9,7 +9,7 @@ import SearchBar from '../general/search/SearchBar';
 
 type Props = {
   logo: string,
-  list: string[],
+  navItems: string[],
   scrollOk: boolean
 };
 
@@ -24,15 +24,15 @@ function LocaleSelectorContainer() {
   />;
 }
 
-export default function Header({ logo, list, scrollOk }: Props) {
+export default function Header({ logo, navItems, scrollOk }: Props) {
   return (
     <header className={classNames('header', { scroll: scrollOk })}>
       {/* <LocaleSelectorContainer /> */}
       <div className='header__left'>
         <img src={logo} alt='logo' className='logo'/>
         <ul>
-          {list.map((element) => (
-            <li key={element}>{element}</li>),
+          {navItems.map((navItem) => (
+            <li key={navItem}>{navItem}</li>),
           )}
         </ul>
       </div>

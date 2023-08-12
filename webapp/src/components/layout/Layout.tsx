@@ -21,7 +21,7 @@ export default function Layout({ children }: Props) {
   }
 
   return <GlobalErrorBoundary>
-    <Header logo={logo} list={navItems} scrollOk={scrollOk}/>
+    <Header logo={logo} navItems={navItems} scrollOk={scrollOk}/>
     {/* <Header /> */}
     <div className='content-layout' onScroll={handleScroll}>
       {children}
