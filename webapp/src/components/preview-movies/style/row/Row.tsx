@@ -17,7 +17,6 @@ type Props = {
   isLargerRow?: boolean,
   topRated?: boolean,
   isDataLoading?: boolean
-  classType: string
 };
 
 type MovieInfo = {
@@ -44,7 +43,9 @@ function Row({
 
   const movieLoader = useLoader();
 
-  function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
+  function handleClick({
+    id, overview, type, genre_ids,
+  }: Production): void {
     setMovieInfo({
       id,
       overview,
@@ -104,7 +105,7 @@ function Row({
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
               <div className='row__poster-container'>
-                <div ref={sliderRef} className='row__posters' id={classType}>
+                <div ref={sliderRef} className='row__posters'>
                   {movieList.map((movie) => (
                     <div
                       key={movie.id}

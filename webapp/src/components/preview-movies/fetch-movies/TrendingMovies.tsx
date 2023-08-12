@@ -25,7 +25,6 @@ function TrendingMovies() {
       title={'Trending'}
       movieList={movie}
       isDataLoading={movieLoading.isLoading}
-      classType={'trending'}
     />
   );
 }
