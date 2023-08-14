@@ -5,7 +5,6 @@ $background-color: radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,0.730
 $background-popin : radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,1) 100%);
 $separator-color: #dddddd;
 $background-header: linear-gradient(rgba(0, 0, 0, 0.5), rgba(40, 44, 52, 0));
-$background-arrow: rgba(0,0,0, 0.25);
 $background-gradient-loading: linear-gradient(110deg, #282c34 10%, rgb(50, 53, 63) 20%, #282c34 50%);
 $background-loading: #eee;
 $background-filter: rgba(0,0,0,0.075);
@@ -14,42 +13,41 @@ $background-filter-top-poster: linear-gradient(90deg, #141415 0%, rgba(0,0,0,0) 
 $primary-color: #282c34;
 $secondary-color: #efefef;
 
-$box-padding: 16px;
-$box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.25);
+$box-padding: 1rem;
+$box-shadow: 0rem 0rem 0.6rem 0rem rgba(0,0,0,0.25);
 
-$button-height: 30px;
-$button-padding: 5px;
-$button-border-radius: 15px;
+$button-height: 2rem;
+$button-padding: 0.5rem;
+$button-border-radius: 1rem;
 $button-background: rgba(255,255,255,0.075);
 $button-background-hover: rgba(255,255,255,0.25);
 
 $border: rgba(255, 255, 255, 0.25) solid 1px;
-$border-radius-arrow-right: 20px 0px 0px 20px;
-$border-radius-arrow-left: 0px 20px 20px 0px;
-$border-radius-poster: 10px;
-$border-radius-large-poster: 20px;
+$border-radius-small: 0.7rem;
+$border-radius-large: 1.5rem;
 $border-color : rgba(255, 255, 255, 0.25);
 
 $width-arrow:  2rem;
-$width-poster: 250px;
-$width-player: 100px;
-$width-search-bar: 300px;
+$width-poster: 18rem;
+$width-player: 7rem;
+$width-search-bar: 21.4rem;
 
-$height-top-card: 700px;
-$height-poster: 140px;
-$height-player: 40px;
-$height-cross: 30px;
-$height-search-bar: 30px;
+$height-top-card: 31.25rem;
+$height-poster: 8.75rem;
+$height-player: 2.5rem;
+$height-cross: 2rem;
+$height-search-bar: 2rem;
+$height-logo: 6.25rem;
 
 $color-p: #FFFFFF;
 
-$spacer-0-5: 0.5rem;
-$spacer-1: 1rem;
-$spacer-2: 2rem;
-$spacer-2-5: 2.5rem;
-$spacer-3: 3rem;
-$spacer-5: 5rem;
+$spacer-XS: 0.5rem;
+$spacer-S: 1rem;
+$spacer-M: 2rem;
+$spacer-XM: 2.5rem;
+$spacer-L: 3rem;
+$spacer-XL: 5rem;
 
 
 /* Phone */
-$title-row-font-size: 2rem;
+$font-size-large: 2rem;

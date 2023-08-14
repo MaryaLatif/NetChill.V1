@@ -1,5 +1,8 @@
 @use '../variables' as *;
 
+$background-header: linear-gradient(rgba(0, 0, 0, 1), rgba(40, 44, 52, 0.9));
+$background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
+
 #main-header {
   padding: 0 $box-padding;
   display: flex;
@@ -14,22 +17,22 @@
   font-family: 'Montserrat';
   font-size: small;
   font-weight: lighter;
-  padding-bottom: 20px;
+  padding-bottom: $spacer-S;
   justify-content: space-between;
   position: fixed;
   width: 100%;
   z-index: 3;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(rgba(0, 0, 0, 1), rgba(40, 44, 52, 0.9));
+  box-shadow: $box-shadow;
+  background: $background-header;
 
   &--light {
-    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
+    background: $background-light;
     box-shadow: none;
   }
 
   .logo {
     object-fit: contain;
-    height: 100px;
+    height: $height-logo;
   }
 
   ul {
@@ -37,17 +40,17 @@
     display: flex;
   }
   li {
-    margin-right: 50px;
+    margin-right: $spacer-L;
   }
 
   .header__left {
     display: flex;
     align-items: center;
-    margin-left: $spacer-1;
+    margin-left: $spacer-S;
   }
 
   .header__right {
-    margin-right: $spacer-3;
+    margin-right: $spacer-XL;
   }
 }
 

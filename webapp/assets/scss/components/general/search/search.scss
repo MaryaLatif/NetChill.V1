@@ -9,7 +9,7 @@
 
   input {
     margin: 0px;
-    padding: $spacer-1;
+    padding: $spacer-S;
     width: 100%;
     outline: none;
     height: $height-search-bar;
@@ -32,7 +32,7 @@
     border: none;
     cursor: pointer;
     color: $color-p;
-    padding: 0 $spacer-0-5 0 $spacer-0-5;
+    padding: 0 $spacer-XS 0 $spacer-XS;
     background: $button-background;
     height: 30px;
     width: 40px;

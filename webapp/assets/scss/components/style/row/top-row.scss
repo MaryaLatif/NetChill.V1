@@ -3,7 +3,7 @@
 .row-top {
   z-index: 0;
   position: relative;
-  margin-bottom: $spacer-3;
+  margin-bottom: $spacer-XL;
 
   .row__posters {
     padding: 0;
@@ -15,11 +15,11 @@
   }
 
   .arrow__left {
-    border-radius: $border-radius-large-poster 0px 0px $border-radius-large-poster;
+    border-radius: $border-radius-large 0px 0px $border-radius-large;
   }
 
   .arrow__right {
-    border-radius: 0px $border-radius-large-poster $border-radius-large-poster 0px;
+    border-radius: 0px $border-radius-large $border-radius-large 0px;
   }
 
   .row__posters--top {
@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     color: white;
-    gap: $spacer-5;
+    gap: $spacer-XL;
     position: relative;
     opacity: 0;
     transition: opacity ease-in 3s;
@@ -51,7 +51,7 @@
     }
 
     #info {
-      border-radius: $border-radius-poster;
+      border-radius: $border-radius-small;
       width: 25%;
       height: 50%;
       display: flex;
@@ -59,7 +59,7 @@
       justify-content: space-around;
       z-index: 3;
       position: absolute;
-      margin: $spacer-3;
+      margin: $spacer-XL;
       left: 0;
       bottom: 0;
 
@@ -74,7 +74,7 @@
       object-fit: cover;
       object-position: center;
       z-index: 1;
-      border-radius: $border-radius-large-poster;
+      border-radius: $border-radius-large;
       border-bottom: $border;
       transition: opacity 4s;
     }
