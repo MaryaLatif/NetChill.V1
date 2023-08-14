@@ -27,7 +27,6 @@ function TopRatedMovies() {
       movieList={movie}
       topRated={true}
       isDataLoading={movieLoading.isLoading}
-      classType={'top_rated'}
     />
   );
 }

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Production } from '../../../../api/types/MovieDbTypes';
 import RowLoading from '../../../general/loading/RowLoading';
-import '../../../../../assets/scss/components/row.scss';
-import '../../../../../assets/scss/components/arrow.scss';
-import '../../../../../assets/scss/components/top-row.scss';
-import Player from '../../../general/streaming/movie/Player';
-import Arrow from './Arrow';
-import Poster from '../image/Poster';
+import '../../../../../assets/scss/components/style/row/row.scss';
+import '../../../../../assets/scss/components/style/arrow/arrow.scss';
+import '../../../../../assets/scss/components/style/row/top-row.scss';
+import Arrow from '../arrow/Arrow';
+import Poster from '../poster/Poster';
 
 type Props = {
   title?: string,
@@ -14,41 +13,109 @@ type Props = {
   isDataLoading?: boolean
 };
 
+const SLIDER_TIMING: number = 8000;
+
 function TopRow({ movieList, isDataLoading }: Props) {
-  function hundleClickArrowRight() {
-    const slider = document.getElementById('top_posters');
-    slider.scrollLeft += window.innerWidth;
+  const slider = useRef<HTMLDivElement>(null);
+
+  const [currentPoster, setCurrentPoster] = useState(0);
+
+  const sliderInterval = useRef<NodeJS.Timeout>();
+
+  function createSliderInterval() {
+    if (sliderInterval.current) {
+      stopSliderInterval();
+    }
+
+    sliderInterval.current = setInterval(() => goNextPoster(), SLIDER_TIMING);
   }
 
-  function hundleClickArrowLeft() {
-    const slider = document.getElementById('top_posters');
-    slider.scrollLeft -= window.innerWidth;
+  function stopSliderInterval() {
+    if (!sliderInterval?.current) {
+      return;
+    }
+
+    return clearInterval(sliderInterval.current);
   }
+
+  function goNextPoster() {
+    setCurrentPoster((prevPoster) => {
+      if (!slider.current) {
+        return prevPoster;
+      }
+
+      stopSliderInterval();
+
+      if (prevPoster + 1 >= movieList.length) {
+        slider.current.scrollLeft = 0;
+        return 0;
+      }
+      slider.current.scrollLeft += window.innerWidth;
+
+      createSliderInterval();
+
+      return prevPoster + 1;
+    });
+  }
+
+  function goPreviousPoster() {
+    if (!slider.current) {
+      return;
+    }
+
+    stopSliderInterval();
+
+    setCurrentPoster(currentPoster - 1);
+    slider.current.scrollLeft -= window.innerWidth;
+
+    createSliderInterval();
+  }
+
+  useEffect(() => {
+    createSliderInterval();
+
+    // Nettoyer l'intervalle lorsque le composant est démonté pour éviter les fuites de mémoire
+    return stopSliderInterval;
+  }, [movieList]);
 
   return (
-    <div className={'row'} >
+    <div className='row-top'>
       {
-        isDataLoading
-          ? <RowLoading/>
-
-          : <div className={'row_posters'} id={'top_posters'}>
-            {movieList.map((movie) => (
-              <div key={movie.title}>
-                <div className={'top_card'} style={{ width: `${window.innerWidth}px` }}>
-                  <div>
-                    <h2>{movie.title}</h2>
-                    <p>{movie.overview}</p>
-                    <Player />
+        isDataLoading ? (
+            <RowLoading/>
+        )
+          : (
+            <div ref={slider} className='row__posters row__posters--top'>
+              {movieList.map((movie, index) => {
+                const isSelected = currentPoster === index;
+                return (
+                  <div key={movie.id}>
+                    <Poster
+                      title={movie.title}
+                      overview={movie.overview}
+                      id={movie.id}
+                      type={movie.type}
+                      backdrop_path={movie.backdrop_path}
+                      isSelected={isSelected}
+                      stopInterval={stopSliderInterval}
+                    />
                   </div>
-                  <Poster title={movie.title} path={movie.backdrop_path} className={'top_img'}/>
-                </div>
-              </div>
-            ))}
-          </div>
+                );
+              })}
+            </div>
+          )
       }
-      <div className={'arrow_parent'} >
-        <Arrow left={true} onClick={hundleClickArrowLeft}/>
-        <Arrow right={true} onClick={hundleClickArrowRight}/>
+
+      //TODO créer un composant SLIDER
+      <div className='navigation__container'>
+        {
+          currentPoster > 0
+          && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
+        }
+        {
+          currentPoster < movieList.length - 1
+          && <Arrow orientation={'right'} onClick={goNextPoster}/>
+        }
       </div>
     </div>
   );

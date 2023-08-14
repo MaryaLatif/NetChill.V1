@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import logo from '../../../../../assets/icons/fermer.png';
-import '../../../../../assets/scss/components/show-video.scss';
+import '../../../../../assets/scss/components/general/streaming/trailer/show-trailer.scss';
+import { XCircle } from 'react-feather';
 import GenreList from '../../../preview-movies/style/genre/GenreList';
 import ErrorTrailer from './ErrorTrailer';
 import Player from '../movie/Player';
@@ -25,21 +25,21 @@ function ShowTrailer({
   };
 
   return (
-    <div id={'parent-show-movie'}>
-      <div id={'show-movie'}>
-        <div className={'cross-parent'}>
-          <img className={'cross'} src={logo} alt={'cross'} onClick={onClose}/>
+    <div className='show-movie__container'>
+      <div className='show-movie'>
+        <div className='cross'>
+          <XCircle onClick={onClose} className='cross__icon'/>
         </div>
         {url ? <YouTube videoId={url} opts={opts}/>
           : <ErrorTrailer/>
         }
-        <Player offset={'3rem 0px 0px 3rem'}/>
-        <div className={'about-it'}>
-          <div className={'overview-parent'}>
+        <Player />
+        <div className='about-it'>
+          <div className='about-it__overview__container'>
             <h3>Overview</h3>
-            <p className={'overview'}>{overview}</p>
+            <p className='about-it__overview'>{overview}</p>
           </div>
-          <GenreList genreId={genreIds} className={'genre-list'}/>
+          <GenreList genreId={genreIds} className='about-it__genre-list'/>
         </div>
       </div>
     </div>

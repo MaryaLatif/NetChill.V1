@@ -1,0 +1,117 @@
+@use '../../../variables' as *;
+
+.row {
+  position: relative;
+  margin-top: 50px;
+
+  > h2 {
+    margin-left: $spacer-2;
+    color: $color-p;
+    font-family: "Helvetica Neue";
+    font-weight: 500;
+  }
+
+  &__poster-parent{
+    position: relative;
+    margin: $spacer-2;
+  }
+
+  &__posters {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    gap: $spacer-1;
+    padding: $spacer-1;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .poster {
+      z-index: 1;
+      border-radius: $border-radius-poster;
+      position: relative;
+      width: 100%;
+      max-height: $height-poster;
+      transition: transform 450ms;
+      box-shadow: $box-shadow;
+
+      &:hover {
+        transform: scale(1.08);
+
+        .media__info {
+          display: flex;
+        }
+
+        img {
+          filter: blur(1px);
+        }
+      }
+
+      &--large {
+        max-height: $height-top-card;
+        display: flex;
+        justify-content: space-around;
+        color: white;
+      }
+
+      .media__info {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: $color-p;
+        border-radius: $border-radius-poster;
+      }
+
+      .media__title {
+        margin-bottom: $spacer-1;
+      }
+
+      .media__img {
+        object-fit: contain; /*img pas déformée selon sa taille*/
+        max-height: 140px;
+        border-radius: 10px;
+        border: rgba(255, 255, 255, 0.25) solid 1px;
+      }
+    }
+  }
+
+  .row_poster_loading {
+    border-radius: $border-radius-poster;
+    position: relative;
+    min-width: $width-poster;
+    height: $height-poster;
+    margin-right: $spacer-1;
+    box-shadow: $box-shadow;
+    background: $background-loading;
+    background: $background-gradient-loading;
+    border-radius: $border-radius-poster;
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+  }
+}
+
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .row {
+    h2 {
+      font-size: $title-row-font-size;
+      font-weight: normal;
+    }
+  }
+}
