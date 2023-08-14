@@ -43,14 +43,13 @@ function Row({
 
   const movieLoader = useLoader();
 
-  function handleClick({
-    id, overview, type, genre_ids,
-  }: Production): void {
+  function handleClick(index: number): void {
+    const movie = movieList[index];
     setMovieInfo({
-      id,
-      overview,
-      type,
-      genre_ids,
+      id: movie.id,
+      overview: movie.overview,
+      type: movie.type,
+      genre_ids: movie.genre_ids,
     });
     setVisible(true);
   }
@@ -106,7 +105,7 @@ function Row({
             : (
               <div className='row__poster-container'>
                 <div ref={sliderRef} className='row__posters'>
-                  {movieList.map((movie) => (
+                  {movieList.map((movie, index) => (
                     <div
                       key={movie.id}
                       className={classNames(
@@ -114,7 +113,7 @@ function Row({
                         { 'poster--large': isLargerRow },
                         { top_rated: topRated },
                       )}
-                      onClick={() => handleClick(movie)}
+                      onClick={() => handleClick(index)}
                       aria-hidden="true"
                     >
                       <PosterBackground
