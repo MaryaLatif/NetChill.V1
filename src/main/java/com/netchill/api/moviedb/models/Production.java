@@ -23,6 +23,7 @@ public class Production {
     private String type;
     private Float vote_average;
 
+    //TODO enum
     @JsonSetter("title")
     public void setTypeToMovie(String title) {
         this.title = title;
