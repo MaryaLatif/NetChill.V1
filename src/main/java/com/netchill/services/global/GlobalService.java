@@ -26,7 +26,5 @@ public class GlobalService {
         List<Production> prod = this.globalApi.getTrending(null).getResults();
         return prod;
     }
-
-
 }
 

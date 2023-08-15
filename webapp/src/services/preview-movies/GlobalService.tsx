@@ -8,7 +8,7 @@ export default class GlobalService {
 
   getTrendingMovies = () => this.previewApi.getTrendingMovies()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch trending movies: {} ', { error });
       throw error;
     });
 }

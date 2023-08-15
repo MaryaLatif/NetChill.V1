@@ -1,7 +1,6 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.services.movie.MovieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,8 +45,8 @@ public class MovieWs {
 
     @GET
     @Path("/")
-    public List<Production> getTopMovieByGenre(@QueryParam("genre") int genre) {
-        List<Production> results = movieService.getTopMoviesByGenre(genre);
+    public List<Production> getTopRatedByGenre(@QueryParam("genre") int genre) {
+        List<Production> results = movieService.getTopRatedByGenre(genre);
 
         return results;
     }

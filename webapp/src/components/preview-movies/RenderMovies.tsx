@@ -26,7 +26,7 @@ function RenderMovies() {
       <TopRatedMovies/>
       <TrendingMovies/>
       {genres.map((genre) => (
-        <MoviesByGenre key={genre.id} genre={genre.name} id_genre={genre.id}/>
+        <MoviesByGenre key={genre.id} genre={genre.name} idGenre={genre.id}/>
       ))}
     </div>
   );

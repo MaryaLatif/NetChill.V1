@@ -90,7 +90,7 @@ function Poster({
            }}>
       </div>
 
-      <PosterBackground title={title} path={backdrop_path} className='top-card__img'/>
+      <PosterBackground className='top-card__img' title={title} path={backdrop_path}/>
 
       {showTrailer && trailerUrl
         && (

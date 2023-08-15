@@ -43,5 +43,4 @@ public class SerieWs {
     public List<Production> getTopNetflixOriginals() {
         return serieService.getTopNetflixOriginals();
     }
-
 }
