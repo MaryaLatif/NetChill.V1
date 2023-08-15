@@ -19,9 +19,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Singleton
-public class MovieDBApiService {
+public class TmdbApiClient {
     // Logger pour ecrire des logs plusieur niveau .info .debug .error .warn
-    private static final Logger LOGGER = LoggerFactory.getLogger(MovieDBApiService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TmdbApiClient.class);
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     private final ObjectMapper objectMapper;
 
@@ -30,7 +30,7 @@ public class MovieDBApiService {
     private final ConfigurationService configurationService;
 
     @Inject
-    private MovieDBApiService(ObjectMapper objectMapper, ConfigurationService configurationService) {
+    private TmdbApiClient(ObjectMapper objectMapper, ConfigurationService configurationService) {
         this.configurationService = configurationService;
         JacksonConverterFactory jacksonConverterFactory = JacksonConverterFactory.create(objectMapper);
         this.retrofitClient = new Retrofit.Builder()

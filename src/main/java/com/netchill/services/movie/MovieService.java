@@ -24,20 +24,15 @@ public class MovieService {
     }
 
     public Production getMovieById(Long movieId) {
-        Production movie = this.movieApiClient.getMovieById(movieId);
-        String imageKey = movie.getBackdrop_path();
-        List<Production> movies = List.of(movie);
-
-        return movie;
+        return this.movieApiClient.getMovieById(movieId);
     }
 
     public List<Long> getMovieGenres(Long movieId) {
         return this.movieApiClient.getMovieById(movieId).getGenre_ids();
     }
 
-    public List<Production> getTopMoviesByGenre(int genre) {
-        List<Production> movies = this.movieApiClient.getMoviesByGenre(genre, null).getResults();
-        return movies;
+    public List<Production> getTopRatedByGenre(int genre) {
+        return this.movieApiClient.getMoviesByGenre(genre, null).getResults();
     }
 
     public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, int page) {
@@ -45,8 +40,6 @@ public class MovieService {
     }
 
     public List<Production> getTopRated() {
-        List<Production> prod = this.movieApiClient.getTopRated(null).getResults();
-        return prod;
+        return this.movieApiClient.getTopRated(null).getResults();
     }
-
 }

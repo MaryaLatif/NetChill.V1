@@ -21,6 +21,7 @@ public interface MovieApiRetrofit {
             @Query("language") String language,
             @Query("page") Integer page
     );
+
     @GET("/3/movie/{id}")
     Call<Production> getMovieById(
             @Path("id") Long id,

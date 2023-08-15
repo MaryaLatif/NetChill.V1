@@ -36,6 +36,4 @@ public class GlobalWs {
     public List<Production> getTrending() {
         return moviePreviewService.getTrending();
     }
-
-
 }

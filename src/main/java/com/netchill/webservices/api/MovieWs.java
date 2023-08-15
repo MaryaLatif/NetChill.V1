@@ -1,7 +1,6 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.services.movie.MovieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,11 +26,11 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/id")
-    public Production getMovieById(@QueryParam("id") Long id) {
+    @Path("/{id}")
+    public Production getMovieById(@PathParam("id") Long id) {
         Production result = this.movieService.getMovieById(id);
 
-        if (result == null){
+        if (result == null) {
             throw new NullPointerException();
         }
 
@@ -45,13 +44,10 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/genre/")
-    public List<Production> getTopMovieByGenre(@QueryParam("genre") int genre) {
-        List<Production> results = movieService.getTopMoviesByGenre(genre);
+    @Path("/")
+    public List<Production> getTopRatedByGenre(@QueryParam("genre") int genre) {
+        List<Production> results = movieService.getTopRatedByGenre(genre);
 
-        if (results == null){
-            throw new NullPointerException();
-        }
         return results;
     }
 }

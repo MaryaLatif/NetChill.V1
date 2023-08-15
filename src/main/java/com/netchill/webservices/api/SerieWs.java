@@ -27,8 +27,8 @@ public class SerieWs {
     }
 
     @GET
-    @Path("/id")
-    public Production getSerieById(@QueryParam("id") Long id) {
+    @Path("/{id}")
+    public Production getSerieById(@PathParam("id") Long id) {
         Production result = this.serieService.getSerieById(id);
 
         if (result == null){
@@ -43,5 +43,4 @@ public class SerieWs {
     public List<Production> getTopNetflixOriginals() {
         return serieService.getTopNetflixOriginals();
     }
-
 }

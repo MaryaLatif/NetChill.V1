@@ -9,7 +9,7 @@ export default class SerieService {
 
   getNetflixOriginals = () => this.serieApi.getNetflixOriginals()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch netflix originals series: {} ', { error });
       throw error;
     });
 }

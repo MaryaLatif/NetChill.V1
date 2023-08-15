@@ -8,10 +8,11 @@ export default class MovieApi {
   constructor(private readonly httpClient: ApiHttpClient) {
   }
 
-  getTopOfMoviesByGenre(genre: number) {
+  getTopRatedByGenre(genre: number) {
     return this
       .httpClient
-      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/genre?genre=${genre}`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}`)
+      .queryParams([['genre', genre]])
       .execute();
   }
 

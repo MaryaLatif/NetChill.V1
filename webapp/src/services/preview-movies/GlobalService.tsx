@@ -1,5 +1,5 @@
 import { Logger } from 'simple-logging-system';
-import GlobalApi from '../../api/preview-movies/GlobalApi';
+import GlobalApi from '../../api/global/GlobalApi';
 
 const logger = new Logger('PreviewMoviesService');
 export default class GlobalService {
@@ -8,7 +8,7 @@ export default class GlobalService {
 
   getTrendingMovies = () => this.previewApi.getTrendingMovies()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch trending movies: {} ', { error });
       throw error;
     });
 }

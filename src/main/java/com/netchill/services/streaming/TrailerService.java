@@ -1,6 +1,5 @@
 package com.netchill.services.streaming;
 
-import com.netchill.api.moviedb.MovieDBApiService;
 import com.netchill.api.moviedb.models.Trailer;
 import com.netchill.api.moviedb.models.TrailerKey;
 import com.netchill.api.moviedb.services.trailer.TrailerApiService;
@@ -19,7 +18,17 @@ public class TrailerService {
         this.trailerApiClient = trailerApiClient;
     }
 
-    private TrailerKey trailerOk(List<TrailerKey> trailerKeys) {
+    public TrailerKey getSerieTrailerById(Long id) {
+        Trailer trailer = trailerApiClient.getSerieTrailerById(id);
+        return this.getTrailer(trailer.getKeyList());
+    }
+
+    public TrailerKey getMovieTrailerById(Long id) {
+        Trailer trailer = trailerApiClient.getMovieTrailerById(id);
+        return this.getTrailer(trailer.getKeyList());
+    }
+
+    private TrailerKey getTrailer(List<TrailerKey> trailerKeys) {
         if (trailerKeys.isEmpty()) {
             return new TrailerKey();
         }
@@ -32,15 +41,4 @@ public class TrailerService {
 
         return trailerKeys.get(0);
     }
-
-    public TrailerKey getSerieTrailerById(Long id) {
-        Trailer trailer = trailerApiClient.getSerieTrailerById(id);
-        return this.trailerOk(trailer.getKeyList());
-    }
-
-    public TrailerKey getMovieTrailerById(Long id) {
-        Trailer trailer = trailerApiClient.getMovieTrailerById(id);
-        return this.trailerOk(trailer.getKeyList());
-    }
-
 }

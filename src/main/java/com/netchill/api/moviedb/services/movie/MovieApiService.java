@@ -1,6 +1,6 @@
 package com.netchill.api.moviedb.services.movie;
 
-import com.netchill.api.moviedb.MovieDBApiService;
+import com.netchill.api.moviedb.TmdbApiClient;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.services.configuration.ConfigurationService;
@@ -14,16 +14,13 @@ import javax.inject.Singleton;
 
 @Singleton
 public class MovieApiService {
-    // Logger pour ecrire des logs plusieur niveau .info .debug .error .warn
-    private static final Logger LOGGER = LoggerFactory.getLogger(MovieApiService.class);
-    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String LANGUAGE = "en-US";
     private final MovieApiRetrofit movieApi;
-    private final MovieDBApiService apiClient;
+    private final TmdbApiClient apiClient;
     private final ConfigurationService configurationService;
 
     @Inject
-    private MovieApiService(MovieDBApiService movieDbApiClient, ConfigurationService configurationService) {
+    private MovieApiService(TmdbApiClient movieDbApiClient, ConfigurationService configurationService) {
         this.configurationService = configurationService;
         this.apiClient = movieDbApiClient;
         // Crée l'api grace à l'interface retrofit
@@ -54,6 +51,4 @@ public class MovieApiService {
                 this.configurationService.getMovieDbApiKey()
         ));
     }
-
-
 }

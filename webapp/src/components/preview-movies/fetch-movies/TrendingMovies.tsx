@@ -6,7 +6,7 @@ import { Production } from '../../../api/types/MovieDbTypes';
 import Row from '../style/row/Row';
 
 function TrendingMovies() {
-  const globalService: GlobalService = getGlobalInstance(GlobalService);
+  const globalService = getGlobalInstance(GlobalService);
 
   const [movie, setMovie] = useState<Production[]>([]);
   const movieLoading = useLoader();
@@ -25,7 +25,6 @@ function TrendingMovies() {
       title={'Trending'}
       movieList={movie}
       isDataLoading={movieLoading.isLoading}
-      classType={'trending'}
     />
   );
 }
