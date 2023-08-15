@@ -27,11 +27,11 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/id")
-    public Production getMovieById(@QueryParam("id") Long id) {
+    @Path("/{id}")
+    public Production getMovieById(@PathParam("id") Long id) {
         Production result = this.movieService.getMovieById(id);
 
-        if (result == null){
+        if (result == null) {
             throw new NullPointerException();
         }
 
@@ -45,13 +45,10 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/genre/")
+    @Path("/")
     public List<Production> getTopMovieByGenre(@QueryParam("genre") int genre) {
         List<Production> results = movieService.getTopMoviesByGenre(genre);
 
-        if (results == null){
-            throw new NullPointerException();
-        }
         return results;
     }
 }

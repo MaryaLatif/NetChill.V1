@@ -11,14 +11,14 @@ export default class TrailerApi {
   getMovieTrailerById(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movie/id?id=${id}`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movie/${id}`)
       .execute();
   }
 
   getSerieTrailerById(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/serie/id?id=${id}`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/serie/${id}`)
       .execute();
   }
 }

@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import '../../../../../public/assets/css/row.css';
-import '../../../../../public/assets/css/arrow.css';
+import React, { useEffect, useRef, useState } from 'react';
+import '../../../../../assets/scss/components/style/row/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
-import top1 from '../../../../../assets/icons/top1.png';
-import top2 from '../../../../../assets/icons/top2.png';
-import top3 from '../../../../../assets/icons/top3.png';
-import Arrow from './Arrow';
+import Arrow from '../arrow/Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
-import Poster from '../image/Poster';
+import PosterBackground from '../poster/PosterBackground';
 import Recommendation from '../recommendation/Recommendation';
 
 type Props = {
@@ -21,37 +17,39 @@ type Props = {
   isLargerRow?: boolean,
   topRated?: boolean,
   isDataLoading?: boolean
-  classType: string
 };
 
 type MovieInfo = {
   id: number,
   overview: string,
   type: MediaType,
-  genreIds: number[]
+  genre_ids: number[]
 };
 
+// TODO [REFACTO-SCSS]
+// TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-  title, movieList, isLargerRow, topRated, isDataLoading, classType,
+  title, movieList, isLargerRow, topRated, isDataLoading,
 }: Props) {
   const streamingService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
   const [movieInfo, setMovieInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
+  const [currentSliderLeft, setCurrentSliderLeft] = useState(0);
+  const [sliderWidth, setSliderWidth] = useState(0);
+
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const movieLoader = useLoader();
 
-  const top: any[] = [top1, top2, top3];
-
-  let i = 0;
-
-  function handleClick(movieId: number, movieResume: string, type: MediaType, genreIds: number[]): void {
+  function handleClick(index: number): void {
+    const movie = movieList[index];
     setMovieInfo({
-      id: movieId,
-      overview: movieResume,
-      type,
-      genreIds,
+      id: movie.id,
+      overview: movie.overview,
+      type: movie.type,
+      genre_ids: movie.genre_ids,
     });
     setVisible(true);
   }
@@ -61,22 +59,35 @@ function Row({
     setTrailer(undefined);
   }
 
-  function hundleClickArrowRight() {
-    const slider = document.getElementById(classType);
-    slider.scrollLeft += window.innerWidth - 150;
+  // TODO à revoir slider.current.scrollLeft
+  function handleClickArrowRight() {
+    if (!sliderRef.current) {
+      return;
+    }
+    sliderRef.current.scrollLeft += window.innerWidth - 150;
   }
 
-  function hundleClickArrowLeft() {
-    const slider = document.getElementById(classType);
-    slider.scrollLeft -= window.innerWidth - 150;
+  function handleClickArrowLeft() {
+    if (!sliderRef.current) {
+      return;
+    }
+    sliderRef.current.scrollLeft -= window.innerWidth - 150;
   }
+
+  useEffect(() => {
+    if (!sliderRef.current) {
+      return;
+    }
+    setCurrentSliderLeft(sliderRef.current.scrollLeft);
+    setSliderWidth(sliderRef.current.scrollWidth);
+  }, [sliderRef.current?.scrollLeft]);
 
   useEffect(() => {
     if (!movieInfo) {
       return;
     }
 
-    const apiCall = movieInfo.type === 'movie'
+    const apiCall = movieInfo.type === MediaType.MOVIE
       ? streamingService.getMovieTrailerById
       : streamingService.getSerieTrailerById;
 
@@ -92,45 +103,46 @@ function Row({
           isDataLoading
             ? (<RowLoading isLargerRow={isLargerRow}/>)
             : (
-              <div className={'row_posters'} id={classType}>
-                {movieList.map((movie) => (
-                  <div
-                    key={movie.id}
-                    className={classNames(
-                      'row_poster',
-                      { row_poster_large: isLargerRow },
-                      { top_rated: topRated },
-                      `${classType}`,
-                    )}
-                    onClick={() => handleClick(
-                      movie.id,
-                      movie.overview,
-                      movie.title ? MediaType.SERIE : MediaType.MOVIE,
-                      movie.genre_ids,
-                    )}
-                    aria-hidden="true"
-                  >
-                    {topRated && i < 3 && (<img src={top[i]} alt={'top 1'} className={'top_rated_img'}/>)}
-                    {i < 3 && <noscript>{i++}</noscript>}
-                    <Poster
-                      path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
-                      title={movie.title}
-                      className={'row_img'}
-                    />
-                    <div className={'info'}>
-                      <h3 className={'title'}>{movie.title ? movie.title : movie.title}</h3>
-                      < Recommendation average={movie.vote_average}/>
+              <div className='row__poster-container'>
+                <div ref={sliderRef} className='row__posters'>
+                  {movieList.map((movie, index) => (
+                    <div
+                      key={movie.id}
+                      className={classNames(
+                        'poster',
+                        { 'poster--large': isLargerRow },
+                        { top_rated: topRated },
+                      )}
+                      onClick={() => handleClick(index)}
+                      aria-hidden="true"
+                    >
+                      <PosterBackground
+                        path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
+                        title={movie.title}
+                        className='media__img'
+                      />
+                      <div className='media__info'>
+                        <h3 className='media__title'>{movie.title ? movie.title : movie.title}</h3>
+                        < Recommendation average={movie.vote_average}/>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className='navigation__container' style={{ height: '140px' }}>
+                  {
+                    currentSliderLeft > 0
+                    && <Arrow orientation='left' onClick={handleClickArrowLeft}/>
+                  }
+                  {
+                    sliderWidth - currentSliderLeft > window.innerWidth
+                    && <Arrow orientation='right' onClick={handleClickArrowRight}/>
+                  }
+                </div>
               </div>
             )
         }
-        <div className={'arrow_parent'} style={{ height: '140px', bottom: '1rem' }}>
-          <Arrow left={true} onClick={hundleClickArrowLeft}/>
-          <Arrow right={true} onClick={hundleClickArrowRight}/>
-        </div>
       </div>
+      // TODO [Click outside popin]
       {
         visible
         && trailer
@@ -138,17 +150,17 @@ function Row({
         && (<div onClick={(event) => {
           let element = event.target;
           while (element.parentNode
-            && (element.parentNode !== document.getElementById('show-movie'))) {
+            && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
             element = element.parentNode;
           }
-          if (element.parentNode !== document.getElementById('show-movie')) {
+          if (element.parentNode !== document.getElementsByName('show-movie')) {
             handleCloseTrailerPopIn();
           }
         }}>
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}
-              genreIds={movieInfo.genreIds}
+              genreIds={movieInfo.genre_ids}
               onClose={handleCloseTrailerPopIn}
             />
           </div>
