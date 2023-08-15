@@ -1,9 +1,14 @@
 import React from 'react';
 
+const thousand: number = 1000;
+const hundred: number = 100;
 function Recommendation({ average } : { average: number }) {
-  average = Math.round((average * 1000) / 100);
+  function formatRecommendation(avg: number) {
+    return Math.round((avg * thousand) / hundred);
+  }
+
   return (
-    <p>Recommendation : {average}%</p>
+    <p>Recommendation : {formatRecommendation(average)}%</p>
   );
 }
 
