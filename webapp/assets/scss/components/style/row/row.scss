@@ -57,6 +57,7 @@
       }
 
       .media__info {
+        font-size: $font-size-M;
         position: absolute;
         height: 100%;
         top: 0;
@@ -108,7 +109,7 @@
 @media only screen and (max-width: 600px) {
   .row {
     h2 {
-      font-size: $font-size-large;
+      font-size: $font-size-L;
       font-weight: normal;
     }
   }

@@ -122,7 +122,7 @@ function Row({
                         className='media__img'
                       />
                       <div className='media__info'>
-                        <h3 className='media__title'>{movie.title ? movie.title : movie.title}</h3>
+                        <p className='media__title'>{movie.title ? movie.title : movie.title}</p>
                         < Recommendation average={movie.vote_average}/>
                       </div>
                     </div>
