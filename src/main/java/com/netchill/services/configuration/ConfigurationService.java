@@ -36,7 +36,7 @@ public class ConfigurationService {
     }
 
     public String getImageBaseUrl() {
-        return config.getString("img_url");
+        return config.getString("api.tmdb-image.base-url");
     }
 
     public String getVideoBaseUrl() {

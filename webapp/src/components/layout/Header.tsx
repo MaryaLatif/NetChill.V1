@@ -4,13 +4,13 @@ import { useObservable } from 'micro-observables';
 import classNames from 'classnames';
 import LocaleSelector from '../theme/LocaleSelector';
 import LocaleService from '../../i18n/locale/LocaleService';
-import '../../../public/assets/css/header.css';
+import '../../../assets/scss/layouts/_header.scss';
 import SearchBar from '../general/search/SearchBar';
 
 type Props = {
   logo: string,
-  list: string[],
-  scrollOk: boolean
+  navItems: string[],
+  isLighter: boolean
 };
 
 function LocaleSelectorContainer() {
@@ -24,19 +24,19 @@ function LocaleSelectorContainer() {
   />;
 }
 
-export default function Header({ logo, list, scrollOk }: Props) {
+export default function Header({ logo, navItems, isLighter }: Props) {
   return (
-    <header id="header" className={classNames({ scroll: scrollOk })}>
+    <header className={classNames('header', { '--light': isLighter })}>
       {/* <LocaleSelectorContainer /> */}
-      <div id='left'>
-        <img src={logo} alt={'logo'} className='logo'/>
+      <div className='header__left'>
+        <img src={logo} alt='logo' className='logo'/>
         <ul>
-          {list.map((element) => (
-            <li key={element}>{element}</li>),
+          {navItems.map((navItem) => (
+            <li key={navItem}>{navItem}</li>),
           )}
         </ul>
       </div>
-      <div id='right'>
+      <div className='header__right'>
         <SearchBar/>
       </div>
     </header>

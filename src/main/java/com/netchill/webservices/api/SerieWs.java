@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/series")
 @Tag(name = "Serie", description = "All about tv show")
@@ -26,10 +27,8 @@ public class SerieWs {
     }
 
     @GET
-    @Path("/id")
-    public Production getSerieById(
-            @QueryParam("id") Long id) {
-
+    @Path("/{id}")
+    public Production getSerieById(@PathParam("id") Long id) {
         Production result = this.serieService.getSerieById(id);
 
         if (result == null){
@@ -37,5 +36,11 @@ public class SerieWs {
         }
 
         return result ;
+    }
+
+    @GET
+    @Path("/netflix-originals")
+    public List<Production> getTopNetflixOriginals() {
+        return serieService.getTopNetflixOriginals();
     }
 }
