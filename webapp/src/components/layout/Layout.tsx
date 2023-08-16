@@ -17,8 +17,11 @@ export default function Layout({ children }: Props) {
 
   // TODO à revoir
   function handleScroll() {
-    if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= topOfScreen) setLighterHeader(true);
-    else setLighterHeader(false);
+    if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= topOfScreen) {
+      setLighterHeader(true);
+    } else {
+      setLighterHeader(false);
+    }
   }
 
   return <GlobalErrorBoundary>

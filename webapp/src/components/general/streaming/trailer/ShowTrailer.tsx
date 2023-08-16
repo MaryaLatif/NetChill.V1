@@ -30,10 +30,12 @@ function ShowTrailer({
         <div className='cross'>
           <XCircle onClick={onClose} className='cross__icon'/>
         </div>
-        {url ? <YouTube videoId={url} opts={opts}/>
-          : <ErrorTrailer/>
+        {
+          url
+            ? <YouTube videoId={url} opts={opts}/>
+            : <ErrorTrailer/>
         }
-        <Player />
+        <Player/>
         <div className='about-it'>
           <div className='about-it__overview__container'>
             <h3>Overview</h3>

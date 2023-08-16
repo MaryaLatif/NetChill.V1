@@ -31,9 +31,7 @@ export default function Header({ logo, navItems, isLighter }: Props) {
       <div className='header__left'>
         <img src={logo} alt='logo' className='logo'/>
         <ul>
-          {navItems.map((navItem) => (
-            <li key={navItem}>{navItem}</li>),
-          )}
+          {navItems.map((navItem) => (<li key={navItem}>{navItem}</li>))}
         </ul>
       </div>
       <div className='header__right'>
