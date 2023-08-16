@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Optional;
 
 @Path("/genre")
 @Tag(name = "Genre", description = "WS about genres")
@@ -32,14 +33,14 @@ public class GenreWs {
 
     @GET
     @Path("/{id}")
-    public Genre getGenreById(@PathParam("id") Long id) {
+    public Optional<Genre> getGenreById(@PathParam("id") Long id) {
         Genre result = this.genreService.getGenreById(id);
 
         if (result == null) {
             throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
-        return result;
+        return Optional.of(result);
     }
 
     @GET
