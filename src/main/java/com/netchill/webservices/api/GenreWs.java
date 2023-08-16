@@ -37,7 +37,7 @@ public class GenreWs {
         Optional<Genre> result = this.genreService.getGenreById(id);
 
         if (result == null) {
-            throw new WsException(NetchillWsError.INTERNAL_ERROR);
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
 
         return result;

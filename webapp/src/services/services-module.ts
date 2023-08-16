@@ -6,7 +6,7 @@ import GenreService from './genre/GenreService';
 import GlobalService from './preview-movies/GlobalService';
 import MovieService from './movie/MovieService';
 import SerieService from './serie/SerieService';
-import ImageService from './Image/ImageService';
+import ConfigurationService from './configuration/ConfigurationService';
 
 export default function installServicesModule(injector: Injector) {
   injector.registerSingleton(Scheduler);
@@ -17,5 +17,5 @@ export default function installServicesModule(injector: Injector) {
   injector.registerSingleton(GlobalService);
   injector.registerSingleton(MovieService);
   injector.registerSingleton(SerieService);
-  injector.registerSingleton(ImageService);
+  injector.registerSingleton(ConfigurationService);
 }

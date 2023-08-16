@@ -2,6 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 
+import com.netchill.api.moviedb.models.Configuration;
 import com.netchill.services.configuration.ConfigurationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -13,23 +14,24 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/image")
-@Tag(name = "Movie", description = "Image base url")
+@Path("/configuration")
+@Tag(name = "Configuration", description = "configuration data")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
 @Singleton
-public class ImageWs {
+public class ConfigurationWs {
     private String imageBaseUrl;
 
     @Inject
-    private ImageWs(ConfigurationService configurationService){
+    private ConfigurationWs(ConfigurationService configurationService){
         this.imageBaseUrl = configurationService.getImageBaseUrl();
     }
 
     @GET
-    @Path("/base-url")
-    public String getImageBaseUrl(){
-        return this.imageBaseUrl;
+    @Path("/")
+    public Configuration getConfiguration(){
+        Configuration config = new Configuration(this.imageBaseUrl);
+        return config;
     }
 }

@@ -28,9 +28,7 @@ public class MovieWs {
     @GET
     @Path("/{id}")
     public Production getMovieById(@PathParam("id") Long id) {
-        Production result = this.movieService.getMovieById(id);
-
-        return result;
+        return this.movieService.getMovieById(id);
     }
 
     @GET
@@ -40,10 +38,8 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/")
+    @Path("/top-rated")
     public List<Production> getTopRatedByGenre(@QueryParam("genre") int genre) {
-        List<Production> results = movieService.getTopRatedByGenre(genre);
-
-        return results;
+        return movieService.getTopRatedByGenre(genre);
     }
 }

@@ -11,7 +11,7 @@ export default class MovieApi {
   getTopRatedByGenre(genre: number) {
     return this
       .httpClient
-      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}`)
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
       .queryParams([['genre', genre]])
       .execute();
   }

@@ -1,3 +1,7 @@
+export type Configuration = {
+  imageBaseUrl: string,
+};
+
 export type PaginatedResult<T> = {
   page: number,
   results: T[],

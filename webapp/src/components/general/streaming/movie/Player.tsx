@@ -4,8 +4,8 @@ import { Play } from 'react-feather';
 
 function Player() {
   return (
-    <button className='play'>
-      <Play className='play__icon' />
+    <button className='play-button'>
+      <Play />
     </button>
   );
 }

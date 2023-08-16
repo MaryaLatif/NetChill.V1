@@ -38,7 +38,7 @@ public class TrailerWs {
         TrailerKey result = this.movieStreamingService.getSerieTrailerById(id);
 
         if (result == null) {
-            throw new WsException(NetchillWsError.INTERNAL_ERROR);
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
 
         return result;
@@ -50,7 +50,7 @@ public class TrailerWs {
         TrailerKey result = this.movieStreamingService.getMovieTrailerById(id);
 
         if (result == null) {
-            throw new WsException(NetchillWsError.INTERNAL_ERROR);
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
 
         return result;

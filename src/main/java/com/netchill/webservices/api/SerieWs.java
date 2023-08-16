@@ -34,7 +34,7 @@ public class SerieWs {
         Production result = this.serieService.getSerieById(id);
 
         if (result == null){
-            throw new WsException(NetchillWsError.INTERNAL_ERROR);
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
 
         return result ;

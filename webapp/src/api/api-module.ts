@@ -6,7 +6,7 @@ import GenreApi from './genre/GenreApi';
 import GlobalApi from './global/GlobalApi';
 import MovieApi from './movie/MovieApi';
 import SerieApi from './serie/SerieApi';
-import ImageApi from './Image/ImageApi';
+import ConfigurationApi from './configuration/ConfigurationApi';
 
 export default function installApiModule(injector: Injector) {
   injector.registerSingleton(ApiHttpClient);
@@ -16,5 +16,5 @@ export default function installApiModule(injector: Injector) {
   injector.registerSingleton(GlobalApi);
   injector.registerSingleton(MovieApi);
   injector.registerSingleton(SerieApi);
-  injector.registerSingleton(ImageApi);
+  injector.registerSingleton(ConfigurationApi);
 }
