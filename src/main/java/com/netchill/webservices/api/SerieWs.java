@@ -1,9 +1,11 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.serie.SerieService;
+import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -32,7 +34,7 @@ public class SerieWs {
         Production result = this.serieService.getSerieById(id);
 
         if (result == null){
-            throw new NullPointerException();
+            throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
         return result ;

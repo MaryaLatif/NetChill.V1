@@ -30,10 +30,6 @@ public class MovieWs {
     public Production getMovieById(@PathParam("id") Long id) {
         Production result = this.movieService.getMovieById(id);
 
-        if (result == null) {
-            throw new NullPointerException();
-        }
-
         return result;
     }
 

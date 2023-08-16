@@ -1,10 +1,12 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.api.moviedb.models.TrailerKey;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.streaming.TrailerService;
+import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class TrailerWs {
         TrailerKey result = this.movieStreamingService.getSerieTrailerById(id);
 
         if (result == null) {
-            throw new NullPointerException();
+            throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
         return result;
@@ -48,7 +50,7 @@ public class TrailerWs {
         TrailerKey result = this.movieStreamingService.getMovieTrailerById(id);
 
         if (result == null) {
-            throw new NullPointerException();
+            throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
         return result;

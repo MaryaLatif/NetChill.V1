@@ -11,7 +11,7 @@ export default class GenreApi {
   getGenreById(id: number) {
     return this
       .httpClient
-      .restRequest<Genre>(HttpMethod.GET, `${this.BASE_URL}/id?id=${id}`)
+      .restRequest<Genre>(HttpMethod.GET, `${this.BASE_URL}/${id}`)
       .execute();
   }
 
