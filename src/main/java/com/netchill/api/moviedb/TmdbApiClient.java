@@ -81,4 +81,8 @@ public class TmdbApiClient {
             throw new RuntimeException("Error during call to the referientiel API", e);
         }
     }
+
+    public void buildApiInterface(final Class<T> retrofit){
+        retrofit = this.getRetrofitClient().create(T.class);
+    }
 }

@@ -7,6 +7,7 @@ import com.netchill.db.generated.Genre;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class GenreService {
@@ -19,7 +20,7 @@ public class GenreService {
         this.genreDao = genreDao;
     }
 
-    public Genre getGenreById(Long id) {
+    public Optional<Genre> getGenreById(Long id) {
         return this.genreDao.getGenreById(id);
     }
 

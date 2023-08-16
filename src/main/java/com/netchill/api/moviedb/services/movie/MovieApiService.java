@@ -27,6 +27,7 @@ public class MovieApiService {
         this.movieApi = this.apiClient.getRetrofitClient().create(MovieApiRetrofit.class);
     }
 
+    //TODO passer par une Function
     public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, @Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getMovieByGenre(
                         this.configurationService.getMovieDbApiKey(),

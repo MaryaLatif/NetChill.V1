@@ -34,13 +34,13 @@ public class GenreWs {
     @GET
     @Path("/{id}")
     public Optional<Genre> getGenreById(@PathParam("id") Long id) {
-        Genre result = this.genreService.getGenreById(id);
+        Optional<Genre> result = this.genreService.getGenreById(id);
 
         if (result == null) {
             throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
-        return Optional.of(result);
+        return result;
     }
 
     @GET
