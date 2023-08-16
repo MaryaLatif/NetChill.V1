@@ -81,9 +81,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
   return (
     <div className='row-top'>
       {
-        isDataLoading ? (
-            <RowLoading/>
-        )
+        isDataLoading ? <RowLoading/>
           : (
             <div ref={slider} className='row__posters row__posters--top'>
               {movieList.map((movie, index) => {
@@ -107,7 +105,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
       }
 
       //TODO créer un composant SLIDER
-      <div className='navigation__container'>
+      <div className='navigation-container'>
         {
           currentPoster > 0
           && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
