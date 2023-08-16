@@ -1,5 +1,5 @@
 import { Logger } from 'simple-logging-system';
-import GenreApi from '../../api/general/GenreApi';
+import GenreApi from '../../api/genre/GenreApi';
 import { Genre } from '../../api/types/MovieDbTypes';
 
 const logger = new Logger('GenreService');
@@ -21,7 +21,7 @@ export default class GenreService {
 
   getPreviewGenres = () => this.generalApi.getPreviewGenre()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch the list of genre: {}', { error });
       throw error;
     });
 }

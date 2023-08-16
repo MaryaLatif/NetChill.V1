@@ -28,19 +28,19 @@ public class ConfigurationService {
     }
 
     public String getMovieDbApiBaseUrl() {
-        return "https://api.themoviedb.org/3/";
+        return config.getString("api.tmdb.base-url");
     }
 
     public String getMovieDbApiKey() {
-        return "a0c1e55338f3c5d80fc1e6fbef225e0e";
+        return config.getString("api.tmdb.api-key");
     }
 
     public String getImageBaseUrl() {
-        return config.getString("img_url");
+        return config.getString("api.tmdb-image.base-url");
     }
 
     public String getVideoBaseUrl() {
-        return "src/main/resources/videos/";
+        return config.getString("video.base-url");
     }
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import '../../../../../public/assets/css/player.css';
+import '../../../../../assets/scss/components/general/streaming/movie/player.scss';
 import { Play } from 'react-feather';
 
 function Player() {
   return (
-    <button className={'play'}>
-      <Play color={'white'} />
+    <button className='play'>
+      <Play className='play__icon' />
     </button>
   );
 }

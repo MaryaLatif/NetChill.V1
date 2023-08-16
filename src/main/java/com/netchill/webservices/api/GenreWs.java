@@ -1,9 +1,11 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.db.generated.Genre;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.genre.GenreService;
+import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -11,6 +13,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Optional;
 
 @Path("/genre")
 @Tag(name = "Genre", description = "WS about genres")
@@ -29,13 +32,12 @@ public class GenreWs {
     }
 
     @GET
-    @Path("/id")
-    public Genre getGenreById(
-            @QueryParam("id") Long id) {
-        Genre result = this.genreService.getGenreById(id);
+    @Path("/{id}")
+    public Optional<Genre> getGenreById(@PathParam("id") Long id) {
+        Optional<Genre> result = this.genreService.getGenreById(id);
 
-        if (result == null){
-            throw new NullPointerException();
+        if (result == null) {
+            throw new WsException(NetchillWsError.INTERNAL_ERROR);
         }
 
         return result;

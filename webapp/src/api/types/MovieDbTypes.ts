@@ -1,6 +1,6 @@
-export type Productions = {
+export type PaginatedResult<T> = {
   page: number,
-  results: Production[],
+  results: T[],
   total_page: number,
   total_results: number,
 };
@@ -14,7 +14,7 @@ export type Production = {
   poster_path: string,
   release_date: string,
   title: string,
-  media_type: string,
+  type: MediaType,
   vote_average: number,
 };
 
