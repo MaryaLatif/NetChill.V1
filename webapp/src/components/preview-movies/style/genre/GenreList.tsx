@@ -8,6 +8,7 @@ type Props = {
   genreId: number[],
   className?: string,
 };
+
 function GenreList({ genreId, className } : Props) {
   const generalService = getGlobalInstance(GenreService);
 
