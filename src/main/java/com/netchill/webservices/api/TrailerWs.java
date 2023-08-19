@@ -14,8 +14,8 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/stream")
-@Tag(name = "Streaming", description = "Trailer and movies")
+@Path("/trailer")
+@Tag(name = "Trailer", description = "Movie and Serie trailer")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi

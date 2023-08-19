@@ -46,6 +46,6 @@ public class GenreWs {
     @GET
     @Path("/list-genres")
     public List<Genre> getPreviewGenres() {
-        return this.genreService.getPreviewGenres();
+        return this.genreService.featuredGenre();
     }
 }

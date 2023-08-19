@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
 import ConfigurationService from '../../../../services/configuration/ConfigurationService';
 
-const imageApiClient = getGlobalInstance(ConfigurationService);
 function PosterBackground({ path, title, className }: { path: string, title: string, className?: string }) {
+  const imageApiClient = getGlobalInstance(ConfigurationService);
+
   const [imageBaseUrl, setImageBaseUrl] = useState<string>();
 
   useEffect(() => {
