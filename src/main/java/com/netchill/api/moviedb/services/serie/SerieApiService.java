@@ -28,6 +28,10 @@ public class SerieApiService {
         this.serieApi = this.apiClient.getRetrofitClient().create(SerieApiRetrofit.class);
     }
 
+    public MovieDbPaginatedResponse<Production> getNetflixOriginals() {
+        return this.getNetflixOriginals(null);
+    }
+
     public MovieDbPaginatedResponse<Production> getNetflixOriginals(@Nullable Integer page) {
         return this.apiClient.executeRequest(serieApi.getNetflixOriginals(
                 this.configurationService.getMovieDbApiKey(),

@@ -25,6 +25,10 @@ public class GlobalApiService {
         this.globalApi = this.apiClient.getRetrofitClient().create(GlobalApiRetrofit.class);
     }
 
+    public MovieDbPaginatedResponse<Production> getTrending() {
+        return this.getTrending(null);
+    }
+
     public MovieDbPaginatedResponse<Production> getTrending(@Nullable Integer page) {
         return this.apiClient.executeRequest(globalApi.getTrending(
                 this.configurationService.getMovieDbApiKey(),

@@ -27,12 +27,8 @@ public class MovieService {
         return this.movieApiClient.getMovieById(movieId);
     }
 
-    public List<Long> getMovieGenres(Long movieId) {
-        return this.movieApiClient.getMovieById(movieId).getGenre_ids();
-    }
-
     public List<Production> getTopRatedByGenre(int genre) {
-        return this.movieApiClient.getMoviesByGenre(genre, null).getResults();
+        return this.movieApiClient.getMoviesByGenre(genre).getResults();
     }
 
     public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, int page) {
@@ -40,6 +36,6 @@ public class MovieService {
     }
 
     public List<Production> getTopRated() {
-        return this.movieApiClient.getTopRated(null).getResults();
+        return this.movieApiClient.getTopRated().getResults();
     }
 }

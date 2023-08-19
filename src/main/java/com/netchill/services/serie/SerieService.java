@@ -18,8 +18,7 @@ public class SerieService {
     }
 
     public List<Production> getTopNetflixOriginals() {
-        List<Production> prod = this.serieApiClient.getNetflixOriginals(null).getResults();
-        return prod;
+        return this.serieApiClient.getNetflixOriginals().getResults();
     }
 
     public MovieDbPaginatedResponse<Production> getAllNetflixOriginals(Integer page) {

@@ -27,6 +27,10 @@ public class MovieApiService {
     }
 
     //TODO passer par une Function
+    public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre) {
+        return this.getMoviesByGenre(genre, null);
+    }
+
     public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, @Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getMovieByGenre(
                         this.configurationService.getMovieDbApiKey(),
@@ -34,6 +38,10 @@ public class MovieApiService {
                         page
                 )
         );
+    }
+
+    public MovieDbPaginatedResponse<Production> getTopRated() {
+        return this.getTopRated(null);
     }
 
     public MovieDbPaginatedResponse<Production> getTopRated(@Nullable Integer page) {
