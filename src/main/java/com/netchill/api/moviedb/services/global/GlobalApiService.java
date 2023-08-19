@@ -15,8 +15,6 @@ import javax.inject.Singleton;
 
 @Singleton
 public class GlobalApiService {
-    private static final String LANGUAGE = "en-US";
-
     private final GlobalApiRetrofit globalApi;
     private final TmdbApiClient apiClient;
     private final ConfigurationService configurationService;
@@ -30,7 +28,7 @@ public class GlobalApiService {
     public MovieDbPaginatedResponse<Production> getTrending(@Nullable Integer page) {
         return this.apiClient.executeRequest(globalApi.getTrending(
                 this.configurationService.getMovieDbApiKey(),
-                LANGUAGE,
+                this.apiClient.getLanguage(),
                 page
         ));
     }

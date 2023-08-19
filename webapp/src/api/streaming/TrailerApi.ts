@@ -8,14 +8,14 @@ export default class TrailerApi {
   constructor(private readonly httpClient: ApiHttpClient) {
   }
 
-  getMovieTrailerById(id: number) {
+  getTrailerMovieById(id: number) {
     return this
       .httpClient
       .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movie/${id}`)
       .execute();
   }
 
-  getSerieTrailerById(id: number) {
+  getTrailerBySerieId(id: number) {
     return this
       .httpClient
       .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/serie/${id}`)

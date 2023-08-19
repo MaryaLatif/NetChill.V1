@@ -19,8 +19,8 @@ public interface SerieApiRetrofit {
 
     @GET("/3/tv/{id}")
     Call<Production> getSerieById(
-            @Path("id") Long id,
-            @Query("api_key") String apiKey
+            @Query("api_key") String apiKey,
+            @Path("id") Long id
     );
 
 }

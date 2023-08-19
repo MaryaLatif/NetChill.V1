@@ -34,8 +34,8 @@ public class TrailerWs {
 
     @GET
     @Path("/serie/{id}")
-    public TrailerKey getSerieTrailerById(@PathParam("id") Long id) {
-        TrailerKey result = this.movieStreamingService.getSerieTrailerById(id);
+    public TrailerKey getTrailerBySerieId(@PathParam("id") Long id) {
+        TrailerKey result = this.movieStreamingService.getTrailerBySerieId(id);
 
         if (result == null) {
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
@@ -46,8 +46,8 @@ public class TrailerWs {
 
     @GET
     @Path("/movie/{id}")
-    public TrailerKey getMovieTrailerById(@PathParam("id") Long id) {
-        TrailerKey result = this.movieStreamingService.getMovieTrailerById(id);
+    public TrailerKey getTrailerByMovieId(@PathParam("id") Long id) {
+        TrailerKey result = this.movieStreamingService.getTrailerByMovieId(id);
 
         if (result == null) {
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);

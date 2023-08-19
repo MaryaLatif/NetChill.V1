@@ -14,7 +14,6 @@ import javax.inject.Singleton;
 
 @Singleton
 public class MovieApiService {
-    private static final String LANGUAGE = "en-US";
     private final MovieApiRetrofit movieApi;
     private final TmdbApiClient apiClient;
     private final ConfigurationService configurationService;
@@ -40,7 +39,7 @@ public class MovieApiService {
     public MovieDbPaginatedResponse<Production> getTopRated(@Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getTopRated(
                         this.configurationService.getMovieDbApiKey(),
-                        LANGUAGE,
+                        this.apiClient.getLanguage(),
                         page
                 )
         );
@@ -48,8 +47,8 @@ public class MovieApiService {
 
     public Production getMovieById(Long id) {
         return this.apiClient.executeRequest(movieApi.getMovieById(
-                id,
-                this.configurationService.getMovieDbApiKey()
+                this.configurationService.getMovieDbApiKey(),
+                id
         ));
     }
 }

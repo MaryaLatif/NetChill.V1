@@ -15,8 +15,6 @@ import javax.inject.Singleton;
 @Singleton
 public class SerieApiService {
     private static final int NETFLIX_ID = 213;
-    private static final String LANGUAGE = "en-US";
-
     private final SerieApiRetrofit serieApi;
     private final TmdbApiClient apiClient;
     private final ConfigurationService configurationService;
@@ -40,8 +38,8 @@ public class SerieApiService {
 
     public Production getSerieById(Long id) {
         return this.apiClient.executeRequest(serieApi.getSerieById(
-                id,
-                this.configurationService.getMovieDbApiKey()
+                this.configurationService.getMovieDbApiKey(),
+                id
         ));
     }
 

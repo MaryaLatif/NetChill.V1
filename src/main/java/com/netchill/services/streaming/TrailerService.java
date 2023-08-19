@@ -18,13 +18,13 @@ public class TrailerService {
         this.trailerApiClient = trailerApiClient;
     }
 
-    public TrailerKey getSerieTrailerById(Long id) {
-        Trailer trailer = trailerApiClient.getSerieTrailerById(id);
+    public TrailerKey getTrailerBySerieId(Long id) {
+        Trailer trailer = trailerApiClient.getTrailerBySerieId(id);
         return this.getTrailer(trailer.getKeyList());
     }
 
-    public TrailerKey getMovieTrailerById(Long id) {
-        Trailer trailer = trailerApiClient.getMovieTrailerById(id);
+    public TrailerKey getTrailerByMovieId(Long id) {
+        Trailer trailer = trailerApiClient.getTrailerByMovieId(id);
         return this.getTrailer(trailer.getKeyList());
     }
 

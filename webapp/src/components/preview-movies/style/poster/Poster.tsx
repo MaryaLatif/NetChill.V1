@@ -64,8 +64,8 @@ function Poster({
 
   useEffect(() => {
     const apiCall = type === MediaType.MOVIE
-      ? trailerService.getMovieTrailerById
-      : trailerService.getSerieTrailerById;
+      ? trailerService.getTrailerMovieById
+      : trailerService.getTrailerBySerieId;
 
     movieLoader.monitor(apiCall(id)
       .then(setTrailerUrl));
