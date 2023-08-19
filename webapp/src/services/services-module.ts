@@ -7,6 +7,7 @@ import GlobalService from './preview-movies/GlobalService';
 import MovieService from './movie/MovieService';
 import SerieService from './serie/SerieService';
 import ConfigurationService from './configuration/ConfigurationService';
+import StreamService from './streaming/StreamService';
 
 export default function installServicesModule(injector: Injector) {
   injector.registerSingleton(Scheduler);
@@ -18,4 +19,5 @@ export default function installServicesModule(injector: Injector) {
   injector.registerSingleton(MovieService);
   injector.registerSingleton(SerieService);
   injector.registerSingleton(ConfigurationService);
+  injector.registerSingleton(StreamService);
 }
