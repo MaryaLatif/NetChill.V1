@@ -7,6 +7,7 @@ import GlobalApi from './global/GlobalApi';
 import MovieApi from './movie/MovieApi';
 import SerieApi from './serie/SerieApi';
 import ConfigurationApi from './configuration/ConfigurationApi';
+import StreamApi from './streaming/StreamApi';
 
 export default function installApiModule(injector: Injector) {
   injector.registerSingleton(ApiHttpClient);
@@ -17,4 +18,5 @@ export default function installApiModule(injector: Injector) {
   injector.registerSingleton(MovieApi);
   injector.registerSingleton(SerieApi);
   injector.registerSingleton(ConfigurationApi);
+  injector.registerSingleton(StreamApi);
 }
