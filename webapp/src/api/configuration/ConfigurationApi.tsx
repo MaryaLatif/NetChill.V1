@@ -10,7 +10,7 @@ export default class ConfigurationApi {
   getConfiguration() {
     return this
       .httpClient
-      .restRequest<Configuration>(HttpMethod.GET, this.baseUrl)
+      .restRequest<Configuration>(HttpMethod.GET, `${this.baseUrl}/image-base-url`)
       .execute();
   }
 }

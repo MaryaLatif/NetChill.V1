@@ -29,7 +29,7 @@ public class ConfigurationWs {
     }
 
     @GET
-    @Path("/")
+    @Path("/image-base-url")
     public Configuration getConfiguration(){
         return new Configuration(this.imageBaseUrl);
     }
