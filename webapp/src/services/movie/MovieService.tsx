@@ -13,7 +13,7 @@ export default class MovieService {
       throw error;
     });
 
-  getTopRatedMovies = () => this.movieApi.getTopRatedMovies()
+  getTopRated = () => this.movieApi.getTopRated()
     .catch((error) => {
       logger.error('Failed to fetch top rated movies: {} ', { error });
       throw error;

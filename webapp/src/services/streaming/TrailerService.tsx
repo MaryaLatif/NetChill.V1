@@ -6,7 +6,7 @@ const logger = new Logger('StreamingService');
 export default class TrailerService {
   constructor(private readonly streamingApi: TrailerApi) {}
 
-  getTrailerMovieById = (id: number) => this.streamingApi.getTrailerMovieById(id)
+  getTrailerByMovieId = (id: number) => this.streamingApi.getTrailerMovieById(id)
     .catch((error) => {
       logger.error('Error while fetching movie trailer', { movieId: id, err: error });
       throw error;

@@ -32,7 +32,7 @@ public class GlobalApiService {
     public MovieDbPaginatedResponse<Production> getTrending(@Nullable Integer page) {
         return this.apiClient.executeRequest(globalApi.getTrending(
                 this.configurationService.getMovieDbApiKey(),
-                this.apiClient.getLanguage(),
+                this.apiClient.LANGUAGE,
                 page
         ));
     }

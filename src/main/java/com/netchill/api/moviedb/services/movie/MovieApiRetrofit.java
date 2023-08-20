@@ -11,7 +11,7 @@ public interface MovieApiRetrofit {
     @GET("/3/discover/movie")
     Call<MovieDbPaginatedResponse<Production>> getMovieByGenre(
             @Query("api_key") String apiKey,
-            @Query("with_genres") int idGenre,
+            @Query("with_genres") Long idGenre,
             @Query("page") Integer page
     );
 

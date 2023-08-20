@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Optional;
 
 @Path("/series")
 @Tag(name = "Serie", description = "All about tv show")
@@ -30,14 +31,8 @@ public class SerieWs {
 
     @GET
     @Path("/{id}")
-    public Production getSerieById(@PathParam("id") Long id) {
-        Production result = this.serieService.getSerieById(id);
-
-        if (result == null){
-            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
-        }
-
-        return result ;
+    public Optional<Production> getSerieById(@PathParam("id") Long id) {
+        return Optional.ofNullable(this.serieService.getSerieById(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
     }
 
     @GET

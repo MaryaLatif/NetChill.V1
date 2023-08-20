@@ -27,11 +27,11 @@ public class MovieService {
         return this.movieApiClient.getMovieById(movieId);
     }
 
-    public List<Production> getTopRatedByGenre(int genre) {
+    public List<Production> getTopRatedByGenre(Long genre) {
         return this.movieApiClient.getMoviesByGenre(genre).getResults();
     }
 
-    public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, int page) {
+    public MovieDbPaginatedResponse<Production> getMoviesByGenre(Long genre, int page) {
         return this.movieApiClient.getMoviesByGenre(genre, page);
     }
 

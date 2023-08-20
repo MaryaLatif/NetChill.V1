@@ -39,7 +39,7 @@ public class MovieWs {
 
     @GET
     @Path("/top-rated")
-    public List<Production> getTopRatedByGenre(@QueryParam("genre") int genre) {
+    public List<Production> getTopRatedByGenre(@QueryParam("genre") Long genre) {
         return movieService.getTopRatedByGenre(genre);
     }
 }

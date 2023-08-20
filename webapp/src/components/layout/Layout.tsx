@@ -8,12 +8,13 @@ type Props = {
   children: React.ReactNode;
 };
 
+const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
+
 export default function Layout({ children }: Props) {
   const [lighterHeader, setLighterHeader] = useState<boolean>(false);
 
   // TODO à revoir
   const topOfScreen: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
-  const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
 
   // TODO à revoir
   function handleScroll() {

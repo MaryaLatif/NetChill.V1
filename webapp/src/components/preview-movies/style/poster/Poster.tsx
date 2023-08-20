@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import YouTube from 'react-youtube';
 import { getGlobalInstance } from 'plume-ts-di';
-import Player from '../../../general/streaming/movie/Player';
 import PosterBackground from './PosterBackground';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import { MediaType, Trailer } from '../../../../api/types/MovieDbTypes';
@@ -20,7 +18,7 @@ type Props = {
   stopInterval: () => void
 };
 
-const SHOW_TRAILER_TIMER: number = 1000;
+const SHOW_TRAILER_TIMER: number = 1_000;
 
 function Poster({
   title, overview, id, type, backdrop_path, isSelected, stopInterval,
@@ -64,7 +62,7 @@ function Poster({
 
   useEffect(() => {
     const apiCall = type === MediaType.MOVIE
-      ? trailerService.getTrailerMovieById
+      ? trailerService.getTrailerByMovieId
       : trailerService.getTrailerBySerieId;
 
     movieLoader.monitor(apiCall(id)

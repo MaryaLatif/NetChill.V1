@@ -16,7 +16,7 @@ export default class MovieApi {
       .execute();
   }
 
-  getTopRatedMovies() {
+  getTopRated() {
     return this
       .httpClient
       .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)

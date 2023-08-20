@@ -1,12 +1,15 @@
 package com.netchill.services.serie;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.services.serie.SerieApiService;
+import com.netchill.webservices.error.NetchillWsError;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class SerieService {
@@ -25,7 +28,10 @@ public class SerieService {
         return this.serieApiClient.getNetflixOriginals(page);
     }
 
-    public Production getSerieById(Long id) {
-        return this.serieApiClient.getSerieById(id);
+    public Optional<Production> getSerieById(Long id) {
+        return Optional.ofNullable(
+                Optional.of(this.serieApiClient.getSerieById(id))
+                        .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND))
+        );
     }
 }

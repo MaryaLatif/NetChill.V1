@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 @Path("/configuration")
-@Tag(name = "Configuration", description = "configuration data")
+@Tag(name = "Configuration", description = "front-end configuration web-service")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
@@ -31,7 +31,6 @@ public class ConfigurationWs {
     @GET
     @Path("/")
     public Configuration getConfiguration(){
-        Configuration config = new Configuration(this.imageBaseUrl);
-        return config;
+        return new Configuration(this.imageBaseUrl);
     }
 }

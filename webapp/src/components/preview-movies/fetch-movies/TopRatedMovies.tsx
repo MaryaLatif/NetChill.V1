@@ -12,7 +12,7 @@ function TopRatedMovies() {
   const movieLoading = useLoader();
 
   function fetchMovie() {
-    movieLoading.monitor(movieService.getTopRatedMovies()
+    movieLoading.monitor(movieService.getTopRated()
       .then(setMovie));
   }
 

@@ -88,7 +88,7 @@ function Row({
     }
 
     const apiCall = movieInfo.type === MediaType.MOVIE
-      ? streamingService.getTrailerMovieById
+      ? streamingService.getTrailerByMovieId
       : streamingService.getTrailerBySerieId;
 
     movieLoader.monitor(apiCall(movieInfo.id)

@@ -2,7 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.TrailerKey;
+import com.netchill.api.moviedb.models.Trailer;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.streaming.TrailerService;
@@ -13,13 +13,15 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Optional;
 
-@Path("/stream")
-@Tag(name = "Streaming", description = "Trailer and movies")
+@Path("/trailer")
+@Tag(name = "Trailer", description = "All about trailer")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
 @Singleton
+//TODO à revoir
 public class TrailerWs {
     private final ConfigurationService configurationService;
     private final TrailerService movieStreamingService;
@@ -34,25 +36,13 @@ public class TrailerWs {
 
     @GET
     @Path("/serie/{id}")
-    public TrailerKey getTrailerBySerieId(@PathParam("id") Long id) {
-        TrailerKey result = this.movieStreamingService.getTrailerBySerieId(id);
-
-        if (result == null) {
-            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
-        }
-
-        return result;
+    public Optional<Trailer> getTrailerBySerieId(@PathParam("id") Long id) {
+        return Optional.ofNullable(this.movieStreamingService.getTrailerBySerieId(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
     }
 
     @GET
     @Path("/movie/{id}")
-    public TrailerKey getTrailerByMovieId(@PathParam("id") Long id) {
-        TrailerKey result = this.movieStreamingService.getTrailerByMovieId(id);
-
-        if (result == null) {
-            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
-        }
-
-        return result;
+    public Optional<Trailer> getTrailerByMovieId(@PathParam("id") Long id) {
+        return Optional.ofNullable(this.movieStreamingService.getTrailerByMovieId(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
     }
 }

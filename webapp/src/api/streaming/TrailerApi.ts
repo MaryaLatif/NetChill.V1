@@ -3,7 +3,7 @@ import ApiHttpClient from '../ApiHttpClient';
 import { Trailer } from '../types/MovieDbTypes';
 
 export default class TrailerApi {
-  private baseUrl = '/stream';
+  private baseUrl = '/trailer';
 
   constructor(private readonly httpClient: ApiHttpClient) {
   }

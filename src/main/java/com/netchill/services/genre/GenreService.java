@@ -1,8 +1,10 @@
 package com.netchill.services.genre;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.api.moviedb.TmdbApiClient;
 import com.netchill.db.dao.movie.GenreDao;
 import com.netchill.db.generated.Genre;
+import com.netchill.webservices.error.NetchillWsError;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,7 +23,11 @@ public class GenreService {
     }
 
     public Optional<Genre> getGenreById(Long id) {
-        return this.genreDao.getGenreById(id);
+        Optional<Genre> genre = this.genreDao.getGenreById(id);
+        if(genre.isEmpty()){
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
+        }
+        return genre;
     }
 
     public List<Genre> getPreviewGenres() {
