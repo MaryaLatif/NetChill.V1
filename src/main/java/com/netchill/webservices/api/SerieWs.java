@@ -31,8 +31,9 @@ public class SerieWs {
 
     @GET
     @Path("/{id}")
-    public Optional<Production> getSerieById(@PathParam("id") Long id) {
-        return Optional.ofNullable(this.serieService.getSerieById(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
+    public Production getSerieById(@PathParam("id") Long id) {
+        return this.serieService.getSerieById(id)
+                .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET

@@ -37,6 +37,7 @@ public class TrailerService {
         return Optional.of(trailers.stream()
                 .filter(trailer -> trailer.getType().equals(TRAILER_TYPE))
                 .findFirst()
+                // return the first video if there is no trailer type, is better then nothing
                 .orElse(trailers.get(0)));
     }
 }

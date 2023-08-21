@@ -23,11 +23,7 @@ public class GenreService {
     }
 
     public Optional<Genre> getGenreById(Long id) {
-        Optional<Genre> genre = this.genreDao.getGenreById(id);
-        if(genre.isEmpty()){
-            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
-        }
-        return genre;
+        return this.genreDao.getGenreById(id);
     }
 
     public List<Genre> getPreviewGenres() {

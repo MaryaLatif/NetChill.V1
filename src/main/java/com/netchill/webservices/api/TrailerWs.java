@@ -36,13 +36,15 @@ public class TrailerWs {
 
     @GET
     @Path("/serie/{id}")
-    public Optional<Trailer> getTrailerBySerieId(@PathParam("id") Long id) {
-        return Optional.ofNullable(this.movieStreamingService.getTrailerBySerieId(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
+    public Trailer getTrailerBySerieId(@PathParam("id") Long id) {
+        return this.movieStreamingService.getTrailerBySerieId(id)
+                .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
     @Path("/movie/{id}")
-    public Optional<Trailer> getTrailerByMovieId(@PathParam("id") Long id) {
-        return Optional.ofNullable(this.movieStreamingService.getTrailerByMovieId(id).orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
+    public Trailer getTrailerByMovieId(@PathParam("id") Long id) {
+        return this.movieStreamingService.getTrailerByMovieId(id)
+                .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 }

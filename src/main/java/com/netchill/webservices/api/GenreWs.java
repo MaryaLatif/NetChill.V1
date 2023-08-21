@@ -33,9 +33,9 @@ public class GenreWs {
 
     @GET
     @Path("/{id}")
-    public Optional<Genre> getGenreById(@PathParam("id") Long id) {
-        return Optional.ofNullable(this.genreService.getGenreById(id)
-                .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND)));
+    public Genre getGenreById(@PathParam("id") Long id) {
+        return this.genreService.getGenreById(id)
+                .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET

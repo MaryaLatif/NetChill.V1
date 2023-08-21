@@ -9,6 +9,7 @@ import com.netchill.services.configuration.ConfigurationService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class MovieService {
@@ -23,8 +24,9 @@ public class MovieService {
         this.configurationService = configurationService;
     }
 
-    public Production getMovieById(Long movieId) {
-        return this.movieApiClient.getMovieById(movieId);
+    //TODO tester avec un id qui n'existe pas
+    public Optional<Production> getMovieById(Long movieId) {
+        return Optional.of(this.movieApiClient.getMovieById(movieId));
     }
 
     public List<Production> getTopRatedByGenre(Long genre) {

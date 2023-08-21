@@ -29,9 +29,6 @@ public class SerieService {
     }
 
     public Optional<Production> getSerieById(Long id) {
-        return Optional.ofNullable(
-                Optional.of(this.serieApiClient.getSerieById(id))
-                        .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND))
-        );
+        return Optional.of(this.serieApiClient.getSerieById(id));
     }
 }
