@@ -31,6 +31,7 @@ public class StreamWs {
 
     @GET
     @Produces("application/octet-stream")
+    @Consumes("")
     @Path("/video/{name}")
     public Response getMediaVideo(@PathParam("name") String videoName, @HeaderParam("Range") String range) throws IOException {
         return this.streamService.getMediaVideo(videoName, range);
