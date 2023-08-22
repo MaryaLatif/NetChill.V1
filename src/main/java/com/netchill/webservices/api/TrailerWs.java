@@ -2,7 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Trailer;
+import com.netchill.api.moviedb.models.YoutubeKey;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.services.streaming.TrailerService;
@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.Optional;
 
 @Path("/trailer")
 @Tag(name = "Trailer", description = "All about trailer")
@@ -36,14 +35,14 @@ public class TrailerWs {
 
     @GET
     @Path("/serie/{id}")
-    public Trailer getTrailerBySerieId(@PathParam("id") Long id) {
+    public YoutubeKey getTrailerBySerieId(@PathParam("id") Long id) {
         return this.movieStreamingService.getTrailerBySerieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
     @Path("/movie/{id}")
-    public Trailer getTrailerByMovieId(@PathParam("id") Long id) {
+    public YoutubeKey getTrailerByMovieId(@PathParam("id") Long id) {
         return this.movieStreamingService.getTrailerByMovieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }

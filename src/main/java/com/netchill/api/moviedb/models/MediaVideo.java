@@ -8,8 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Trailers {
+//TODO à revoir
+public class MediaVideo {
     private Long id;
     @JsonAlias({"results"})
-    private List<Trailer> keyList;
+    private List<YoutubeKey> keyList;
 }

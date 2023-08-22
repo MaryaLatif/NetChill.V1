@@ -47,7 +47,7 @@ public class MovieApiService {
     public MovieDbPaginatedResponse<Production> getTopRated(@Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getTopRated(
                         this.configurationService.getMovieDbApiKey(),
-                        this.apiClient.LANGUAGE,
+                        TmdbApiClient.LANGUAGE,
                         page
                 )
         );

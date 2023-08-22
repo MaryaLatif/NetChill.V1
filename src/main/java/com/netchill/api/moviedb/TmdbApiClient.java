@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 
 @Singleton
 public class TmdbApiClient {
+    public static final String LANGUAGE = "en-US";
     // Logger pour ecrire des logs plusieur niveau .info .debug .error .warn
     private static final Logger LOGGER = LoggerFactory.getLogger(TmdbApiClient.class);
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
-    public static final String LANGUAGE = "en-US";
     private final ObjectMapper objectMapper;
 
     @Getter

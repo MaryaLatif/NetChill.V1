@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Trailer {
+public class YoutubeKey {
     private String key;
     private String type;
 }

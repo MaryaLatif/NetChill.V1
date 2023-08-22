@@ -1,7 +1,7 @@
 package com.netchill.api.moviedb.services.trailer;
 
 import com.netchill.api.moviedb.TmdbApiClient;
-import com.netchill.api.moviedb.models.Trailers;
+import com.netchill.api.moviedb.models.MediaVideo;
 import com.netchill.services.configuration.ConfigurationService;
 
 import javax.inject.Inject;
@@ -20,14 +20,14 @@ public class TrailerApiService {
         this.trailerApi = this.apiClient.getRetrofitClient().create(TrailerApiRetrofit.class);
     }
 
-    public Trailers getTrailerBySerieId(Long id) {
+    public MediaVideo getVideosBySerieId(Long id) {
         return this.apiClient.executeRequest(trailerApi.getTrailerBySerieId(
                 this.configurationService.getMovieDbApiKey(),
                 id
         ));
     }
 
-    public Trailers getTrailerByMovieId(Long id) {
+    public MediaVideo getVideosByMovieId(Long id) {
         return this.apiClient.executeRequest(trailerApi.getTrailerByMovieId(
                 this.configurationService.getMovieDbApiKey(),
                 id
