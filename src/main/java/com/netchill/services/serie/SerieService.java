@@ -29,6 +29,6 @@ public class SerieService {
     }
 
     public Optional<Production> getSerieById(Long id) {
-        return Optional.of(this.serieApiClient.getSerieById(id));
+        return Optional.ofNullable(this.serieApiClient.getSerieById(id));
     }
 }

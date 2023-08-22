@@ -30,14 +30,10 @@ public class TrailerService {
     }
 
     private Optional<Trailer> getTrailer(List<Trailer> trailers) {
-        if (trailers.isEmpty()) {
-            return Optional.empty();
-        }
-
         return Optional.of(trailers.stream()
                 .filter(trailer -> trailer.getType().equals(TRAILER_TYPE))
                 .findFirst()
-                // return the first video if there is no trailer type, is better then nothing
+                // returns the first video if there is no type of trailer available, is better then nothing at all
                 .orElse(trailers.get(0)));
     }
 }

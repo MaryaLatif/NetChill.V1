@@ -26,7 +26,7 @@ public class MovieService {
 
     //TODO tester avec un id qui n'existe pas
     public Optional<Production> getMovieById(Long movieId) {
-        return Optional.of(this.movieApiClient.getMovieById(movieId));
+        return Optional.ofNullable(this.movieApiClient.getMovieById(movieId));
     }
 
     public List<Production> getTopRatedByGenre(Long genre) {
