@@ -1,15 +1,12 @@
 package com.netchill.services.streaming;
 
 import com.coreoz.plume.jersey.errors.WsException;
-import com.netchill.WebApplication;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.webservices.error.NetchillWsError;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import static java.lang.Integer.parseInt;
 
@@ -23,7 +20,7 @@ public class StreamService {
     }
 
     public Response getMediaVideo(String videoName, String range) throws IOException {
-        File video = new File("/Users/marya/Dev/NetChill.V1/src/main/resources/videos/transformers.mkv");
+        File video = new File("/Users/marya/Dev/NetChill.V1/src/main/resources/videos/mailo.MP4");
         if(!video.exists()){
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
@@ -41,14 +38,14 @@ public class StreamService {
         System.out.println("range: " + range + " parts: " + parts[0]);
 
         int start = parseInt(parts[0], 10);//si il n'y a pas de range tout court on débute à 0
-        int end = (parts.length > 1) ? parseInt(parts[1], 10) : (int)video.length() - 1; //si on demande pas le byte de fin on dit qu'on envoie seulement 120 byte
+        long end = (parts.length > 1) ? parseInt(parts[1], 10) : video.length() - 1 ; //si on demande pas le byte de fin on dit qu'on envoie seulement 120 byte
 
         videoPath.skipNBytes(start);
 
         return Response.status(Response.Status.PARTIAL_CONTENT)
-                .entity(videoPath.readNBytes(end))
-                .header("Content-Range", "bytes " + start + "-" + end + "/" + (int)video.length())
-                .header("Content-length", end - start + 1)
+                .entity(videoPath.readNBytes((int)end))
+                .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
+                .header("Content-length", 10000)
                 .header("Accept-Ranges", "bytes")
                 .build();
     }
