@@ -40,15 +40,16 @@ public class StreamService {
 
         System.out.println("range: " + range + " parts: " + parts[0]);
 
-        int start = (!parts[0].equals("")) ? parseInt(parts[0]) : 0;//si il n'y a pas de range tout court on débute à 0
-        int end = (parts.length > 1) ? parseInt(parts[1]) : (int)video.length() - 1; //si on demande pas le byte de fin on dit qu'on envoie seulement 120 byte
+        int start = parseInt(parts[0], 10);//si il n'y a pas de range tout court on débute à 0
+        int end = (parts.length > 1) ? parseInt(parts[1], 10) : (int)video.length() - 1; //si on demande pas le byte de fin on dit qu'on envoie seulement 120 byte
 
         videoPath.skipNBytes(start);
 
         return Response.status(Response.Status.PARTIAL_CONTENT)
                 .entity(videoPath.readNBytes(end))
-                .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-                .header("Accept-Range", "bytes")
+                .header("Content-Range", "bytes " + start + "-" + end + "/" + (int)video.length())
+                .header("Content-length", end - start + 1)
+                .header("Accept-Ranges", "bytes")
                 .build();
     }
 
