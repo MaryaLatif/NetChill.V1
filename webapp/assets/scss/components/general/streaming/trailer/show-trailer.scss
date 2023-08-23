@@ -4,7 +4,7 @@
   display: block;
 }
 
-.show-movie__parent {
+.show-movie__container {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
@@ -19,7 +19,7 @@
     width: 50%;
     height: 90%;
     background: $background-popin;
-    border-radius: $border-radius-poster;
+    border-radius: $border-radius-small;
     overflow: scroll;
 
     .cross{
@@ -29,45 +29,48 @@
 
       &__icon {
         cursor: pointer;
-        margin: $spacer-0-5;
+        margin: $spacer-XS;
         color: $border-color;
 
         &:hover{
           color: white;
         }
       }
+      .play{
+        margin: $spacer-XL 0 0 $spacer-XL;
+      }
     }
 
     .about-it {
       display: flex;
-      padding: $spacer-2-5;
+      padding: $spacer-XM;
       color: $color-p;
       justify-content: space-between;
       min-height: 28%;
       bottom: 0px;
 
-      &__overview__parent {
+      &__overview__container {
         display: flex;
         flex-direction: column;
         width: 50%;
 
         h3{
-          margin: $spacer-1 0px $spacer-1 0px;
+          margin: $spacer-S 0px $spacer-S 0px;
         }
 
         .about-it__overview {
-          line-height: $spacer-2;
+          line-height: $spacer-XM;
         }
       }
 
       &__genre-list {
         list-style: none;
-        margin-top: $spacer-1;
+        margin-top: $spacer-S;
         h4 {
-          margin: $spacer-1 0px $spacer-1 0px;
+          margin: $spacer-S 0px $spacer-S 0px;
         }
         li {
-          margin-bottom: $spacer-0-5;
+          margin-bottom: $spacer-XS;
         }
       }
     }

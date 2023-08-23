@@ -21,12 +21,8 @@ public class GlobalService {
         this.genreDao = genreDao;
         this.configurationService = configurationService;
     }
-
     public List<Production> getTrending() {
-        List<Production> prod = this.globalApi.getTrending(null).getResults();
-        return prod;
+        return this.globalApi.getTrending().getResults();
     }
-
-
 }
 

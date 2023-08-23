@@ -1,6 +1,6 @@
 @use '../../../../variables' as *;
 
-.play{
+.play-button{
   background: $button-background;
   height: $height-player;
   width: $width-player;
@@ -12,7 +12,7 @@
   border: $border;
   box-shadow: $box-shadow;
 
-  .play__icon{
+  i{
     color: white;
   }
   &:hover{

@@ -1,9 +1,10 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
-import com.netchill.api.moviedb.models.Movie;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.services.movie.MovieService;
+import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
@@ -27,15 +28,10 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/id")
-    public Production getMovieById(@QueryParam("id") Long id) {
-        Production result = this.movieService.getMovieById(id);
-
-        if (result == null){
-            throw new NullPointerException();
-        }
-
-        return result;
+    @Path("/{id}")
+    public Production getMovieById(@PathParam("id") Long id) {
+        return this.movieService.getMovieById(id)
+                .orElseThrow(()->new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
@@ -45,13 +41,8 @@ public class MovieWs {
     }
 
     @GET
-    @Path("/genre/")
-    public List<Production> getTopMovieByGenre(@QueryParam("genre") int genre) {
-        List<Production> results = movieService.getTopMoviesByGenre(genre);
-
-        if (results == null){
-            throw new NullPointerException();
-        }
-        return results;
+    @Path("/top-rated/genre")
+    public List<Production> getTopRatedByGenre(@QueryParam("genre") Long genre) {
+        return movieService.getTopRatedByGenre(genre);
     }
 }

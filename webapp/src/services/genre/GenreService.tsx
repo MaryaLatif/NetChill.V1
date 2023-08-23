@@ -21,7 +21,7 @@ export default class GenreService {
 
   getPreviewGenres = () => this.generalApi.getPreviewGenre()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch the list of genre: {}', { error });
       throw error;
     });
 }

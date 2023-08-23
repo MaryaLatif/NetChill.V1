@@ -8,19 +8,25 @@ type Props = {
   children: React.ReactNode;
 };
 
+const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
+
 export default function Layout({ children }: Props) {
-  const [scrollOk, setScrollOk] = useState<boolean>(false);
+  const [lighterHeader, setLighterHeader] = useState<boolean>(false);
 
-  const scrollOff: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
-  const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
+  // TODO à revoir
+  const topOfScreen: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
 
+  // TODO à revoir
   function handleScroll() {
-    if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= scrollOff) setScrollOk(false);
-    else setScrollOk(true);
+    if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= topOfScreen) {
+      setLighterHeader(true);
+    } else {
+      setLighterHeader(false);
+    }
   }
 
   return <GlobalErrorBoundary>
-    <Header logo={logo} list={navItems} scrollOk={scrollOk}/>
+    <Header logo={logo} navItems={navItems} isLighter={lighterHeader}/>
     {/* <Header /> */}
     <div className='content-layout' onScroll={handleScroll}>
       {children}

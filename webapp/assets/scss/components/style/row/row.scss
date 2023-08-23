@@ -5,7 +5,7 @@
   margin-top: 50px;
 
   > h2 {
-    margin-left: $spacer-2;
+    margin-left: $spacer-XM;
     color: $color-p;
     font-family: "Helvetica Neue";
     font-weight: 500;
@@ -13,7 +13,7 @@
 
   &__poster-parent{
     position: relative;
-    margin: $spacer-2;
+    margin: $spacer-XM;
   }
 
   &__posters {
@@ -21,8 +21,8 @@
     overflow-y: hidden;
     overflow-x: scroll;
     scroll-behavior: smooth;
-    gap: $spacer-1;
-    padding: $spacer-1;
+    gap: $spacer-S;
+    padding: $spacer-S;
 
     &::-webkit-scrollbar {
       display: none;
@@ -30,7 +30,7 @@
 
     .poster {
       z-index: 1;
-      border-radius: $border-radius-poster;
+      border-radius: $border-radius-small;
       position: relative;
       width: 100%;
       max-height: $height-poster;
@@ -40,7 +40,7 @@
       &:hover {
         transform: scale(1.08);
 
-        .poster__info {
+        .media__info {
           display: flex;
         }
 
@@ -49,14 +49,15 @@
         }
       }
 
-      &__large {
+      &--large {
         max-height: $height-top-card;
         display: flex;
         justify-content: space-around;
         color: white;
       }
 
-      &__info {
+      .media__info {
+        font-size: $font-size-M;
         position: absolute;
         height: 100%;
         top: 0;
@@ -69,32 +70,30 @@
         display: none;
         background-color: rgba(0, 0, 0, 0.5);
         color: $color-p;
-        border-radius: $border-radius-poster;
+        border-radius: $border-radius-small;
       }
 
-      &__title {
-        margin-bottom: $spacer-1;
+      .media__title {
+        margin-bottom: $spacer-S;
       }
 
-      &__img {
+      .media__img {
         object-fit: contain; /*img pas déformée selon sa taille*/
         max-height: 140px;
         border-radius: 10px;
-        border: rgba(255, 255, 255, 0.25) solid 1px;
+        border: $border-color;
       }
     }
   }
 
   .row_poster_loading {
-    border-radius: $border-radius-poster;
+    border-radius: $border-radius-small;
     position: relative;
     min-width: $width-poster;
     height: $height-poster;
-    margin-right: $spacer-1;
+    margin-right: $spacer-S;
     box-shadow: $box-shadow;
-    background: $background-loading;
     background: $background-gradient-loading;
-    border-radius: $border-radius-poster;
     background-size: 200% 100%;
     animation: 1.5s shine linear infinite;
   }
@@ -110,7 +109,7 @@
 @media only screen and (max-width: 600px) {
   .row {
     h2 {
-      font-size: $title-row-font-size;
+      font-size: $font-size-L;
       font-weight: normal;
     }
   }

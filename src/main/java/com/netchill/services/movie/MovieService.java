@@ -9,6 +9,7 @@ import com.netchill.services.configuration.ConfigurationService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class MovieService {
@@ -23,30 +24,20 @@ public class MovieService {
         this.configurationService = configurationService;
     }
 
-    public Production getMovieById(Long movieId) {
-        Production movie = this.movieApiClient.getMovieById(movieId);
-        String imageKey = movie.getBackdrop_path();
-        List<Production> movies = List.of(movie);
-
-        return movie;
+    //TODO tester avec un id qui n'existe pas
+    public Optional<Production> getMovieById(Long movieId) {
+        return Optional.ofNullable(this.movieApiClient.getMovieById(movieId));
     }
 
-    public List<Long> getMovieGenres(Long movieId) {
-        return this.movieApiClient.getMovieById(movieId).getGenre_ids();
+    public List<Production> getTopRatedByGenre(Long genre) {
+        return this.movieApiClient.getMoviesByGenre(genre).getResults();
     }
 
-    public List<Production> getTopMoviesByGenre(int genre) {
-        List<Production> movies = this.movieApiClient.getMoviesByGenre(genre, null).getResults();
-        return movies;
-    }
-
-    public MovieDbPaginatedResponse<Production> getMoviesByGenre(int genre, int page) {
+    public MovieDbPaginatedResponse<Production> getMoviesByGenre(Long genre, int page) {
         return this.movieApiClient.getMoviesByGenre(genre, page);
     }
 
     public List<Production> getTopRated() {
-        List<Production> prod = this.movieApiClient.getTopRated(null).getResults();
-        return prod;
+        return this.movieApiClient.getTopRated().getResults();
     }
-
 }

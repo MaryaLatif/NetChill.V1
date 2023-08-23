@@ -7,15 +7,15 @@ export default class MovieService {
   constructor(private readonly movieApi: MovieApi) {
   }
 
-  getMoviesByGenre = (id: number) => this.movieApi.getTopOfMoviesByGenre(id)
+  getTopRatedByGenre = (id: number) => this.movieApi.getTopRatedByGenre(id)
     .catch((error) => {
-      logger.error('Error', { id, err: error });
+      logger.error('Failed to fetch movies for genre with id: {} ', id, { error });
       throw error;
     });
 
-  getTopRatedMovies = () => this.movieApi.getTopRatedMovies()
+  getTopRated = () => this.movieApi.getTopRated()
     .catch((error) => {
-      logger.error('Error', error);
+      logger.error('Failed to fetch top rated movies: {} ', { error });
       throw error;
     });
 }
