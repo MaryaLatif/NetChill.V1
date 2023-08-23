@@ -8,6 +8,7 @@ import com.netchill.db.generated.QPreviewGenreMovie;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class GenreDao {
@@ -17,12 +18,12 @@ public class GenreDao {
         this.transactionManager = transactionManager;
     }
 
-    public Genre getGenreById(Long id) {
-        return this.transactionManager.selectQuery()
+    public Optional<Genre> getGenreById(Long id) {
+        return Optional.ofNullable(this.transactionManager.selectQuery()
                 .select(QGenre.genre)
                 .from(QGenre.genre)
                 .where(QGenre.genre.id.eq(id))
-                .fetchOne();
+                .fetchOne());
     }
 
     public List<Genre> getPreviewGenres() {

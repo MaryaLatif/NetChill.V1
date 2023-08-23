@@ -1,0 +1,36 @@
+@use '../../../variables' as *;
+$background-arrow: rgba(0,0,0, 0.25);
+
+.arrow {
+  cursor: pointer;
+  background: $background-arrow;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  opacity: 0;
+  border-radius: $border-radius-small;
+
+  &--right {
+    margin-left: auto;
+  }
+
+  &--left {
+    margin-right: auto;
+  }
+
+  &__icon {
+    color: white;
+  }
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.navigation-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: $spacer-S;
+}
