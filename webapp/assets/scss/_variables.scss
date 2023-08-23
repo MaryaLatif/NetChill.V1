@@ -1,12 +1,53 @@
 $base-font-family: 'Roboto', sans-serif;
 $base-font-size: 14px;
 
-$background-color: #eeeeee;
+$background-color: radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,0.7301514355742297) 100%);
+$background-popin : radial-gradient(circle, rgba(40,44,52,1) 0%, rgba(0,0,0,1) 100%);
 $separator-color: #dddddd;
+$background-header: linear-gradient(rgba(0, 0, 0, 0.5), rgba(40, 44, 52, 0));
+$background-gradient-loading: linear-gradient(110deg, #282c34 10%, rgb(50, 53, 63) 20%, #282c34 50%);
+$background-loading: #eee;
+$background-filter: rgba(0,0,0,0.075);
+$background-filter-top-poster: linear-gradient(90deg, #141415 0%, rgba(0,0,0,0) 50%);
 
 $primary-color: #282c34;
 $secondary-color: #efefef;
 
-$box-padding: 16px;
+$box-padding: 1rem;
+$box-shadow: 0rem 0rem 0.6rem 0rem rgba(0,0,0,0.25);
 
-$button-height: 24px;
+$button-height: 2rem;
+$button-padding: 0.5rem;
+$button-border-radius: 1rem;
+$button-background: rgba(255,255,255,0.075);
+$button-background-hover: rgba(255,255,255,0.25);
+
+$border: rgba(255, 255, 255, 0.25) solid 1px;
+$border-radius-small: 0.7rem;
+$border-radius-large: 1.5rem;
+$border-color : rgba(255, 255, 255, 0.25);
+
+$width-arrow:  2rem;
+$width-poster: 18rem;
+$width-player: 7rem;
+$width-search-bar: 21.4rem;
+
+$height-top-card: 31.25rem;
+$height-poster: 8.75rem;
+$height-player: 2.5rem;
+$height-cross: 2rem;
+$height-search-bar: 2rem;
+$height-logo: 6.25rem;
+
+$color-p: #FFFFFF;
+
+$spacer-XS: 0.5rem;
+$spacer-S: 1rem;
+$spacer-M: 2rem;
+$spacer-XM: 2.5rem;
+$spacer-L: 3rem;
+$spacer-XL: 5rem;
+
+
+$font-size-M: 1.5rem;
+$font-size-L: 2rem;

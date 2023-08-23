@@ -1,14 +1,20 @@
 import { Injector } from 'plume-ts-di';
 import ApiHttpClient from './ApiHttpClient';
 import SampleApi from './session/SampleApi';
-import StreamingApi from './streaming/StreamingApi';
-import GenreApi from './general/GenreApi';
-import PreviewApi from './preview-movies/PreviewApi';
+import TrailerApi from './streaming/TrailerApi';
+import GenreApi from './genre/GenreApi';
+import GlobalApi from './global/GlobalApi';
+import MovieApi from './movie/MovieApi';
+import SerieApi from './serie/SerieApi';
+import ConfigurationApi from './configuration/ConfigurationApi';
 
 export default function installApiModule(injector: Injector) {
   injector.registerSingleton(ApiHttpClient);
   injector.registerSingleton(SampleApi);
-  injector.registerSingleton(StreamingApi);
+  injector.registerSingleton(TrailerApi);
   injector.registerSingleton(GenreApi);
-  injector.registerSingleton(PreviewApi);
+  injector.registerSingleton(GlobalApi);
+  injector.registerSingleton(MovieApi);
+  injector.registerSingleton(SerieApi);
+  injector.registerSingleton(ConfigurationApi);
 }

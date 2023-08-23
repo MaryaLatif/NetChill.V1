@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
 import useLoader from '../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import PreviewMoviesService from '../../../services/preview-movies/PreviewMoviesService';
-import { Movie } from '../../../api/types/MovieDbTypes';
+import GlobalService from '../../../services/preview-movies/GlobalService';
+import { Production } from '../../../api/types/MovieDbTypes';
 import Row from '../style/row/Row';
 
 function TrendingMovies() {
-  const previewMoviesService: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
+  const globalService = getGlobalInstance(GlobalService);
 
-  const [movie, setMovie] = useState<Movie[]>([]);
+  const [movie, setMovie] = useState<Production[]>([]);
   const movieLoading = useLoader();
 
   function fetchMovie() {
-    movieLoading.monitor(previewMoviesService.getTrendingMovies()
+    movieLoading.monitor(globalService.getTrendingMovies()
       .then(setMovie));
   }
 
@@ -25,7 +25,6 @@ function TrendingMovies() {
       title={'Trending'}
       movieList={movie}
       isDataLoading={movieLoading.isLoading}
-      classType={'trending'}
     />
   );
 }

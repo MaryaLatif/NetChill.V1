@@ -1,6 +1,7 @@
 package com.netchill.api.moviedb.models;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,19 @@ public class Production {
     private String release_date;
     @JsonAlias({"title", "name"})
     private String title;
-    private String media_type;
+    private String type;
     private Float vote_average;
+
+    //TODO enum
+    @JsonSetter("title")
+    public void setTypeToMovie(String title) {
+        this.title = title;
+        this.type = "movie";
+    }
+
+    @JsonSetter("name")
+    public void setTypeToSerie(String name) {
+        this.title = name;
+        this.type = "serie";
+    }
 }
