@@ -32,7 +32,10 @@ public class StreamService {
         if(range != null){
             parts = range.replace("bytes=","").split("-");
         } else{
-            parts = new String[]{"0"};
+            return  Response.status(Response.Status.OK)
+                    .header("Content-length", video.length())
+                    .header("Accept-Ranges", "bytes")
+                    .build();
         }
 
         System.out.println("range: " + range + " parts: " + parts[0]);
@@ -45,7 +48,7 @@ public class StreamService {
         return Response.status(Response.Status.PARTIAL_CONTENT)
                 .entity(videoPath.readNBytes((int)end))
                 .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-                .header("Content-length", 10000)
+                .header("Content-length", end - start )
                 .header("Accept-Ranges", "bytes")
                 .build();
     }
