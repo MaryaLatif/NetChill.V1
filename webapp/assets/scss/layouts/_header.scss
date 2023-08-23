@@ -1,7 +1,58 @@
 @use '../variables' as *;
 
+$background-header: linear-gradient(rgba(0, 0, 0, 1), rgba(40, 44, 52, 0.9));
+$background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
+
 #main-header {
   padding: 0 $box-padding;
   display: flex;
   justify-content: flex-end;
 }
+
+.header {
+  transition: box-shadow 1s, background 1s;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-family: 'Montserrat';
+  font-size: small;
+  font-weight: lighter;
+  padding-bottom: $spacer-S;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  box-shadow: $box-shadow;
+  background: $background-header;
+
+  &--light {
+    background: $background-light;
+    box-shadow: none;
+  }
+
+  .logo {
+    object-fit: contain;
+    height: $height-logo;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+  }
+  li {
+    margin-right: $spacer-L;
+  }
+
+  .header__left {
+    display: flex;
+    align-items: center;
+    margin-left: $spacer-S;
+  }
+
+  .header__right {
+    margin-right: $spacer-XL;
+  }
+}
+
+
+

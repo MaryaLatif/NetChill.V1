@@ -5,20 +5,20 @@ import NetflixMovies from './fetch-movies/NetflixMovies';
 import TrendingMovies from './fetch-movies/TrendingMovies';
 import TopRatedMovies from './fetch-movies/TopRatedMovies';
 import useLoader from '../../lib/plume-http-react-hook-loader/promiseLoaderHook';
-import PreviewMoviesService from '../../services/preview-movies/PreviewMoviesService';
 import { Genre } from '../../api/types/MovieDbTypes';
+import GenreService from '../../services/genre/GenreService';
 
 function RenderMovies() {
-  const previewMoviesService: PreviewMoviesService = getGlobalInstance(PreviewMoviesService);
+  const genreService: GenreService = getGlobalInstance(GenreService);
 
   const [genres, setGenres] = useState<Genre[]>([]);
 
   const movieLoader = useLoader();
 
   useEffect(() => {
-    movieLoader.monitor(previewMoviesService.getPreviewGenres()
+    movieLoader.monitor(genreService.getPreviewGenres()
       .then(setGenres));
-  }, [genres]);
+  }, []);
 
   return (
     <div className={'app'}>
@@ -26,7 +26,7 @@ function RenderMovies() {
       <TopRatedMovies/>
       <TrendingMovies/>
       {genres.map((genre) => (
-        <MoviesByGenre key={genre.id} genre={genre.name} id_genre={genre.id}/>
+        <MoviesByGenre key={genre.id} genre={genre.name} idGenre={genre.id}/>
       ))}
     </div>
   );
