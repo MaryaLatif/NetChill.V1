@@ -1,15 +1,19 @@
 import { Scheduler } from 'simple-job-scheduler';
 import { Injector } from 'plume-ts-di';
 import SampleService from './sample/SampleService';
-import StreamingService from './streaming/StreamingService';
-import GeneralService from './general/GeneralService';
-import PreviewMoviesService from './preview-movies/PreviewMoviesService';
+import TrailerService from './streaming/TrailerService';
+import GenreService from './genre/GenreService';
+import GlobalService from './preview-movies/GlobalService';
+import MovieService from './movie/MovieService';
+import SerieService from './serie/SerieService';
 
 export default function installServicesModule(injector: Injector) {
   injector.registerSingleton(Scheduler);
   // sample service to delete
   injector.registerSingleton(SampleService);
-  injector.registerSingleton(StreamingService);
-  injector.registerSingleton(GeneralService);
-  injector.registerSingleton(PreviewMoviesService);
+  injector.registerSingleton(TrailerService);
+  injector.registerSingleton(GenreService);
+  injector.registerSingleton(GlobalService);
+  injector.registerSingleton(MovieService);
+  injector.registerSingleton(SerieService);
 }

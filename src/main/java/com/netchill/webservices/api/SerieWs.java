@@ -1,6 +1,7 @@
 package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.security.permission.PublicApi;
+import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.serie.SerieService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/series")
 @Tag(name = "Serie", description = "All about tv show")
@@ -18,13 +20,28 @@ import javax.ws.rs.core.MediaType;
 @Singleton
 public class SerieWs {
     private SerieService serieService;
+
     @Inject
-    private SerieWs(SerieService serieService){
+    private SerieWs(SerieService serieService) {
         this.serieService = serieService;
     }
+
     @GET
-    @Path("/{id}")
-    public Serie getSerieById(@PathParam("id") Long id){
-        return this.serieService.getSerieById(id);
+    @Path("/id")
+    public Production getSerieById(@QueryParam("id") Long id) {
+        Production result = this.serieService.getSerieById(id);
+
+        if (result == null){
+            throw new NullPointerException();
+        }
+
+        return result ;
     }
+
+    @GET
+    @Path("/netflix-originals")
+    public List<Production> getTopNetflixOriginals() {
+        return serieService.getTopNetflixOriginals();
+    }
+
 }

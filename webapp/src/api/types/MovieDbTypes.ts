@@ -1,11 +1,11 @@
-export type AllMovies = {
+export type PaginatedResult<T> = {
   page: number,
-  results: Movie[],
+  results: T[],
   total_page: number,
   total_results: number,
 };
 
-export type Movie = {
+export type Production = {
   adult: boolean,
   backdrop_path: string,
   genre_ids: number[],
@@ -13,28 +13,9 @@ export type Movie = {
   overview: string,
   poster_path: string,
   release_date: string,
-  title?: string,
-  name?: string,
+  title: string,
+  type: MediaType,
   vote_average: number,
-  media_type: string
-};
-
-export type NetflixMovie = {
-  backdrop_path: string,
-  genre_ids: number[],
-  id: number,
-  overview: string,
-  poster_path: string,
-  first_air_date: string,
-  name: string,
-  vote_average: number,
-};
-
-export type AllNetflixMovies = {
-  page: number,
-  results: NetflixMovie[],
-  total_page: number,
-  total_results: number,
 };
 
 type Genre = {

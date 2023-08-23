@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import { Genre } from '../../../../api/types/MovieDbTypes';
-import GeneralService from '../../../../services/general/GeneralService';
+import GenreService from '../../../../services/genre/GenreService';
 
 type Props = {
   genreId: number[],
   className?: string,
 };
 function GenreList({ genreId, className } : Props) {
-  const generalService = getGlobalInstance(GeneralService);
+  const generalService = getGlobalInstance(GenreService);
 
   const [genres, setGenres] = useState<Genre[]>([]);
   const movieLoader = useLoader();

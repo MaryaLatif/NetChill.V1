@@ -4,14 +4,15 @@ import { useObservable } from 'micro-observables';
 import classNames from 'classnames';
 import LocaleSelector from '../theme/LocaleSelector';
 import LocaleService from '../../i18n/locale/LocaleService';
-import Search from '../preview-movies/style/search/Search';
-import '../../../public/assets/css/header.css';
+import '../../../assets/scss/layouts/_header.scss';
+import SearchBar from '../general/search/SearchBar';
 
 type Props = {
   logo: string,
   list: string[],
   scrollOk: boolean
 };
+
 function LocaleSelectorContainer() {
   const localeService = getGlobalInstance(LocaleService);
   const currentLocale = useObservable(localeService.getCurrentLocale());
@@ -25,18 +26,18 @@ function LocaleSelectorContainer() {
 
 export default function Header({ logo, list, scrollOk }: Props) {
   return (
-    <header id="header" className={classNames({ scroll: scrollOk })}>
+    <header className={classNames('header', { scroll: scrollOk })}>
       {/* <LocaleSelectorContainer /> */}
-      <div id={'left'}>
-        <img src={logo} alt={'logo'} className={'logo'}/>
+      <div className='header__left'>
+        <img src={logo} alt={'logo'} className='logo'/>
         <ul>
           {list.map((element) => (
             <li key={element}>{element}</li>),
           )}
         </ul>
       </div>
-      <div id={'right'}>
-        <Search/>
+      <div className='header__right'>
+        <SearchBar/>
       </div>
     </header>
   );

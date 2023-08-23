@@ -1,11 +1,11 @@
 import React from 'react';
-import icon from '../../../../../assets/icons/play.png';
-import '../../../../../public/assets/css/player.css';
+import '../../../../../assets/scss/components/general/streaming/movie/player.scss';
+import { Play } from 'react-feather';
 
-function Player() {
+function Player({ offset }: { offset?: string }) {
   return (
-    <button className={'play'}>
-      <img src={icon} alt={'play icon'} className={'play_icon'}/>
+    <button className='play' style={{ margin: offset }}>
+      <Play className='play__icon' />
     </button>
   );
 }

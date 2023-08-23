@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollRestoration } from 'react-router-dom';
 import GlobalErrorBoundary from '../theme/GlobalErrorBoundary';
 import logo from '../../../assets/icons/logo_transparent.png';
@@ -11,18 +11,20 @@ type Props = {
 export default function Layout({ children }: Props) {
   const [scrollOk, setScrollOk] = useState<boolean>(false);
 
-  const boxRef = useRef<HTMLDivElement>(null);
   const scrollOff: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
+  const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
+
   function handleScroll() {
     if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= scrollOff) setScrollOk(false);
     else setScrollOk(true);
   }
+
   return <GlobalErrorBoundary>
-    <Header logo={logo} list={['Home', 'Serie', 'Movie']} scrollOk={scrollOk} />
+    <Header logo={logo} list={navItems} scrollOk={scrollOk}/>
     {/* <Header /> */}
-    <div className="content-layout" ref={boxRef} onScroll={handleScroll}>
+    <div className='content-layout' onScroll={handleScroll}>
       {children}
     </div>
-    <ScrollRestoration />
+    <ScrollRestoration/>
   </GlobalErrorBoundary>;
 }
