@@ -17,7 +17,7 @@ public class TrailerApiService {
     private TrailerApiService(TmdbApiClient apiClient, ConfigurationService configurationService){
         this.configurationService = configurationService;
         this.apiClient = apiClient;
-        this.trailerApi = this.apiClient.getRetrofitClient().create(TrailerApiRetrofit.class);
+        this.trailerApi = this.apiClient.buildApiInterface(TrailerApiRetrofit.class);
     }
 
     public MediaVideo getVideosBySerieId(Long id) {

@@ -23,7 +23,7 @@ public class MovieApiService {
         this.configurationService = configurationService;
         this.apiClient = movieDbApiClient;
         // Crée l'api grace à l'interface retrofit
-        this.movieApi = this.apiClient.getRetrofitClient().create(MovieApiRetrofit.class);
+        this.movieApi = this.apiClient.buildApiInterface(MovieApiRetrofit.class);
     }
 
     //TODO passer par une Function

@@ -25,7 +25,7 @@ public class SerieApiService {
 
         this.apiClient = movieDbApiClient;
         // Crée l'api grace à l'interface retrofit
-        this.serieApi = this.apiClient.getRetrofitClient().create(SerieApiRetrofit.class);
+        this.serieApi = this.apiClient.buildApiInterface(SerieApiRetrofit.class);
     }
 
     public MovieDbPaginatedResponse<Production> getNetflixOriginals() {

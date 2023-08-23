@@ -22,7 +22,7 @@ public class GlobalApiService {
     private GlobalApiService(TmdbApiClient apiClient, ConfigurationService configurationService) {
         this.configurationService = configurationService;
         this.apiClient = apiClient;
-        this.globalApi = this.apiClient.getRetrofitClient().create(GlobalApiRetrofit.class);
+        this.globalApi = this.apiClient.buildApiInterface(GlobalApiRetrofit.class);
     }
 
     public MovieDbPaginatedResponse<Production> getTrending() {

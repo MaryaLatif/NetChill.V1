@@ -84,7 +84,7 @@ public class TmdbApiClient {
     }
 
 
-    public void buildApiInterface(final Class<T> retrofit) {
-        this.getRetrofitClient().create(T.class);
+    public <T> T buildApiInterface(Class<T> retrofit) {
+        return this.getRetrofitClient().create(retrofit);
     }
 }
