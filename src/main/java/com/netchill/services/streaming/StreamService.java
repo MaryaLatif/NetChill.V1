@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 
 import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 
 public class StreamService {
     private final MovieDao movieDao;
@@ -20,35 +21,32 @@ public class StreamService {
     }
 
     public Response getMediaVideo(String videoName, String range) throws IOException {
-        File video = new File("/Users/marya/Dev/NetChill.V1/src/main/resources/videos/mailo.MP4");
+        File video = new File("/Users/marya/Dev/NetChill.V1/src/main/resources/videos/transformers.mkv");
         if(!video.exists()){
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
-        System.out.println("La vidéo existe " + video.length()+" bytes");
 
-        InputStream videoPath = StreamService.class.getResourceAsStream("/videos/mailo.MP4");
-        String[] parts;
-
-        if(range != null){
-            parts = range.replace("bytes=","").split("-");
-        } else{
+        if(range == null){
             return  Response.status(Response.Status.OK)
                     .header("Content-length", video.length())
                     .header("Accept-Ranges", "bytes")
                     .build();
         }
 
-        System.out.println("range: " + range + " parts: " + parts[0]);
+        final int CHUNK_SIZE = 1_000_000;
+        InputStream videoPath = StreamService.class.getResourceAsStream("/videos/transformers.mkv");
+        String[] parts = range.replace("bytes=","").split("-");
+        long start = parseLong(parts[0], 10);
+        long end = parts.length > 1 ? parseInt(parts[1]) : Math.min(start + CHUNK_SIZE, video.length()-1); //prend le plus petit des 2 paramètres
 
-        int start = parseInt(parts[0], 10);//si il n'y a pas de range tout court on débute à 0
-        long end = (parts.length > 1) ? parseInt(parts[1], 10) : video.length() - 1 ; //si on demande pas le byte de fin on dit qu'on envoie seulement 120 byte
+        System.out.println("range: " + range + " parts: " + parts[0]);
 
         videoPath.skipNBytes(start);
 
         return Response.status(Response.Status.PARTIAL_CONTENT)
                 .entity(videoPath.readNBytes((int)end))
                 .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-                .header("Content-length", end - start )
+                .header("Content-length", end - start + 1 )
                 .header("Accept-Ranges", "bytes")
                 .build();
     }
