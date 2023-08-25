@@ -31,7 +31,7 @@ type MovieInfo = {
 function Row({
   title, movieList, isLargerRow, topRated, isDataLoading,
 }: Props) {
-  const streamingService = getGlobalInstance(TrailerService);
+  const trailerService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
   const [movieInfo, setMovieInfo] = useState<MovieInfo>();
@@ -78,6 +78,8 @@ function Row({
     if (!sliderRef.current) {
       return;
     }
+    console.log(sliderRef.current);
+    console.log(currentSliderLeft);
     setCurrentSliderLeft(sliderRef.current.scrollLeft);
     setSliderWidth(sliderRef.current.scrollWidth);
   }, [sliderRef.current?.scrollLeft]);
@@ -88,8 +90,8 @@ function Row({
     }
 
     const apiCall = movieInfo.type === MediaType.MOVIE
-      ? streamingService.getTrailerByMovieId
-      : streamingService.getTrailerBySerieId;
+      ? trailerService.getTrailerByMovieId
+      : trailerService.getTrailerBySerieId;
 
     movieLoader.monitor(apiCall(movieInfo.id)
       .then(setTrailer));
@@ -119,16 +121,16 @@ function Row({
                       <PosterBackground
                         path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                         title={movie.title}
-                        className='media__img'
+                        className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
                       />
                       <div className='media__info'>
-                        <p className='media__title'>{movie.title ? movie.title : movie.title}</p>
+                        <p className='media__title'>{movie.title}</p>
                         < Recommendation average={movie.vote_average}/>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className='navigation__container' style={{ height: '140px' }}>
+                <div className='navigation__container'>
                   {
                     currentSliderLeft > 0
                     && <Arrow orientation='left' onClick={handleClickArrowLeft}/>
@@ -142,7 +144,7 @@ function Row({
             )
         }
       </div>
-      // TODO [Click outside popin]
+      {/* TODO [Click outside popin] */}
       {
         visible
         && trailer

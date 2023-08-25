@@ -36,9 +36,10 @@
           color: white;
         }
       }
-      .play{
-        margin: $spacer-XL 0 0 $spacer-XL;
-      }
+    }
+
+    .play-button{
+      margin: $spacer-L 0 0 $spacer-L;
     }
 
     .about-it {
@@ -83,6 +84,30 @@
       justify-content: center;
       color: $color-p;
     }
+  }
+}
+
+.trailer-large {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s;
+  z-index: 5;
+
+  &__video{
+    position: absolute;
+    z-index: 5;
+    width: 100vw;
+    height: $height-top-card;
+
+    iframe{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &--hider {
+    opacity: 0;
   }
 }
 

@@ -13,14 +13,12 @@ type Props = {
   isDataLoading?: boolean
 };
 
-const SLIDER_TIMING: number = 8_000;
+const SLIDER_TIMING: number = 5_000;
 
 function TopRow({ movieList, isDataLoading }: Props) {
   const slider = useRef<HTMLDivElement>(null);
-
-  const [currentPoster, setCurrentPoster] = useState(0);
-
   const sliderInterval = useRef<NodeJS.Timeout>();
+  const [currentPoster, setCurrentPoster] = useState(0);
 
   function createSliderInterval() {
     if (sliderInterval.current) {
@@ -51,7 +49,6 @@ function TopRow({ movieList, isDataLoading }: Props) {
         return 0;
       }
       slider.current.scrollLeft += window.innerWidth;
-
       createSliderInterval();
 
       return prevPoster + 1;
@@ -104,8 +101,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
           )
       }
 
-      //TODO créer un composant SLIDER
-      <div className='navigation-container'>
+      {/* TODO créer un composant SLIDER */}
+      <div className='navigation__container'>
         {
           currentPoster > 0
           && <Arrow orientation={'left'} onClick={goPreviousPoster}/>

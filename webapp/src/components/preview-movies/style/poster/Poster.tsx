@@ -97,7 +97,7 @@ function Poster({
             videoKey={trailerUrl.key}
             isShown={trailerOpacityOne}
 
-            // TODO [HOOK?]
+            /* TODO [HOOK?] */
             onPause={() => {
               setTrailerOpacityOne(false);
               setInterval(() => {

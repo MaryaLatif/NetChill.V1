@@ -26,7 +26,7 @@ function LocaleSelectorContainer() {
 
 export default function Header({ logo, navItems, isLighter }: Props) {
   return (
-    <header className={classNames('header', { '--light': isLighter })}>
+    <header className={classNames('header', { 'header--light': isLighter })}>
       {/* <LocaleSelectorContainer /> */}
       <div className='header__left'>
         <img src={logo} alt='logo' className='logo'/>

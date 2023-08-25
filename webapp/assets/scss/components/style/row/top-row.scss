@@ -40,7 +40,7 @@
     position: relative;
     opacity: 0;
     transition: opacity ease-in 3s;
-    width: 100vh;
+    width: 100vw;
 
     &--selected {
       opacity: 1;
@@ -90,25 +90,6 @@
       z-index: 2;
       background: rgb(40, 44, 52);
       background: $background-filter-top-poster;
-    }
-  }
-
-  .trailer-large {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transition: opacity 1s;
-    z-index: 5;
-
-    &__video{
-      position: absolute;
-      z-index: 5;
-      width: 100vh;
-      height: $height-top-card;
-    }
-
-    &--hider {
-      opacity: 0;
     }
   }
 }

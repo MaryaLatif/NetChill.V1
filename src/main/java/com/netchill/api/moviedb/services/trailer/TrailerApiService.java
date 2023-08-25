@@ -22,15 +22,15 @@ public class TrailerApiService {
 
     public MediaVideo getVideosBySerieId(Long id) {
         return this.apiClient.executeRequest(trailerApi.getTrailerBySerieId(
-                this.configurationService.getMovieDbApiKey(),
-                id
+                id,
+                this.configurationService.getMovieDbApiKey()
         ));
     }
 
     public MediaVideo getVideosByMovieId(Long id) {
         return this.apiClient.executeRequest(trailerApi.getTrailerByMovieId(
-                this.configurationService.getMovieDbApiKey(),
-                id
+                id,
+                this.configurationService.getMovieDbApiKey()
         ));
     }
 }

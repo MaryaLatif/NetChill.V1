@@ -1,5 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import '../../../../../assets/scss/components/general/streaming/trailer/show-trailer.scss';
 
 type Props = {
   opts: {},
@@ -13,12 +14,12 @@ function ShowLargeTrailer({
 }: Props) {
   return (
     <div
-      className={`trailer-large${!isShown && '--hiden'}`}
+      className={`trailer-large${!isShown ? '--hiden' : ''}`} /* le && ... ne fonctionnait pas */
     >
       <YouTube
         opts={opts}
         videoId={videoKey}
-        // TODO [HOOK?]
+        /* TODO [HOOK?] */
         onPause={onPause}
         onEnd={onEnd}
         className='trailer-large__video'
