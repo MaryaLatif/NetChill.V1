@@ -29,8 +29,8 @@ type MovieInfo = {
 // TODO [REFACTO-SCSS]
 // TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-  title, movieList, isLargerRow, topRated, isDataLoading,
-}: Props) {
+               title, movieList, isLargerRow, topRated, isDataLoading,
+             }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
@@ -103,10 +103,14 @@ function Row({
         <h2>{title}</h2>
         {
           isDataLoading
-            ? (<RowLoading isLargerRow={isLargerRow}/>)
+            ? (<RowLoading isLargerRow={isLargerRow} />)
             : (
-              <div className='row__poster-container'>
-                <div ref={sliderRef} className='row__posters'>
+              <div className="row__poster-container">
+                {
+                  currentSliderLeft > 0
+                  && <Arrow orientation="left" onClick={handleClickArrowLeft} />
+                }
+                <div ref={sliderRef} className="row__posters">
                   {movieList.map((movie, index) => (
                     <div
                       key={movie.id}
@@ -123,23 +127,17 @@ function Row({
                         title={movie.title}
                         className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
                       />
-                      <div className='media__info'>
-                        <p className='media__title'>{movie.title}</p>
-                        < Recommendation average={movie.vote_average}/>
+                      <div className="media__info">
+                        <p className="media__title">{movie.title}</p>
+                        < Recommendation average={movie.vote_average} />
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className='navigation__container'>
-                  {
-                    currentSliderLeft > 0
-                    && <Arrow orientation='left' onClick={handleClickArrowLeft}/>
-                  }
-                  {
-                    sliderWidth - currentSliderLeft > window.innerWidth
-                    && <Arrow orientation='right' onClick={handleClickArrowRight}/>
-                  }
-                </div>
+                {
+                  sliderWidth - currentSliderLeft > window.innerWidth
+                  && <Arrow orientation="right" onClick={handleClickArrowRight} />
+                }
               </div>
             )
         }
@@ -150,15 +148,15 @@ function Row({
         && trailer
         && movieInfo
         && (<div onClick={(event) => {
-          let element = event.target;
-          while (element.parentNode
+            let element = event.target;
+            while (element.parentNode
             && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
-            element = element.parentNode;
-          }
-          if (element.parentNode !== document.getElementsByName('show-movie')) {
-            handleCloseTrailerPopIn();
-          }
-        }}>
+              element = element.parentNode;
+            }
+            if (element.parentNode !== document.getElementsByName('show-movie')) {
+              handleCloseTrailerPopIn();
+            }
+          }}>
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}
