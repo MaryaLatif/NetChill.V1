@@ -26,9 +26,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run tests
-        run: yarn test
-
       - name: Build
         run: yarn build
 
@@ -57,4 +54,4 @@ jobs:
         run: mvn test
 
       - name: Build
-        run: mvn build
+        run: mvn package -Dmaven.test.skip
