@@ -1,0 +1,52 @@
+name: Node.js CI
+
+jobs:
+  build-front:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Run tests
+        run: yarn build
+
+  build-back:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [ 20 ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+
+      - name: Install dependencies
+        run: mvn install
+
+      - name: Run tests
+        run: mvn test
+
+      - name: Build
+        run: mvn build
