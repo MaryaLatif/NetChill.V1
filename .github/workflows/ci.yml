@@ -4,6 +4,7 @@ on: push
 
 jobs:
   build-front:
+    name: Build front
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,10 +27,17 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Eslint
+        run: yarn eslint
+
+      - name: Typescript
+        run: yarn typescript
+
       - name: Build
         run: yarn build
 
   build-back:
+    name: Build back
     runs-on: ubuntu-latest
 
     strategy:
