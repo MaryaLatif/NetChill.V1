@@ -10,6 +10,10 @@ jobs:
       matrix:
         node-version: [16.x]
 
+    defaults:
+      run:
+        working-directory: ./webapp
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -47,7 +51,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java-version }}
-          distribution: distribution
+          distribution: ${{ matrix.distribution }}
 
       - name: Install dependencies
         run: mvn install
