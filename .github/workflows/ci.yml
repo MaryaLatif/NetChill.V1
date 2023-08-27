@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Open webapp directory
+        run: cd webapp
+
       - name: Install dependencies
         run: yarn install
 
@@ -34,6 +37,7 @@ jobs:
     strategy:
       matrix:
         java-version: [ 20 ]
+        distribution: [ 'corretto' ]
 
     steps:
       - name: Checkout repository
@@ -43,6 +47,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java-version }}
+          distribution: distribution
 
       - name: Install dependencies
         run: mvn install
