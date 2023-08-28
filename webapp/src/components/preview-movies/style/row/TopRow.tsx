@@ -80,38 +80,35 @@ function TopRow({ movieList, isDataLoading }: Props) {
       {
         isDataLoading ? <RowLoading/>
           : (
-            <div ref={slider} className='row__posters row__posters--top'>
-              {movieList.map((movie, index) => {
-                const isSelected = currentPoster === index;
-                return (
-                  <div key={movie.id}>
+            <>
+              {
+                currentPoster > 0
+                && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
+              }
+              <div ref={slider} className='row__posters row__posters--top'>
+                {movieList.map((movie, index) => {
+                  const isSelected = currentPoster === index;
+                  return (
                     <Poster
+                      key={movie.id}
                       title={movie.title}
                       overview={movie.overview}
                       id={movie.id}
                       type={movie.type}
                       backdrop_path={movie.backdrop_path}
                       isSelected={isSelected}
-                      stopInterval={stopSliderInterval}
+                      onShowTrailer={stopSliderInterval}
                     />
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+              {
+                currentPoster < movieList.length - 1
+                && <Arrow orientation={'right'} onClick={goNextPoster}/>
+              }
+              </>
           )
       }
-
-      {/* TODO créer un composant SLIDER */}
-      <div className='navigation__container'>
-        {
-          currentPoster > 0
-          && <Arrow orientation={'left'} onClick={goPreviousPoster}/>
-        }
-        {
-          currentPoster < movieList.length - 1
-          && <Arrow orientation={'right'} onClick={goNextPoster}/>
-        }
-      </div>
     </div>
   );
 }

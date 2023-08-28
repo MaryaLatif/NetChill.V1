@@ -1,28 +1,35 @@
-import React from 'react';
+import classNames from 'classnames';
+import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 import '../../../../../assets/scss/components/general/streaming/trailer/show-trailer.scss';
 
 type Props = {
-  opts: {},
   videoKey: string,
-  isShown: boolean,
   onPause: ()=>void,
   onEnd: ()=>void
 };
+
+const opts = {
+  playerVars: {
+    autoplay: 1,
+    controls: 0,
+  },
+};
 function ShowLargeTrailer({
-  opts, videoKey, isShown, onPause, onEnd,
+  videoKey, onPause, onEnd,
 }: Props) {
+  const [ready, setReady] = useState(false);
   return (
     <div
-      className={`trailer-large${!isShown ? '--hiden' : ''}`} /* le && ... ne fonctionnait pas */
+      className={classNames('trailer-large', { 'trailer-large--hiden': !ready })}
     >
       <YouTube
         opts={opts}
         videoId={videoKey}
-        /* TODO [HOOK?] */
+        loading='lazy'
+        onReady={() => setReady(true)}
         onPause={onPause}
         onEnd={onEnd}
-        className='trailer-large__video'
       />
     </div>
   );

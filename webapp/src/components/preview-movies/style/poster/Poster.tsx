@@ -15,17 +15,18 @@ type Props = {
   type: string,
   backdrop_path: string,
   isSelected: boolean,
-  stopInterval: () => void
+  onShowTrailer?: () => void,
+  onHideTrailer?: () => void
 };
 
 const SHOW_TRAILER_TIMER: number = 1_000;
 
 function Poster({
-  title, overview, id, type, backdrop_path, isSelected, stopInterval,
-}: Props) {
+                  title, overview, id, type, backdrop_path, isSelected, onShowTrailer, onHideTrailer,
+                }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
-  const [showTrailer, setShowTrailer] = useState(false);
+  const [isTrailerShown, setIsTrailerShown] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState<Trailer>();
   const [trailerOpacityOne, setTrailerOpacityOne] = useState(false);
 
@@ -33,11 +34,20 @@ function Poster({
 
   const movieLoader = useLoader();
 
-  const opts = {
-    playerVars: {
-      autoplay: 1,
-      controls: 0,
-    },
+  const showTrailer = () => {
+    if (!trailerUrl) {
+      return;
+    }
+    onShowTrailer?.();
+    setIsTrailerShown(true);
+  };
+
+  const hideTrailer = () => {
+    if (!trailerUrl) {
+      return;
+    }
+    onHideTrailer?.();
+    setIsTrailerShown(false);
   };
 
   useEffect(() => {
@@ -49,7 +59,7 @@ function Poster({
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].intersectionRatio < 0.25) {
-          setShowTrailer(false);
+          setIsTrailerShown(false);
         }
       }, {
         threshold: 0.25,
@@ -74,39 +84,18 @@ function Poster({
       ref={trailer}
       className={classNames('top-card', { 'top-card--selected': isSelected })}
     >
-      <MediaDetails title={title} overview={overview}/>
+      <MediaDetails title={title} overview={overview} />
 
-      <div className='top-card--filter'
-           onClick={() => {
-             stopInterval();
-
-             setShowTrailer((prevState) => !prevState);
-
-             setInterval(() => {
-               setTrailerOpacityOne(true);
-             }, SHOW_TRAILER_TIMER);
-           }}>
+      <div aria-hidden onClick={showTrailer}>
+        <PosterBackground className="top-card__img" title={title} path={backdrop_path} />
       </div>
 
-      <PosterBackground className='top-card__img' title={title} path={backdrop_path}/>
-
-      {showTrailer && trailerUrl
+      {isTrailerShown && trailerUrl
         && (
           <ShowLargeTrailer
-            opts={opts}
             videoKey={trailerUrl.key}
-            isShown={trailerOpacityOne}
-
-            /* TODO [HOOK?] */
-            onPause={() => {
-              setTrailerOpacityOne(false);
-              setInterval(() => {
-                setShowTrailer((prevState) => !prevState);
-              }, SHOW_TRAILER_TIMER);
-            }}
-            onEnd={() => {
-              setShowTrailer(false);
-            }}
+            onPause={hideTrailer}
+            onEnd={hideTrailer}
             />
         )}
     </div>

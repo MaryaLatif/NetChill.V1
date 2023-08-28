@@ -28,15 +28,15 @@ export default function Header({ logo, navItems, isLighter }: Props) {
   return (
     <header className={classNames('header', { 'header--light': isLighter })}>
       {/* <LocaleSelectorContainer /> */}
-      <div className='header__left'>
-        <img src={logo} alt='logo' className='logo'/>
-        <ul>
+      <div className="header__left">
+        <img src={logo} alt="logo" className="logo" />
+        {/* <ul>
           {navItems.map((navItem) => (<li key={navItem}>{navItem}</li>))}
-        </ul>
+        </ul> */}
       </div>
-      <div className='header__right'>
-        <SearchBar/>
-      </div>
+      {/* <div className="header__right">
+        <SearchBar />
+      </div> */}
     </header>
   );
 }
