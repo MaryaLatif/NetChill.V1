@@ -1,6 +1,6 @@
 # dependencies
-/node_modules
-/.pnp
+webapp/node_modules
+webapp/.pnp
 .pnp.js
 .cache
 
@@ -8,8 +8,8 @@
 /coverage
 
 # production
-/build
-/ts-built
+webapp/build
+webapp/ts-built
 
 # Eclipse
 .classpath
@@ -40,14 +40,14 @@ yarn-error.log*
 /.nyc_output/
 
 # yarn
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
+webapp/.yarn/*
+!webapp/.yarn/patches
+!webapp/.yarn/releases
+!webapp/.yarn/plugins
+!webapp/.yarn/sdks
+!webapp/.yarn/versions
+webapp/.pnp.*
 
 # scss types
-/scss-types
+webapp/scss-types
 
