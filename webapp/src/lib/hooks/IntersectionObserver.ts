@@ -1,9 +1,11 @@
 import { RefObject, useEffect, useState } from 'react';
 
+/*
 const DEFAULT_OPTIONS = {
   threshold: 1,
   rootMargin: '0px',
 };
+ */
 
 function useIntersectionObserver(observedElement:RefObject<HTMLElement>, opts?: IntersectionObserverInit) {
   const [isElementVisible, setIsElementVisible] = useState(false);
