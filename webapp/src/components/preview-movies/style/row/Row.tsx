@@ -10,6 +10,7 @@ import RowLoading from '../../../general/loading/RowLoading';
 import ShowTrailer from '../../../general/streaming/trailer/ShowTrailer';
 import PosterBackground from '../poster/PosterBackground';
 import Recommendation from '../recommendation/Recommendation';
+import Slider from '../slider/Slider';
 
 type Props = {
   title: string,
@@ -29,15 +30,14 @@ type MovieInfo = {
 // TODO [REFACTO-SCSS]
 // TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-               title, movieList, isLargerRow, topRated, isDataLoading,
-             }: Props) {
+  title, movieList, isLargerRow, topRated, isDataLoading,
+}: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
   const [movieInfo, setMovieInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
-  const [currentSliderLeft, setCurrentSliderLeft] = useState(0);
-  const [sliderWidth, setSliderWidth] = useState(0);
+  const [currentPosition, setCurrentPosition] = useState(0);
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -61,28 +61,34 @@ function Row({
 
   // TODO à revoir slider.current.scrollLeft
   function handleClickArrowRight() {
-    if (!sliderRef.current) {
-      return;
-    }
-    sliderRef.current.scrollLeft += window.innerWidth - 150;
+    setCurrentPosition((prevState) => {
+      if (!sliderRef.current) {
+        return prevState;
+      }
+
+      if (Math.ceil(sliderRef.current.scrollLeft) + sliderRef.current.offsetWidth >= sliderRef.current.scrollWidth) {
+        return 0;
+      }
+
+      return prevState + 1;
+    });
   }
 
   function handleClickArrowLeft() {
     if (!sliderRef.current) {
       return;
     }
-    sliderRef.current.scrollLeft -= window.innerWidth - 150;
+
+    setCurrentPosition((prevState) => prevState - 1);
   }
 
   useEffect(() => {
     if (!sliderRef.current) {
       return;
     }
-    console.log(sliderRef.current);
-    console.log(currentSliderLeft);
-    setCurrentSliderLeft(sliderRef.current.scrollLeft);
-    setSliderWidth(sliderRef.current.scrollWidth);
-  }, [sliderRef.current?.scrollLeft]);
+
+    sliderRef.current.scrollLeft = currentPosition * sliderRef.current.offsetWidth;
+  }, [currentPosition]);
 
   useEffect(() => {
     if (!movieInfo) {
@@ -106,38 +112,36 @@ function Row({
             ? (<RowLoading isLargerRow={isLargerRow} />)
             : (
               <div className="row__poster-container">
-                {
-                  currentSliderLeft > 0
-                  && <Arrow orientation="left" onClick={handleClickArrowLeft} />
-                }
-                <div ref={sliderRef} className="row__posters">
-                  {movieList.map((movie, index) => (
-                    <div
-                      key={movie.id}
-                      className={classNames(
-                        'poster',
-                        { 'poster--large': isLargerRow },
-                        { top_rated: topRated },
-                      )}
-                      onClick={() => handleClick(index)}
-                      aria-hidden="true"
-                    >
-                      <PosterBackground
-                        path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
-                        title={movie.title}
-                        className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
-                      />
-                      <div className="media__info">
-                        <p className="media__title">{movie.title}</p>
-                        < Recommendation average={movie.vote_average} />
-                      </div>
+                <Slider
+                  isArrowLeftVisible={currentPosition > 0}
+                  isArrowRightVisible
+                  onClickArrowRight={handleClickArrowRight}
+                  onClickArrowLeft={handleClickArrowLeft} >
+                    <div ref={sliderRef} className="row__posters">
+                      {movieList.map((movie, index) => (
+                        <div
+                          key={movie.id}
+                          className={classNames(
+                            'poster',
+                            { 'poster--large': isLargerRow },
+                            { top_rated: topRated },
+                          )}
+                          onClick={() => handleClick(index)}
+                          aria-hidden="true"
+                        >
+                          <PosterBackground
+                            path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
+                            title={movie.title}
+                            className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
+                          />
+                          <div className="media__info">
+                            <p className="media__title">{movie.title}</p>
+                            < Recommendation average={movie.vote_average} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                {
-                  sliderWidth - currentSliderLeft > window.innerWidth
-                  && <Arrow orientation="right" onClick={handleClickArrowRight} />
-                }
+                </Slider>
               </div>
             )
         }
@@ -148,15 +152,15 @@ function Row({
         && trailer
         && movieInfo
         && (<div onClick={(event) => {
-            let element = event.target;
-            while (element.parentNode
+          let element = event.target;
+          while (element.parentNode
             && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
-              element = element.parentNode;
-            }
-            if (element.parentNode !== document.getElementsByName('show-movie')) {
-              handleCloseTrailerPopIn();
-            }
-          }}>
+            element = element.parentNode;
+          }
+          if (element.parentNode !== document.getElementsByName('show-movie')) {
+            handleCloseTrailerPopIn();
+          }
+        }}>
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}
