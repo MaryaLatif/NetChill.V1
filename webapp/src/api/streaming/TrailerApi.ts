@@ -3,7 +3,7 @@ import ApiHttpClient from '../ApiHttpClient';
 import { Trailer } from '../types/MovieDbTypes';
 
 export default class TrailerApi {
-  private baseUrl = '/trailer';
+  private baseUrl = '/trailers';
 
   constructor(private readonly httpClient: ApiHttpClient) {
   }
@@ -11,14 +11,16 @@ export default class TrailerApi {
   getTrailerMovieById(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movie/${id}`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movies/movie-id`)
+      .queryParams([['id', id]])
       .execute();
   }
 
   getTrailerBySerieId(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/serie/${id}`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/series/serie-id`)
+      .queryParams([['id', id]])
       .execute();
   }
 }
