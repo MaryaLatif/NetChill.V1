@@ -5,12 +5,15 @@ import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.services.movie.MovieApiService;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Singleton
 public class MovieService {
     private MovieDao movieDao;
@@ -24,17 +27,26 @@ public class MovieService {
         this.configurationService = configurationService;
     }
 
-    //TODO tester avec un id qui n'existe pas
     public Optional<Production> getMovieById(Long movieId) {
-        return Optional.ofNullable(this.movieApiClient.getMovieById(movieId));
+        try {
+            return Optional.of(this.movieApiClient.getMovieById(movieId));
+        } catch (Exception e) {
+            log.warn("Error when fetching movie with id: {}", movieId, e);
+            return Optional.empty();
+        }
     }
 
     public List<Production> getTopRatedByGenre(Long genre) {
         return this.movieApiClient.getMoviesByGenre(genre).getResults();
     }
 
-    public MovieDbPaginatedResponse<Production> getMoviesByGenre(Long genre, int page) {
-        return this.movieApiClient.getMoviesByGenre(genre, page);
+    public Optional<MovieDbPaginatedResponse<Production>> getMoviesByGenre(Long genre, int page) {
+        try{
+            return Optional.of(this.movieApiClient.getMoviesByGenre(genre, page));
+        } catch (Exception e){
+            log.warn("Error when fetching paginated movies with this genre id {} and page {} ", genre, page, e );
+            return Optional.empty();
+        }
     }
 
     public List<Production> getTopRated() {
