@@ -28,8 +28,8 @@ type Genre = {
 };
 
 enum MediaType {
-  MOVIE = 'movie',
-  SERIE = 'serie',
+  MOVIE = 'MOVIE',
+  SERIE = 'SERIE',
 }
 
 type Trailer = {
