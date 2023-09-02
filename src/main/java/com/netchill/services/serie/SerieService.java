@@ -1,16 +1,15 @@
 package com.netchill.services.serie;
 
-import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.services.serie.SerieApiService;
-import com.netchill.webservices.error.NetchillWsError;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Singleton
 public class SerieService {
     private SerieApiService serieApiClient;
@@ -24,11 +23,21 @@ public class SerieService {
         return this.serieApiClient.getNetflixOriginals().getResults();
     }
 
-    public MovieDbPaginatedResponse<Production> getAllNetflixOriginals(Integer page) {
-        return this.serieApiClient.getNetflixOriginals(page);
+    public Optional<MovieDbPaginatedResponse<Production>> getAllNetflixOriginals(Integer page) {
+        try{
+            return Optional.of(this.serieApiClient.getNetflixOriginals(page));
+        } catch (Exception e){
+            log.warn("Error when fetching netflix series at the page {}", page, e);
+            return Optional.empty();
+        }
     }
 
     public Optional<Production> getSerieById(Long id) {
-        return Optional.ofNullable(this.serieApiClient.getSerieById(id));
+        try{
+            return Optional.ofNullable(this.serieApiClient.getSerieById(id));
+        } catch (Exception e){
+            log.warn("Error when fetching netflix serie with id {}", id, e);
+            return Optional.empty();
+        }
     }
 }
