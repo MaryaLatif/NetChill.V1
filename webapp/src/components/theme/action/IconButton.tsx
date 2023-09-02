@@ -1,0 +1,16 @@
+import React from 'react';
+
+type Props = {
+  children: React.ReactNode,
+  onClick?: ()=>void,
+};
+
+function IconButton({ children, onClick }: Props) {
+  return (
+    <button onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+export default IconButton;
