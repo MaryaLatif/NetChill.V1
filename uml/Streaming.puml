@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:click on player button;
+:send a request to the server;
+:the server get the request;
+if(correct id?) then (no)
+    :send an error;
+    stop
+else
+    if(video exist?) then (no)
+        :send an error;
+        stop
+    else (yes)
+        :get video path from db;
+        :send a response with the amount of Byte to load;
+        :browser get the response and send a request with the range needed;
+        :the server get the request;
+        if(range format?) then (bytes - bytes)
+            if(end bytes < video length) then (no)
+                :set the end range with the video length;
+            endif
+        endif
+        :send the part of the video;
+stop
+@enduml

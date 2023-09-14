@@ -20,3 +20,4 @@ target/
 
 # logs
 hs_err*
+/src/main/resources/videos/
