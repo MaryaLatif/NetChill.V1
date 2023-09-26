@@ -20,11 +20,6 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
 @Singleton
-//TODO à revoir
-/*
-* - Mettre des S dans les path des WS
-* - id en query param et pas pathparam ?serieId et ?movieId
-*/
 public class TrailerWs {
     private final ConfigurationService configurationService;
     private final TrailerService movieStreamingService;
@@ -38,14 +33,14 @@ public class TrailerWs {
     }
 
     @GET
-    @Path("/series/serie-id")
+    @Path("/series")
     public YoutubeKey getTrailerBySerieId(@QueryParam("id") Long id) {
         return this.movieStreamingService.getTrailerBySerieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
-    @Path("/movies/movie-id")
+    @Path("/movies")
     public YoutubeKey getTrailerByMovieId(@QueryParam("id") Long id) {
         return this.movieStreamingService.getTrailerByMovieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
