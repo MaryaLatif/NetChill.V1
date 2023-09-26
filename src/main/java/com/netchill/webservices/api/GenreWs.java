@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Optional;
 
-@Path("/genre")
+@Path("/genres")
 @Tag(name = "Genre", description = "WS about genres")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

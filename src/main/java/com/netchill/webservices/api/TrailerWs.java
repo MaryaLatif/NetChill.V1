@@ -14,35 +14,34 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/trailer")
+@Path("/trailers")
 @Tag(name = "Trailer", description = "All about trailer")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @PublicApi
 @Singleton
-//TODO à revoir
 public class TrailerWs {
     private final ConfigurationService configurationService;
     private final TrailerService movieStreamingService;
     private final MovieDao movieDao;
 
     @Inject
-    public TrailerWs(ConfigurationService configurationService, TrailerService movieStreamingService, MovieDao movieDao) {
+    private TrailerWs(ConfigurationService configurationService, TrailerService movieStreamingService, MovieDao movieDao) {
         this.configurationService = configurationService;
         this.movieStreamingService = movieStreamingService;
         this.movieDao = movieDao;
     }
 
     @GET
-    @Path("/serie/{id}")
-    public YoutubeKey getTrailerBySerieId(@PathParam("id") Long id) {
+    @Path("/series")
+    public YoutubeKey getTrailerBySerieId(@QueryParam("id") Long id) {
         return this.movieStreamingService.getTrailerBySerieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
-    @Path("/movie/{id}")
-    public YoutubeKey getTrailerByMovieId(@PathParam("id") Long id) {
+    @Path("/movies")
+    public YoutubeKey getTrailerByMovieId(@QueryParam("id") Long id) {
         return this.movieStreamingService.getTrailerByMovieId(id)
                 .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
