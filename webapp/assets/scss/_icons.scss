@@ -1,16 +1,18 @@
+@use "variables" as *;
+
 @font-face {
   font-family: 'Material Icons Outlined';
   font-style: normal;
   font-weight: 400;
   src: url(../icons/material-icons-outlined.woff2) format('woff2'),
-    url(../icons/material-icons-outlined.woff) format('woff');
+  url(../icons/material-icons-outlined.woff) format('woff');
 }
 
 .material-icons {
   font-family: 'Material Icons Outlined'; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
+  font-size: 24px; /* Preferred icon size */
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -30,4 +32,19 @@
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+}
+
+.icon-button {
+  object-fit: contain;
+  height: 100%;
+  color: white;
+  border-radius: $button-border-radius;
+  border: none;
+  cursor: pointer;
+  background: $button-background;
+  border-left: $border;
+
+  &:hover {
+    background: $button-background-hover;
+  }
 }
