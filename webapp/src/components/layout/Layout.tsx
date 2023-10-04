@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollRestoration } from 'react-router-dom';
 import GlobalErrorBoundary from '../theme/GlobalErrorBoundary';
 import logo from '../../../assets/icons/logo_transparent.png';
@@ -12,23 +12,18 @@ const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
 
 export default function Layout({ children }: Props) {
   const [lighterHeader, setLighterHeader] = useState<boolean>(true);
+  const headerRef = useRef<HTMLDivElement>(null);
 
-  // TODO à revoir
-  const topOfScreen: number = document.querySelectorAll('.row')[0]?.getBoundingClientRect().top;
-
-  // TODO à revoir
   function handleScroll() {
-    if (document.querySelectorAll('.row')[0].getBoundingClientRect().top >= topOfScreen) {
-      setLighterHeader(true);
-    } else {
-      setLighterHeader(false);
+    if (!headerRef.current) {
+      return;
     }
+    setLighterHeader(headerRef.current.scrollTop === 0);
   }
-
   return <GlobalErrorBoundary>
     <Header logo={logo} navItems={navItems} isLighter={lighterHeader}/>
     {/* <Header /> */}
-    <div className='content-layout' onScroll={handleScroll}>
+    <div ref={headerRef} className='content-layout' onScroll={handleScroll}>
       {children}
     </div>
     <ScrollRestoration/>

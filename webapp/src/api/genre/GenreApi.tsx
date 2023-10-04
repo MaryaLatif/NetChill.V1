@@ -3,7 +3,7 @@ import ApiHttpClient from '../ApiHttpClient';
 import { Genre } from '../types/MovieDbTypes';
 
 export default class GenreApi {
-  private BASE_URL : string = '/genre';
+  private BASE_URL : string = '/genres';
 
   constructor(private readonly httpClient: ApiHttpClient) {
   }
