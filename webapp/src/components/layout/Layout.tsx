@@ -21,7 +21,7 @@ export default function Layout({ children }: Props) {
     setLighterHeader(headerRef.current.scrollTop === 0);
   }
   return <GlobalErrorBoundary>
-    <Header logo={logo} navItems={navItems} isLighter={lighterHeader}/>
+    <Header logo={logo} /* navItems={navItems} */ isLighter={lighterHeader}/>
     {/* <Header /> */}
     <div ref={headerRef} className='content-layout' onScroll={handleScroll}>
       {children}

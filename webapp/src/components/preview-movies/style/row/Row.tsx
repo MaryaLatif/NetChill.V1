@@ -146,7 +146,7 @@ function Row({
         && trailer
         && movieInfo
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-        && (<div onClick={(event) => {
+        && (<div /* onClick={(event) => {
           let element = event.target;
           while (element.parentNode
             && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
@@ -155,7 +155,7 @@ function Row({
           if (element.parentNode !== document.getElementsByName('show-movie')) {
             handleCloseTrailerPopIn();
           }
-        }}>
+        }} */>
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}
