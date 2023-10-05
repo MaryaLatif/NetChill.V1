@@ -29,8 +29,8 @@ type MovieInfo = {
 // TODO [REFACTO-SCSS]
 // TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-               title, movieList, isLargerRow, topRated, isDataLoading,
-             }: Props) {
+  title, movieList, isLargerRow, topRated, isDataLoading,
+}: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
@@ -78,8 +78,6 @@ function Row({
     if (!sliderRef.current) {
       return;
     }
-    console.log(sliderRef.current);
-    console.log(currentSliderLeft);
     setCurrentSliderLeft(sliderRef.current.scrollLeft);
     setSliderWidth(sliderRef.current.scrollWidth);
   }, [sliderRef.current?.scrollLeft]);
@@ -147,16 +145,17 @@ function Row({
         visible
         && trailer
         && movieInfo
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
         && (<div onClick={(event) => {
-            let element = event.target;
-            while (element.parentNode
+          let element = event.target;
+          while (element.parentNode
             && (element.parentNode !== document.getElementsByClassName('show-movie'))) {
-              element = element.parentNode;
-            }
-            if (element.parentNode !== document.getElementsByName('show-movie')) {
-              handleCloseTrailerPopIn();
-            }
-          }}>
+            element = element.parentNode;
+          }
+          if (element.parentNode !== document.getElementsByName('show-movie')) {
+            handleCloseTrailerPopIn();
+          }
+        }}>
             <ShowTrailer
               url={trailer.key}
               overview={movieInfo.overview}

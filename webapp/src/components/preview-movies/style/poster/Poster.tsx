@@ -19,16 +19,13 @@ type Props = {
   onHideTrailer?: () => void
 };
 
-const SHOW_TRAILER_TIMER: number = 1_000;
-
 function Poster({
-                  title, overview, id, type, backdrop_path, isSelected, onShowTrailer, onHideTrailer,
-                }: Props) {
+  title, overview, id, type, backdrop_path, isSelected, onShowTrailer, onHideTrailer,
+}: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [isTrailerShown, setIsTrailerShown] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState<Trailer>();
-  const [trailerOpacityOne, setTrailerOpacityOne] = useState(false);
 
   const trailer = useRef<HTMLDivElement>(null);
 
@@ -56,6 +53,7 @@ function Poster({
     }
 
     // TODO
+    // eslint-disable-next-line compat/compat
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].intersectionRatio < 0.25) {
