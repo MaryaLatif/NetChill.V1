@@ -18,29 +18,11 @@
     color: $color-p;
   }
 
-  &__icon {
-    object-fit: contain;
-    height: 100%;
-    color: white;
-  }
-
   button {
     position: absolute;
     top: 0;
     border-radius: $button-border-radius;
     right: 0px;
-    border: none;
-    cursor: pointer;
-    color: $color-p;
-    padding: 0 $spacer-XS 0 $spacer-XS;
-    background: $button-background;
-    height: 30px;
-    width: 40px;
-    border-left: $border;
-
-    &:hover{
-      background: $button-background-hover;
-    }
   }
 }
 

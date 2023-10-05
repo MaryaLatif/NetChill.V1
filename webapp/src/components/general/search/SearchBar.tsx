@@ -7,7 +7,7 @@ function SearchBar() {
   return (
     <div className="search-bar">
       <input type="search" id="site-search" placeholder="Search" />
-      <IconButton><Search className="search-bar__icon" /></IconButton>
+      <IconButton><Search /></IconButton>
     </div>
   );
 }

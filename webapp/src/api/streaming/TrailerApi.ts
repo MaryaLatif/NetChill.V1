@@ -11,7 +11,7 @@ export default class TrailerApi {
   getTrailerMovieById(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movies/movie-id`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/movies`)
       .queryParams([['id', id]])
       .execute();
   }
@@ -19,7 +19,7 @@ export default class TrailerApi {
   getTrailerBySerieId(id: number) {
     return this
       .httpClient
-      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/series/serie-id`)
+      .restRequest<Trailer>(HttpMethod.GET, `${this.baseUrl}/series`)
       .queryParams([['id', id]])
       .execute();
   }
