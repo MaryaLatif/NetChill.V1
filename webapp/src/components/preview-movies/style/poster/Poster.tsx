@@ -15,58 +15,38 @@ type Props = {
   type: string,
   backdrop_path: string,
   isSelected: boolean,
-  onShowTrailer?: () => void,
-  onHideTrailer?: () => void
+  isVisible: boolean,
+  onStartTrailer?: () => void,
+  onStopTrailer?: () => void
 };
 
 function Poster({
-  title, overview, id, type, backdrop_path, isSelected, onShowTrailer, onHideTrailer,
+  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
 }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
-  const [isTrailerShown, setIsTrailerShown] = useState(false);
+  const [isTrailerStarted, setIsTrailerStarted] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState<Trailer>();
 
-  const trailer = useRef<HTMLDivElement>(null);
+  const trailerRef = useRef<HTMLDivElement>(null);
 
   const movieLoader = useLoader();
 
-  const showTrailer = () => {
+  const startTrailer = () => {
     if (!trailerUrl) {
       return;
     }
-    onShowTrailer?.();
-    setIsTrailerShown(true);
+    onStartTrailer?.();
+    setIsTrailerStarted(true);
   };
 
-  const hideTrailer = () => {
+  const stopTrailer = () => {
     if (!trailerUrl) {
       return;
     }
-    onHideTrailer?.();
-    setIsTrailerShown(false);
+    onStopTrailer?.();
+    setIsTrailerStarted(false);
   };
-
-  useEffect(() => {
-    if (!trailer.current) {
-      return;
-    }
-
-    // TODO
-    // eslint-disable-next-line compat/compat
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].intersectionRatio < 0.25) {
-          setIsTrailerShown(false);
-        }
-      }, {
-        threshold: 0.25,
-      });
-
-    observer.observe(trailer.current);
-
-    return () => observer.disconnect();
-  }, [trailer.current]);
 
   useEffect(() => {
     const apiCall = type === MediaType.MOVIE
@@ -77,23 +57,32 @@ function Poster({
       .then(setTrailerUrl));
   }, [id]);
 
+  useEffect(() => {
+    if (!isVisible) {
+      setIsTrailerStarted(false);
+    }
+  }, [isVisible]);
+
   return (
     <div
-      ref={trailer}
+      ref={trailerRef}
+      aria-hidden onClick={startTrailer}
       className={classNames('top-card', { 'top-card--selected': isSelected })}
     >
       <MediaDetails title={title} overview={overview} />
 
-      <div aria-hidden onClick={showTrailer}>
+      <div >
         <PosterBackground className="top-card__img" title={title} path={backdrop_path} />
       </div>
 
-      {isTrailerShown && trailerUrl
+      {
+        isTrailerStarted
+        && trailerUrl
         && (
           <ShowLargeTrailer
             videoKey={trailerUrl.key}
-            onPause={hideTrailer}
-            onEnd={hideTrailer}
+            onPause={stopTrailer}
+            onEnd={stopTrailer}
             />
         )}
     </div>

@@ -15,9 +15,9 @@
     position: relative;
     margin: $spacer-S 0 0 $spacer-M ;
 
-    .navigation__container{
+    .arrow{
       height: $height-poster;
-      padding: $spacer-S 0 $spacer-S 0;
+      margin-top: $spacer-S;
     }
   }
 
