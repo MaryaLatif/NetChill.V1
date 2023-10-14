@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../../../../../assets/scss/components/style/row/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
+import MediaQuery from 'react-responsive';
 import Arrow from '../arrow/Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
@@ -116,31 +117,40 @@ function Row({
                   isArrowLeftVisible={currentPosition > 0}
                   isArrowRightVisible
                   onClickArrowRight={handleClickArrowRight}
-                  onClickArrowLeft={handleClickArrowLeft} >
-                    <div ref={sliderRef} className="row__posters">
-                      {movieList.map((movie, index) => (
-                        <div
-                          key={movie.id}
-                          className={classNames(
-                            'poster',
-                            { 'poster--large': isLargerRow },
-                            { top_rated: topRated },
-                          )}
-                          onClick={() => handleClick(index)}
-                          aria-hidden="true"
-                        >
+                  onClickArrowLeft={handleClickArrowLeft}>
+                  <div ref={sliderRef} className="row__posters">
+                    {movieList.map((movie, index) => (
+                      <div
+                        key={movie.id}
+                        className={classNames(
+                          'poster',
+                          { 'poster--large': isLargerRow },
+                          { top_rated: topRated },
+                        )}
+                        onClick={() => handleClick(index)}
+                        aria-hidden="true"
+                      >
+                        <MediaQuery maxWidth={767}>
+                          <PosterBackground
+                            path={movie.poster_path}
+                            title={movie.title}
+                            className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
+                          />
+                        </MediaQuery>
+                        <MediaQuery minWidth={767}>
                           <PosterBackground
                             path={isLargerRow || !movie.backdrop_path ? movie.poster_path : movie.backdrop_path}
                             title={movie.title}
                             className={classNames('media__img', { 'media__img-deformed': !movie.backdrop_path })}
                           />
-                          <div className="media__info">
-                            <p className="media__title">{movie.title}</p>
-                            < Recommendation average={movie.vote_average} />
-                          </div>
+                        </MediaQuery>
+                        <div className="media__info">
+                          <p className="media__title">{movie.title}</p>
+                          < Recommendation average={movie.vote_average} />
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
+                  </div>
                 </Slider>
               </div>
             )

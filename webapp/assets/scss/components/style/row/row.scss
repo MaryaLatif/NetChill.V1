@@ -7,15 +7,15 @@
   > h2 {
     margin-left: $spacer-M;
     color: $color-p;
-    font-family: "Helvetica Neue";
+    font-family: $title-font;
     font-weight: 500;
   }
 
-  &__poster-container{
+  &__poster-container {
     position: relative;
-    margin: $spacer-S 0 0 $spacer-M ;
+    margin: $spacer-S 0 0 $spacer-M;
 
-    .arrow{
+    .arrow {
       height: $height-poster;
       margin-top: $spacer-S;
     }
@@ -79,6 +79,10 @@
 
       .media__title {
         margin-bottom: $spacer-S;
+
+        &--phone {
+          font-size: $font-size-S;
+        }
       }
 
       .media__img {
@@ -86,7 +90,8 @@
         max-height: $height-poster;
         border-radius: 10px;
         border: $border-color;
-        &-deformed{
+
+        &-deformed {
           width: $width-poster-S;
         }
       }
@@ -113,11 +118,9 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
-  .row {
-    h2 {
-      font-size: $font-size-L;
-      font-weight: normal;
-    }
+// css for phone with screen under 767px
+@media (max-width: 767px) {
+  .row > h2 {
+    font-size: $font-size-M;
   }
 }
