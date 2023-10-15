@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import MediaQuery from 'react-responsive';
 import { Production } from '../../../../api/types/MovieDbTypes';
 import useIntersectionObserver from '../../../../lib/hooks/IntersectionObserver';
 import useInterval from '../../../../lib/hooks/Interval';
@@ -65,9 +66,9 @@ function TopRow({ movieList, isDataLoading }: Props) {
   }, [currentPoster]);
 
   return (
-    <div className='row-top'>
+    <div className="row-top">
       {
-        isDataLoading ? <RowLoading/>
+        isDataLoading ? <RowLoading />
           : (
             <>
               <Slider
@@ -75,26 +76,44 @@ function TopRow({ movieList, isDataLoading }: Props) {
                 isArrowRightVisible={currentPoster < movieList.length - 1}
                 onClickArrowRight={goNextPoster}
                 onClickArrowLeft={goPreviousPoster}>
-                <div ref={sliderRef} className='row__posters row__posters--top'>
+                <div ref={sliderRef} className="row__posters row__posters--top">
                   {movieList.map((movie, index) => {
                     const isSelected = currentPoster === index;
                     return (
-                      <Poster
-                        key={movie.id}
-                        title={movie.title}
-                        overview={movie.overview}
-                        id={movie.id}
-                        type={movie.type}
-                        backdrop_path={movie.backdrop_path}
-                        isSelected={isSelected}
-                        isVisible={isSliderVisible}
-                        onStartTrailer={stopInterval}
-                      />
+                      // eslint-disable-next-line react/jsx-key
+                      <div>
+                        <MediaQuery maxWidth={767}>
+                          <Poster
+                            key={movie.id}
+                            title={movie.title}
+                            overview={movie.overview}
+                            id={movie.id}
+                            type={movie.type}
+                            backdrop_path={movie.poster_path}
+                            isSelected={isSelected}
+                            isVisible={isSliderVisible}
+                            onStartTrailer={stopInterval}
+                          />
+                        </MediaQuery>
+                        <MediaQuery minWidth={767}>
+                          <Poster
+                            key={movie.id}
+                            title={movie.title}
+                            overview={movie.overview}
+                            id={movie.id}
+                            type={movie.type}
+                            backdrop_path={movie.backdrop_path}
+                            isSelected={isSelected}
+                            isVisible={isSliderVisible}
+                            onStartTrailer={stopInterval}
+                          />
+                        </MediaQuery>
+                      </div>
                     );
                   })}
                 </div>
               </Slider>
-              </>
+            </>
           )
       }
     </div>

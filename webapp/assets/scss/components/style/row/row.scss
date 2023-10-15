@@ -120,7 +120,13 @@
 
 // css for phone with screen under 767px
 @media (max-width: 767px) {
-  .row > h2 {
-    font-size: $font-size-M;
+  .row {
+    > h2 {
+      font-size: $font-size-M;
+      margin-left: 0;
+    }
+    &__poster-container{
+      margin: $spacer-S 0 0 0;
+    }
   }
 }

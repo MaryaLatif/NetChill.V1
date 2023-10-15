@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { getGlobalInstance } from 'plume-ts-di';
+import MediaQuery from 'react-responsive';
 import PosterBackground from './PosterBackground';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import { MediaType, Trailer } from '../../../../api/types/MovieDbTypes';
@@ -21,8 +22,8 @@ type Props = {
 };
 
 function Poster({
-  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
-}: Props) {
+                  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
+                }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [isTrailerStarted, setIsTrailerStarted] = useState(false);
@@ -64,27 +65,34 @@ function Poster({
   }, [isVisible]);
 
   return (
-    <div
-      ref={trailerRef}
-      aria-hidden onClick={startTrailer}
-      className={classNames('top-card', { 'top-card--selected': isSelected })}
-    >
-      <MediaDetails title={title} overview={overview} />
+    <div>
+      <div
+        ref={trailerRef}
+        aria-hidden onClick={startTrailer}
+        className={classNames('top-card', { 'top-card--selected': isSelected })}
+      >
+        <MediaQuery minWidth={767}>
+          <MediaDetails title={title} overview={overview} />
+        </MediaQuery>
 
-      <div >
-        <PosterBackground className="top-card__img" title={title} path={backdrop_path} />
-      </div>
+        <div>
+          <PosterBackground className="top-card__img" title={title} path={backdrop_path} />
+        </div>
 
-      {
-        isTrailerStarted
-        && trailerUrl
-        && (
-          <ShowLargeTrailer
-            videoKey={trailerUrl.key}
-            onPause={stopTrailer}
-            onEnd={stopTrailer}
+        {
+          isTrailerStarted
+          && trailerUrl
+          && (
+            <ShowLargeTrailer
+              videoKey={trailerUrl.key}
+              onPause={stopTrailer}
+              onEnd={stopTrailer}
             />
-        )}
+          )}
+      </div>
+      <MediaQuery maxWidth={767}>
+        <MediaDetails title={title} overview={overview} />
+      </MediaQuery>
     </div>
   );
 }

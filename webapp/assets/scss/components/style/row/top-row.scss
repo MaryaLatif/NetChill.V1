@@ -2,9 +2,7 @@
 
 .row-top {
   z-index: 0;
-  min-height: 70vh;
   position: relative;
-  margin-bottom: $spacer-XL;
 
   .row__posters {
     padding: 0;
@@ -93,6 +91,17 @@
     }
   }
   .arrow{
-    height: 100vh;
+    height: 100%;
+  }
+}
+
+// css for phone with screen under 767px
+@media (max-width: 767px) {
+  #info{
+    display: flex;
+    flex-direction: column;
+    gap: $spacer-S;
+    margin: $spacer-S;
+    color: white;
   }
 }
