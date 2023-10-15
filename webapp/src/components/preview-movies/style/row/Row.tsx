@@ -3,7 +3,6 @@ import '../../../../../assets/scss/components/style/row/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
 import MediaQuery from 'react-responsive';
-import Arrow from '../arrow/Arrow';
 import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
@@ -161,7 +160,6 @@ function Row({
         visible
         && trailer
         && movieInfo
-        // eslint-disable-next-line jsx-a11y/click-events-have-key
         && (<div /* onClick={(event) => {
           let element = event.target;
           while (element.parentNode

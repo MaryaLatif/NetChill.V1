@@ -22,8 +22,8 @@ type Props = {
 };
 
 function Poster({
-                  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
-                }: Props) {
+  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
+}: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
   const [isTrailerStarted, setIsTrailerStarted] = useState(false);

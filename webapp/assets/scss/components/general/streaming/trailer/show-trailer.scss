@@ -114,4 +114,9 @@
   }
 }
 
-
+// css for phone with screen under 767px
+@media (max-width: 767px) {
+  .show-movie{
+    width: 100%!important;
+  }
+}

@@ -8,7 +8,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
+// const navItems: string[] = ['Home', 'Serie', 'Movie', 'Genre'];
 
 export default function Layout({ children }: Props) {
   const [lighterHeader, setLighterHeader] = useState<boolean>(true);
