@@ -1,7 +1,10 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsError;
+import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.services.streaming.StreamService;
+import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +16,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
 import java.io.IOException;
 
 @Path("/stream")
@@ -31,8 +35,32 @@ public class StreamWs {
 
     @GET
     @Produces("application/octet-stream")
-    @Path("/video/{name}")
-    public Response getMediaVideo(@PathParam("name") String videoName, @HeaderParam("Range") String range) throws IOException {
-        return this.streamService.getMediaVideo(videoName, range);
+    @Path("/video/{movieId}")
+    public Response getMediaVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range) throws WsException, IOException {
+        File video = this.streamService.getMediaVideo(movieId);
+        if(video == null){
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
+        }
+
+        // Si il n'y a pas de range on envoie toute la vidéo
+        if(range == null){
+            return  Response.status(Response.Status.OK)
+                .header("Content-length", video.length())
+                .header("Accept-Ranges", "bytes")
+                .build();
+        }
+        //Sinon on fait tout ça:
+        long[] parts = this.streamService.getRangePart(range, video.length() - 1);
+        long start = parts[0];
+        long end = parts[1];
+
+        byte[] videoPart = this.streamService.getVideoPart(movieId, start, end);
+
+        return Response.status(Response.Status.PARTIAL_CONTENT)
+            .entity(videoPart)
+            .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
+            .header("Content-length", end - start + 1 )
+            .header("Accept-Ranges", "bytes")
+            .build();
     }
 }
