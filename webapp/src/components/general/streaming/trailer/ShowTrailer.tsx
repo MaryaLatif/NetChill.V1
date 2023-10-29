@@ -7,13 +7,14 @@ import ErrorTrailer from './ErrorTrailer';
 import Player from '../movie/Player';
 
 type Props = {
+  movieId: number,
   url: string,
   overview: string,
   genreIds: number[],
   onClose: () => void,
 };
 
-function ShowTrailer({
+function ShowTrailer({ movieId,
   url, overview, genreIds, onClose,
 }: Props) {
   const opts = {
@@ -35,7 +36,7 @@ function ShowTrailer({
             ? <YouTube videoId={url} opts={opts}/>
             : <ErrorTrailer/>
         }
-        <Player/>
+        <Player movieId={movieId}/>
         <div className='about-it'>
           <div className='about-it__overview__container'>
             <h3>Overview</h3>

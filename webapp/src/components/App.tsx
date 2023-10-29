@@ -21,7 +21,7 @@ export default function App() {
           element: <RenderMovies/>,
         },
         {
-          path: 'stream',
+          path: 'stream/:movieId',
           element: <Stream />,
         },
       ],

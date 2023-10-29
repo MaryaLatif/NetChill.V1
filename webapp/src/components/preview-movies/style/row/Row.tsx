@@ -171,6 +171,7 @@ function Row({
           }
         }} */>
             <ShowTrailer
+              movieId={movieInfo.id}
               url={trailer.key}
               overview={movieInfo.overview}
               genreIds={movieInfo.genre_ids}
