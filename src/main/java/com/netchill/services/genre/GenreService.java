@@ -27,6 +27,6 @@ public class GenreService {
     }
 
     public List<Genre> featuredGenre() {
-        return this.genreDao.getPreviewGenres();
+        return this.genreDao.featuredGenre();
     }
 }

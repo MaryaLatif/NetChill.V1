@@ -5,6 +5,7 @@ import { Logger } from 'simple-logging-system';
 import Layout from './layout/Layout';
 import ErrorPage from './pages/ErrorPage';
 import RenderMovies from './preview-movies/RenderMovies';
+import Stream from './pages/stream/Stream';
 
 const logger = new Logger('App');
 
@@ -18,6 +19,10 @@ export default function App() {
         {
           index: true,
           element: <RenderMovies/>,
+        },
+        {
+          path: 'stream',
+          element: <Stream />,
         },
       ],
     },
