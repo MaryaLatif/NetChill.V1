@@ -2,6 +2,7 @@ package com.netchill.services.streaming;
 
 import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.db.dao.movie.MovieDao;
+import com.netchill.services.configuration.ConfigurationService;
 import com.netchill.webservices.error.NetchillWsError;
 
 import javax.inject.Inject;
@@ -13,42 +14,59 @@ import static java.lang.Long.parseLong;
 
 public class StreamService {
     private final MovieDao movieDao;
-    private static final String VIDEO_PATH = "transformers.mkv";
+    private final ConfigurationService configurationService;
+    private static final int CHUNK_SIZE = 1_000_000; // 1MB de vidéo à renvoyer
 
     @Inject
-    private StreamService(MovieDao movieDao){
+    private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
         this.movieDao = movieDao;
+        this.configurationService = configurationService;
     }
 
-    public Response getMediaVideo(String videoName, String range) throws IOException {
-        File video = new File("/Users/marya/Dev/NetChill.V1/src/main/resources/videos/transformers.mkv");
-        if(!video.exists()){
-            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
-        }
+    /**
+     * Récupère le nom du fichier vidéo du film à partir de la bd
+     *
+     * @param movieId
+     * @return
+     * @throws WsException
+     */
+    public File getMediaVideo(Long movieId) {
+        File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(movieId));
+        return video;
+    }
 
-        if(range == null){
-            return  Response.status(Response.Status.OK)
-                    .header("Content-length", video.length())
-                    .header("Accept-Ranges", "bytes")
-                    .build();
-        }
-
-        final int CHUNK_SIZE = 1_000_000;
-        InputStream videoPath = StreamService.class.getResourceAsStream("/videos/transformers.mkv");
-        String[] parts = range.replace("bytes=","").split("-");
+    /**
+     * Transforme le range qui est de la form "Range: x-y" avec x, y = long, en tableau [x, y]
+     *
+     * @param range
+     * @param videoLength
+     * @return
+     */
+    public long[] getRangePart(String range, long videoLength) {
+        String[] parts = range.replace("bytes=", "").split("-");
         long start = parseLong(parts[0], 10);
-        long end = parts.length > 1 ? parseInt(parts[1]) : Math.min(start + CHUNK_SIZE, video.length()-1); //prend le plus petit des 2 paramètres
 
-        System.out.println("range: " + range + " parts: " + parts[0]);
+        // Si le byte de fin > taille de la vidéo -> on envoie le bout vidéo jusqu'à la fin du film
+        long end = parts.length > 1 ? parseInt(parts[1]) : Math.min(start + CHUNK_SIZE, videoLength); //prend le plus petit des 2 paramètres
 
-        videoPath.skipNBytes(start);
+        return new long[]{start, end};
+    }
 
-        return Response.status(Response.Status.PARTIAL_CONTENT)
-                .entity(videoPath.readNBytes((int)end))
-                .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-                .header("Content-length", end - start + 1 )
-                .header("Accept-Ranges", "bytes")
-                .build();
+    /**
+     * Renvoie le morceau de vidéo souhaité
+     *
+     * @param id
+     * @param videoStart
+     * @param videoEnd
+     * @return
+     * @throws IOException
+     */
+    public byte[] getVideoPart(Long id, long videoStart, long videoEnd) throws IOException {
+        InputStream videoPath = StreamService.class.getResourceAsStream("/videos/" + this.movieDao.getMovieUrl(id));
+
+        //Je n'ai pas trouvé de fonction qui renvoie le bout de vidéo d'un début x à une fin y, donc je skip la vidéo jusqu'au début du range.
+        videoPath.skipNBytes(videoStart);
+        return videoPath.readNBytes((int) videoEnd);
     }
 
 }
