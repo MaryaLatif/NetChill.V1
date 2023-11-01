@@ -38,7 +38,7 @@ public class WebApplication {
 			jerseyResourceConfig.register(new JerseyGuiceFeature(injector));
 
 			// migrate the database
-			//injector.getInstance(FlywayService.class).migrate();
+			injector.getInstance(FlywayService.class).migrate();
 			
 			// starts the server
 			HttpServer httpServer = GrizzlySetup.start(
