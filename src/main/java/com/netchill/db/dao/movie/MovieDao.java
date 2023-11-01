@@ -1,6 +1,7 @@
 package com.netchill.db.dao.movie;
 
 import com.coreoz.plume.db.querydsl.transaction.TransactionManagerQuerydsl;
+import com.netchill.db.generated.QMovie;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,7 +40,14 @@ public class MovieDao {
 
         return new MovieTitleWithUrl(tuple.get(QMovie.movie.title), tuple.get(QMovie.movie.movieUrl));
     }
-
      */
+
+    public String getMovieUrl(Long idMovie){
+        return transactionManager.selectQuery()
+            .select(QMovie.movie.movieUrl)
+            .from(QMovie.movie)
+            .where(QMovie.movie.id.eq(idMovie))
+            .fetchOne();
+    }
 }
 

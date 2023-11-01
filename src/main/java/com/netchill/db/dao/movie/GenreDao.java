@@ -26,7 +26,7 @@ public class GenreDao {
                 .fetchOne());
     }
 
-    public List<Genre> getPreviewGenres() {
+    public List<Genre> featuredGenre() {
         return this.transactionManager.selectQuery()
                 .select(QGenre.genre)
                 .from(QGenre.genre)
