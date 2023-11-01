@@ -62,12 +62,11 @@ public class StreamService {
      * @throws IOException
      */
     public byte[] getVideoPart(Long id, long videoStart, long videoEnd) throws IOException {
-        InputStream videoPath = StreamService.class.getResourceAsStream("/videos/" + this.movieDao.getMovieUrl(id));
+        InputStream videoPath = StreamService.class.getResourceAsStream("/movies/" + this.movieDao.getMovieUrl(id));
 
         long remainingBytesToSkip = videoStart;
         // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
         while (remainingBytesToSkip > 0) {
-            System.out.println("SKIPPED");
             long bytesSkipped = videoPath.skip(remainingBytesToSkip);
             if (bytesSkipped <= 0) {
                 throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
