@@ -64,9 +64,32 @@ public class StreamService {
     public byte[] getVideoPart(Long id, long videoStart, long videoEnd) throws IOException {
         InputStream videoPath = StreamService.class.getResourceAsStream("/videos/" + this.movieDao.getMovieUrl(id));
 
-        //Je n'ai pas trouvé de fonction qui renvoie le bout de vidéo d'un début x à une fin y, donc je skip la vidéo jusqu'au début du range.
-        videoPath.skipNBytes(videoStart);
-        return videoPath.readNBytes((int) videoEnd);
+        long remainingBytesToSkip = videoStart;
+        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
+        while (remainingBytesToSkip > 0) {
+            System.out.println("SKIPPED");
+            long bytesSkipped = videoPath.skip(remainingBytesToSkip);
+            if (bytesSkipped <= 0) {
+                throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+            }
+            remainingBytesToSkip -= bytesSkipped;
+        }
+
+        int bufferSize = CHUNK_SIZE; // Taille du tampon de lecture
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+
+        byte[] buffer = new byte[bufferSize];
+        int bytesRead;
+        long bytesToRead = videoEnd; // quantité à lire
+
+        // videoPath.read(buffer) = lit 1024 octet, si la fin du flux est atteinte, read() renverra -1
+        while ((bytesRead = videoPath.read(buffer)) != -1 && bytesToRead > 0) {
+            int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
+            byteStream.write(buffer, 0, bytesToWrite);
+            bytesToRead -= bytesToWrite;
+        }
+
+        return byteStream.toByteArray();
     }
 
 }
