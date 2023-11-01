@@ -62,7 +62,7 @@ public class StreamService {
      * @throws IOException
      */
     public byte[] getVideoPart(Long id, long videoStart, long videoEnd) throws IOException {
-        InputStream videoPath = StreamService.class.getResourceAsStream("/movies/" + this.movieDao.getMovieUrl(id));
+        InputStream videoPath = new FileInputStream(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(id));
 
         long remainingBytesToSkip = videoStart;
         // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
