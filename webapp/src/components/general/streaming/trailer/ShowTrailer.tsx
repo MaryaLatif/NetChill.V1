@@ -14,7 +14,8 @@ type Props = {
   onClose: () => void,
 };
 
-function ShowTrailer({ movieId,
+function ShowTrailer({
+  movieId,
   url, overview, genreIds, onClose,
 }: Props) {
   const opts = {
