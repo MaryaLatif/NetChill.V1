@@ -8,7 +8,7 @@ function Stream() {
   return (
     <div className="stream-container">
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video src={`http://localhost:8080/api/stream/video/${movieId}`} width="50%" controls autoPlay>
+      <video src={`http://localhost:8080/api/stream/video/${movieId}`} width='100%' height='100%' controls autoPlay>
       </video>
     </div>
   );
