@@ -15,7 +15,7 @@ import static java.lang.Long.parseLong;
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
-    private static final int CHUNK_SIZE = 1_000_000; // 1MB de vidéo à renvoyer
+    private static final int CHUNK_SIZE = 5_000_000; // 5MB de tampon pour la mémoire cache
 
     @Inject
     private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
