@@ -58,31 +58,32 @@ public class StreamService {
      * @throws IOException
      */
     public byte[] getVideoPart(File initialFile, long[] parts, long videoLength) throws IOException {
-        InputStream targetStream = new FileInputStream(initialFile);
-        long remainingBytesToSkip = parts[0];
+        try (InputStream targetStream = new FileInputStream(initialFile)) {
+            long remainingBytesToSkip = parts[0];
 
-        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
-        while (remainingBytesToSkip > 0) {
-            long bytesSkipped = targetStream.skip(remainingBytesToSkip);
-            if (bytesSkipped <= 0) {
-                throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+            // Utilisation d'une boucle car ce n'est pas sûr que le saut se fait en une fois, il faut donc gérer cela
+            while (remainingBytesToSkip > 0) {
+                long bytesSkipped = targetStream.skip(remainingBytesToSkip);
+                if (bytesSkipped <= 0) {
+                    throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+                }
+                remainingBytesToSkip -= bytesSkipped;
             }
-            remainingBytesToSkip -= bytesSkipped;
+
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[CHUNK_SIZE];
+            int bytesRead;
+            long bytesToRead = parts[1]; // quantité à lire
+
+            // targetStream.read(buffer) = lit 1 Mo, si la fin du flux est atteinte, read() renverra -1
+            while ((bytesRead = targetStream.read(buffer)) != -1 && bytesToRead > 0) {
+                int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
+                byteStream.write(buffer, 0, bytesToWrite);
+                bytesToRead -= bytesToWrite;
+            }
+
+            return byteStream.toByteArray();
         }
-
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[CHUNK_SIZE];
-        int bytesRead;
-        long bytesToRead = parts[1]; // quantité à lire
-
-        // videoPath.read(buffer) = lit 1Mo, si la fin du flux est atteinte, read() renverra -1
-        while ((bytesRead = targetStream.read(buffer)) != -1 && bytesToRead > 0) {
-            int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
-            byteStream.write(buffer, 0, bytesToWrite);
-            bytesToRead -= bytesToWrite;
-        }
-
-        return byteStream.toByteArray();
     }
 
 }
