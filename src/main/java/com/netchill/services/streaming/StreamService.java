@@ -3,6 +3,7 @@ package com.netchill.services.streaming;
 import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
+import org.checkerframework.checker.units.qual.C;
 
 import javax.inject.Inject;
 import java.io.*;
@@ -58,43 +59,25 @@ public class StreamService {
      * @throws IOException
      */
     /* FIXME A REVOIR */
-    public byte[] getVideoPart(File initialFile, long[] parts, long videoLength) throws IOException {
+    public byte[] getVideoPart(File initialFile, long start) throws IOException {
         InputStream targetStream = new FileInputStream(initialFile);
-        // FIXME plutôt que skip tu pourrais utiliser targetStream.read(CHUNK_SIZE, start, end);
-        StreamService.skipBytes(targetStream, parts[0]);
+        this.skipBytes(targetStream, start);
 
-        // FIXME Tu connais déjà la taille du bite array, tu pourrais l'allouer directement
-        // sans passer par ByteArrayOutputStream;
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[CHUNK_SIZE];
-        int bytesRead;
-        long bytesToRead = parts[1]; // quantité à lire
+        byteStream.write(CHUNK_SIZE);
 
-        // videoPath.read(buffer) = lit 1Mo, si la fin du flux est atteinte, read() renverra -1
-        while ((bytesRead = targetStream.read(buffer)) != -1 && bytesToRead > 0) {
-            int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
-            byteStream.write(buffer, 0, bytesToWrite);
-            bytesToRead -= bytesToWrite;
-        }
-
-
-        byte[] videoPart = byteStream.toByteArray();
-
-        // Tu as oublier de close tes streams;
+        // close les streams;
         targetStream.close();
         byteStream.close();
 
-        return videoPart;
+        return byteStream.toByteArray();
     }
 
     private static void skipBytes(InputStream inputStream, long bytesToSkip) throws IOException {
-        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
-        while (bytesToSkip > 0) {
-            long skipped = inputStream.skip(bytesToSkip);
-            if (skipped <= 0) {
-                throw new EOFException("Impossible de sauter jusqu'au début de la plage spécifiée.");
-            }
-            bytesToSkip -= skipped;
+        // Skip taille tampon ou bytesToSkip si < tampon jusqu'a qu'on arrive à skip autant qu'on voulait
+        while(bytesToSkip > 0){
+            inputStream.skip(Math.min(CHUNK_SIZE, bytesToSkip));
+            bytesToSkip -= CHUNK_SIZE;
         }
     }
 

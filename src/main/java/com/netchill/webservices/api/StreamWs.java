@@ -57,7 +57,7 @@ public class StreamWs {
         long end = parts[1];
 
 
-        byte[] videoPart = this.streamService.getVideoPart(video.get(), parts, video.get().length());
+        byte[] videoPart = this.streamService.getVideoPart(video.get(), start);
 
         return Response.status(Response.Status.PARTIAL_CONTENT)
             .entity(videoPart)
