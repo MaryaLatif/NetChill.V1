@@ -1,23 +1,20 @@
 package com.netchill.webservices.api;
 
-import com.coreoz.plume.jersey.errors.WsError;
 import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.services.streaming.StreamService;
 import com.netchill.webservices.error.NetchillWsError;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import retrofit2.http.Streaming;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 @Path("/stream")
 @Tag(name = "Streaming", description = "Streaming service")
@@ -54,13 +51,20 @@ public class StreamWs {
         long start = parts[0];
         long end = parts[1];
 
-        byte[] videoPart = this.streamService.getVideoPart(movieId, start, end);
+        StreamingOutput stream = output -> {
+            try (OutputStream responseOutputStream = output) {
+                // Appel de la méthode getVideoPart avec responseOutputStream
+                streamService.getVideoPart(movieId, start, end, responseOutputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
 
-        return Response.status(Response.Status.PARTIAL_CONTENT)
-            .entity(videoPart)
+        return Response.ok(stream)
             .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-            .header("Content-length", end - start + 1 )
+            .header("Content-length", end - start + 1)
             .header("Accept-Ranges", "bytes")
+            .status(Response.Status.PARTIAL_CONTENT)
             .build();
     }
 }

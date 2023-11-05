@@ -15,7 +15,7 @@ import static java.lang.Long.parseLong;
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
-    private static final int CHUNK_SIZE = 5_000_000; // 5MB de tampon pour la mémoire cache
+    private static final int CHUNK_SIZE = 1_000_000; // 5MB de tampon pour la mémoire cache
 
     @Inject
     private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
@@ -53,42 +53,36 @@ public class StreamService {
     }
 
     /**
-     * Renvoie le morceau de vidéo souhaité
      *
      * @param id
      * @param videoStart
      * @param videoEnd
-     * @return
+     * @param responseOutputStream = flux de sortie associé à réponse HTTP utilisé pour écrire les données directement dans la réponse HTTP
      * @throws IOException
      */
-    public byte[] getVideoPart(Long id, long videoStart, long videoEnd) throws IOException {
-        InputStream videoPath = new FileInputStream(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(id));
+    public void getVideoPart(Long id, long videoStart, long videoEnd, OutputStream responseOutputStream) throws IOException {
+        try (InputStream videoPath = new FileInputStream(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(id))) {
+            long remainingBytesToSkip = videoStart;
 
-        long remainingBytesToSkip = videoStart;
-        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
-        while (remainingBytesToSkip > 0) {
-            long bytesSkipped = videoPath.skip(remainingBytesToSkip);
-            if (bytesSkipped <= 0) {
-                throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+            // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
+            while (remainingBytesToSkip > 0) {
+                long bytesSkipped = videoPath.skip(remainingBytesToSkip);
+                if (bytesSkipped <= 0) {
+                    throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+                }
+                remainingBytesToSkip -= bytesSkipped;
             }
-            remainingBytesToSkip -= bytesSkipped;
+
+            byte[] buffer = new byte[CHUNK_SIZE]; // Taille du tampon de lecture
+            long bytesToRead = videoEnd; // quantité à lire
+            int bytesRead;
+
+            // videoPath.read(buffer) = lit 1Mo, si la fin du flux est atteinte, read() renverra -1
+            while (bytesToRead > 0 && (bytesRead = videoPath.read(buffer, 0, (int) Math.min(CHUNK_SIZE, bytesToRead))) != -1) {
+                responseOutputStream.write(buffer, 0, bytesRead);
+                bytesToRead -= bytesRead;
+            }
         }
-
-        int bufferSize = CHUNK_SIZE; // Taille du tampon de lecture
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-
-        byte[] buffer = new byte[bufferSize];
-        int bytesRead;
-        long bytesToRead = videoEnd; // quantité à lire
-
-        // videoPath.read(buffer) = lit 1024 octet, si la fin du flux est atteinte, read() renverra -1
-        while ((bytesRead = videoPath.read(buffer)) != -1 && bytesToRead > 0) {
-            int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
-            byteStream.write(buffer, 0, bytesToWrite);
-            bytesToRead -= bytesToWrite;
-        }
-
-        return byteStream.toByteArray();
     }
 
 }
