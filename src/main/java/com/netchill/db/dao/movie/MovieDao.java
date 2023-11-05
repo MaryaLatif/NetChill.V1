@@ -42,7 +42,7 @@ public class MovieDao {
     }
      */
 
-    public String getMovieUrl(Long idMovie){
+    public String fetchMoviePath(Long idMovie){
         return transactionManager.selectQuery()
             .select(QMovie.movie.movieUrl)
             .from(QMovie.movie)

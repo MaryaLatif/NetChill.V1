@@ -1,23 +1,24 @@
 package com.netchill.webservices.api;
 
+import com.coreoz.plume.jersey.errors.WsError;
 import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
 import com.netchill.services.streaming.StreamService;
 import com.netchill.webservices.error.NetchillWsError;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import retrofit2.http.Streaming;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-
+import java.util.Optional;
 
 @Path("/stream")
 @Tag(name = "Streaming", description = "Streaming service")
@@ -34,45 +35,35 @@ public class StreamWs {
     }
 
     @GET
-    @Produces("image/jpeg")
+    @Produces("application/octet-stream")
     @Path("/video/{movieId}")
-    public void getMediaVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range, @Suspended AsyncResponse asyncResponse) throws WsException, IOException {
-        File video = this.streamService.getMediaVideo(movieId);
-        if(video == null){
+    public Response getMediaVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range) throws WsException, IOException {
+        Optional<File> video = this.streamService.getMediaVideo(movieId);
+        if(video.isEmpty()){
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }
 
         // Si il n'y a pas de range on envoie toute la vidéo
         if(range == null){
-            asyncResponse.resume(
-                Response.status(Response.Status.OK)
-                    .header("Content-length", video.length())
-                    .header("Accept-Ranges", "bytes")
-                    .build()
-            );
-        }else {
-            long[] parts = this.streamService.getRangePart(range, video.length() - 1);
-
-            asyncResponse.setTimeoutHandler(result -> {
-                try {
-                    result.resume(Response.status(Response.Status.REQUEST_TIMEOUT).build());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            asyncResponse.resume(
-                new StreamingOutput() {
-                    @Override
-                    public void write(OutputStream output) throws IOException, WebApplicationException {
-                        try {
-                            streamService.streamVideo(movieId, parts[0], parts[1], output);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            );
+            return  Response.status(Response.Status.OK)
+                .header("Content-length", video.get().length())
+                .header("Accept-Ranges", "bytes")
+                .build();
         }
+
+        //Sinon on fait tout ça:
+        long[] parts = this.streamService.getRangePart(range, video.get().length()-1);
+        long start = parts[0];
+        long end = parts[1];
+
+
+        byte[] videoPart = this.streamService.getVideoPart(video.get(), parts, video.get().length());
+
+        return Response.status(Response.Status.PARTIAL_CONTENT)
+            .entity(videoPart)
+            .header("Content-Range", "bytes " + start + "-" + end + "/" + video.get().length())
+            .header("Content-length", end - start + 1 )
+            .header("Accept-Ranges", "bytes")
+            .build();
     }
 }

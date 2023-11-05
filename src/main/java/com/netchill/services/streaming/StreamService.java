@@ -3,30 +3,18 @@ package com.netchill.services.streaming;
 import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
-import com.netchill.webservices.error.NetchillWsError;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
 import java.io.*;
+import java.util.Optional;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.Java2DFrameConverter;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
-    private static final int CHUNK_SIZE = 1_000_000; // 5MB de tampon pour la mémoire cache
+    private static final int CHUNK_SIZE = 1_000_000; // 1MB de tampon pour la mémoire cache
 
     @Inject
     private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
@@ -41,9 +29,9 @@ public class StreamService {
      * @return
      * @throws WsException
      */
-    public File getMediaVideo(Long movieId) {
-        File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(movieId));
-        return video;
+    public Optional<File> getMediaVideo(Long movieId) {
+        File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.fetchMoviePath(movieId));
+        return Optional.of(video);
     }
 
     /**
@@ -55,77 +43,46 @@ public class StreamService {
      */
     public long[] getRangePart(String range, long videoLength) {
         String[] parts = range.replace("bytes=", "").split("-");
-        long start = parseLong(parts[0], 10);
 
         // Si le byte de fin > taille de la vidéo -> on envoie le bout vidéo jusqu'à la fin du film
-        long end = parts.length > 1 ? parseInt(parts[1]) : Math.min(start + CHUNK_SIZE, videoLength); //prend le plus petit des 2 paramètres
-
-        return new long[]{start, end};
+        return new long[]{parseLong(parts[0], 10), parts.length > 1 ? parseInt(parts[1]) : Math.min(parseLong(parts[0], 10) + CHUNK_SIZE, videoLength)};//prend le plus petit des 2 paramètres
     }
 
     /**
+     * Renvoie le morceau de vidéo souhaité
      *
-     * @param id
-     * @param videoStart
-     * @param videoEnd
-     * @param responseOutputStream = flux de sortie associé à réponse HTTP utilisé pour écrire les données directement dans la réponse HTTP
+     * @param initialFile
+     * @param parts
+     * @param videoLength
+     * @return
      * @throws IOException
      */
-    /*
-    public void getVideoPart(Long id, long videoStart, long videoEnd, OutputStream responseOutputStream) throws IOException {
-        try (InputStream videoPath = new FileInputStream(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(id))) {
-            long remainingBytesToSkip = videoStart;
+    public byte[] getVideoPart(File initialFile, long[] parts, long videoLength) throws IOException {
+        InputStream targetStream = new FileInputStream(initialFile);
+        long remainingBytesToSkip = parts[0];
 
-            // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
-            while (remainingBytesToSkip > 0) {
-                long bytesSkipped = videoPath.skip(remainingBytesToSkip);
-                if (bytesSkipped <= 0) {
-                    throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
-                }
-                remainingBytesToSkip -= bytesSkipped;
+        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
+        while (remainingBytesToSkip > 0) {
+            long bytesSkipped = targetStream.skip(remainingBytesToSkip);
+            if (bytesSkipped <= 0) {
+                throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
             }
-
-            byte[] buffer = new byte[CHUNK_SIZE]; // Taille du tampon de lecture
-            long bytesToRead = videoEnd; // quantité à lire
-            int bytesRead;
-
-            // videoPath.read(buffer) = lit 1Mo, si la fin du flux est atteinte, read() renverra -1
-            while (bytesToRead > 0 && (bytesRead = videoPath.read(buffer, 0, (int) Math.min(CHUNK_SIZE, bytesToRead))) != -1) {
-                responseOutputStream.write(buffer, 0, bytesRead);
-                bytesToRead -= bytesRead;
-            }
+            remainingBytesToSkip -= bytesSkipped;
         }
-    }
-    */
 
-    public void streamVideo(Long movieId, long videoStart, long videoEnd, OutputStream responseOutputStream)
-        throws IOException {
-        File videoFile = getMediaVideo(movieId);
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[CHUNK_SIZE];
+        int bytesRead;
+        long bytesToRead = parts[1]; // quantité à lire
 
-        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoFile)) {
-            grabber.start();
-            grabber.setVideoBitrate(grabber.getVideoBitrate());
-
-            Java2DFrameConverter converter = new Java2DFrameConverter();
-            BufferedImage image;
-            long frameNumber = grabber.getTimestamp();
-
-            while (frameNumber <= videoEnd && frameNumber >= videoStart) {
-                Frame frame = grabber.grabFrame();
-                if (frame == null) {
-                    break;
-                }
-
-                frameNumber = grabber.getTimestamp();
-
-                if (frameNumber >= videoStart) {
-                    image = converter.convert(frame);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(image, "jpg", baos);
-                    responseOutputStream.write(baos.toByteArray());
-                }
-            }
+        // videoPath.read(buffer) = lit 1Mo, si la fin du flux est atteinte, read() renverra -1
+        while ((bytesRead = targetStream.read(buffer)) != -1 && bytesToRead > 0) {
+            int bytesToWrite = (int) Math.min(bytesRead, bytesToRead);
+            byteStream.write(buffer, 0, bytesToWrite);
+            bytesToRead -= bytesToWrite;
         }
+
+        return byteStream.toByteArray();
     }
 
 }
