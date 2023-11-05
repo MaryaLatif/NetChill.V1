@@ -57,19 +57,14 @@ public class StreamService {
      * @return
      * @throws IOException
      */
+    /* FIXME A REVOIR */
     public byte[] getVideoPart(File initialFile, long[] parts, long videoLength) throws IOException {
         InputStream targetStream = new FileInputStream(initialFile);
-        long remainingBytesToSkip = parts[0];
+        // FIXME plutôt que skip tu pourrais utiliser targetStream.read(CHUNK_SIZE, start, end);
+        StreamService.skipBytes(targetStream, parts[0]);
 
-        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
-        while (remainingBytesToSkip > 0) {
-            long bytesSkipped = targetStream.skip(remainingBytesToSkip);
-            if (bytesSkipped <= 0) {
-                throw new IOException("Impossible de sauter jusqu'au début de la plage spécifiée.");
-            }
-            remainingBytesToSkip -= bytesSkipped;
-        }
-
+        // FIXME Tu connais déjà la taille du bite array, tu pourrais l'allouer directement
+        // sans passer par ByteArrayOutputStream;
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[CHUNK_SIZE];
         int bytesRead;
@@ -82,7 +77,25 @@ public class StreamService {
             bytesToRead -= bytesToWrite;
         }
 
-        return byteStream.toByteArray();
+
+        byte[] videoPart = byteStream.toByteArray();
+
+        // Tu as oublier de close tes streams;
+        targetStream.close();
+        byteStream.close();
+
+        return videoPart;
+    }
+
+    private static void skipBytes(InputStream inputStream, long bytesToSkip) throws IOException {
+        // Utilisatioin d'une boucle car ce n'est pas sur que le saut se fait en une fois, il faut donc gérer cela
+        while (bytesToSkip > 0) {
+            long skipped = inputStream.skip(bytesToSkip);
+            if (skipped <= 0) {
+                throw new EOFException("Impossible de sauter jusqu'au début de la plage spécifiée.");
+            }
+            bytesToSkip -= skipped;
+        }
     }
 
 }
