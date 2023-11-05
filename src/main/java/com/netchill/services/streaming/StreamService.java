@@ -12,6 +12,17 @@ import java.io.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.Java2DFrameConverter;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
@@ -60,6 +71,7 @@ public class StreamService {
      * @param responseOutputStream = flux de sortie associé à réponse HTTP utilisé pour écrire les données directement dans la réponse HTTP
      * @throws IOException
      */
+    /*
     public void getVideoPart(Long id, long videoStart, long videoEnd, OutputStream responseOutputStream) throws IOException {
         try (InputStream videoPath = new FileInputStream(this.configurationService.getVideoBaseUrl() + this.movieDao.getMovieUrl(id))) {
             long remainingBytesToSkip = videoStart;
@@ -81,6 +93,37 @@ public class StreamService {
             while (bytesToRead > 0 && (bytesRead = videoPath.read(buffer, 0, (int) Math.min(CHUNK_SIZE, bytesToRead))) != -1) {
                 responseOutputStream.write(buffer, 0, bytesRead);
                 bytesToRead -= bytesRead;
+            }
+        }
+    }
+    */
+
+    public void streamVideo(Long movieId, long videoStart, long videoEnd, OutputStream responseOutputStream)
+        throws IOException {
+        File videoFile = getMediaVideo(movieId);
+
+        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoFile)) {
+            grabber.start();
+            grabber.setVideoBitrate(grabber.getVideoBitrate());
+
+            Java2DFrameConverter converter = new Java2DFrameConverter();
+            BufferedImage image;
+            long frameNumber = grabber.getTimestamp();
+
+            while (frameNumber <= videoEnd && frameNumber >= videoStart) {
+                Frame frame = grabber.grabFrame();
+                if (frame == null) {
+                    break;
+                }
+
+                frameNumber = grabber.getTimestamp();
+
+                if (frameNumber >= videoStart) {
+                    image = converter.convert(frame);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, "jpg", baos);
+                    responseOutputStream.write(baos.toByteArray());
+                }
             }
         }
     }

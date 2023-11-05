@@ -9,12 +9,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+
 
 @Path("/stream")
 @Tag(name = "Streaming", description = "Streaming service")
@@ -31,9 +34,9 @@ public class StreamWs {
     }
 
     @GET
-    @Produces("application/octet-stream")
+    @Produces("image/jpeg")
     @Path("/video/{movieId}")
-    public Response getMediaVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range) throws WsException, IOException {
+    public void getMediaVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range, @Suspended AsyncResponse asyncResponse) throws WsException, IOException {
         File video = this.streamService.getMediaVideo(movieId);
         if(video == null){
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
@@ -41,30 +44,35 @@ public class StreamWs {
 
         // Si il n'y a pas de range on envoie toute la vidéo
         if(range == null){
-            return  Response.status(Response.Status.OK)
-                .header("Content-length", video.length())
-                .header("Accept-Ranges", "bytes")
-                .build();
+            asyncResponse.resume(
+                Response.status(Response.Status.OK)
+                    .header("Content-length", video.length())
+                    .header("Accept-Ranges", "bytes")
+                    .build()
+            );
+        }else {
+            long[] parts = this.streamService.getRangePart(range, video.length() - 1);
+
+            asyncResponse.setTimeoutHandler(result -> {
+                try {
+                    result.resume(Response.status(Response.Status.REQUEST_TIMEOUT).build());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            asyncResponse.resume(
+                new StreamingOutput() {
+                    @Override
+                    public void write(OutputStream output) throws IOException, WebApplicationException {
+                        try {
+                            streamService.streamVideo(movieId, parts[0], parts[1], output);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            );
         }
-        //Sinon on fait tout ça:
-        long[] parts = this.streamService.getRangePart(range, video.length() - 1);
-        long start = parts[0];
-        long end = parts[1];
-
-        StreamingOutput stream = output -> {
-            try (OutputStream responseOutputStream = output) {
-                // Appel de la méthode getVideoPart avec responseOutputStream
-                streamService.getVideoPart(movieId, start, end, responseOutputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-
-        return Response.ok(stream)
-            .header("Content-Range", "bytes " + start + "-" + end + "/" + video.length())
-            .header("Content-length", end - start + 1)
-            .header("Accept-Ranges", "bytes")
-            .status(Response.Status.PARTIAL_CONTENT)
-            .build();
     }
 }

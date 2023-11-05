@@ -212,6 +212,13 @@
             <version>4.12.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- JavaCv -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.5.5</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
