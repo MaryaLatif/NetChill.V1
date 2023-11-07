@@ -30,7 +30,7 @@ public class StreamService {
      * @throws WsException
      */
     public Optional<File> getVideoFile(Long movieId) {
-        File video = new File(this.configurationService.getVideoBaseUrl() + "IMG_3297.MOV");
+        File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.fetchMoviePath(movieId));
         return Optional.of(video);
     }
 
