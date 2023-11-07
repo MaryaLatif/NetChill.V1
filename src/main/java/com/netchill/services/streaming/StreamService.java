@@ -3,7 +3,6 @@ package com.netchill.services.streaming;
 import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
-import org.checkerframework.checker.units.qual.C;
 
 import javax.inject.Inject;
 import java.io.*;
@@ -15,7 +14,7 @@ import static java.lang.Long.parseLong;
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
-    private static final int CHUNK_SIZE = 1_000_000; // 1MB de tampon pour la mémoire cache
+    private static final int CHUNK_SIZE = 5_000_000; // 1MB de tampon pour la mémoire cache
 
     @Inject
     private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
@@ -30,8 +29,8 @@ public class StreamService {
      * @return
      * @throws WsException
      */
-    public Optional<File> getMediaVideo(Long movieId) {
-        File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.fetchMoviePath(movieId));
+    public Optional<File> getVideoFile(Long movieId) {
+        File video = new File(this.configurationService.getVideoBaseUrl() + "IMG_3297.MOV");
         return Optional.of(video);
     }
 
@@ -50,35 +49,59 @@ public class StreamService {
     }
 
     /**
-     * Renvoie le morceau de vidéo souhaité
-     *
+     * Renvoie un InputStream pour le morceau de vidéo souhaité
      * @param initialFile
-     * @param parts
-     * @param videoLength
-     * @return
+     * @param start
+     * @param end
+     * @return InputStream for the video part
      * @throws IOException
      */
-    /* FIXME A REVOIR */
-    public byte[] getVideoPart(File initialFile, long start) throws IOException {
-        InputStream targetStream = new FileInputStream(initialFile);
-        this.skipBytes(targetStream, start);
+    public InputStream getVideoPartStream(File initialFile, long start, long end) throws IOException {
+        // on se positionne à l'emplacement du start directement
+        RandomAccessFile randomAccessFile = new RandomAccessFile(initialFile, "r");
+        randomAccessFile.seek(start);
+        //
+        final long[] remaining = {end - start + 1}; // +1 pour pas oublier la fin
+        InputStream inputStream = new FileInputStream(randomAccessFile.getFD()) {
+            @Override
+            public int available() throws IOException {
+                return (int) Math.min(remaining[0], super.available());
+            }
 
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        byteStream.write(CHUNK_SIZE);
+            @Override
+            public int read() throws IOException {
+                if (remaining[0] > 0) {
+                    int data = super.read();
+                    if (data != -1) {
+                        remaining[0]--;
+                    }
+                    return data;
+                } else {
+                    return -1;
+                }
+            }
 
-        // close les streams;
-        targetStream.close();
-        byteStream.close();
+            @Override
+            public int read(byte[] b, int off, int len) throws IOException {
+                if (remaining[0] > 0) {
+                    int toRead = (int) Math.min(len, remaining[0]);
+                    int numRead = super.read(b, off, toRead);
+                    if (numRead != -1) {
+                        remaining[0] -= numRead;
+                    }
+                    return numRead;
+                } else {
+                    return -1;
+                }
+            }
 
-        return byteStream.toByteArray();
-    }
-
-    private static void skipBytes(InputStream inputStream, long bytesToSkip) throws IOException {
-        // Skip taille tampon ou bytesToSkip si < tampon jusqu'a qu'on arrive à skip autant qu'on voulait
-        while(bytesToSkip > 0){
-            inputStream.skip(Math.min(CHUNK_SIZE, bytesToSkip));
-            bytesToSkip -= CHUNK_SIZE;
-        }
+            @Override
+            public void close() throws IOException {
+                randomAccessFile.close(); // close avant de close le stream
+                super.close();
+            }
+        };
+        return inputStream;
     }
 
 }
