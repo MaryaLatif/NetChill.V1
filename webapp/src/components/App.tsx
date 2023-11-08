@@ -10,7 +10,7 @@ import Layout from './layout/Layout';
 import ErrorPage from './pages/ErrorPage';
 import RenderMovies from './preview-movies/RenderMovies';
 import Stream from './pages/stream/Stream';
-import logo from '../../assets/icons/logo_transparent.png';
+import logo from '../../assets/icons/logo-netchill.png';
 import '../../assets/scss/components/general/loading/loading.scss';
 
 const logger = new Logger('App');
