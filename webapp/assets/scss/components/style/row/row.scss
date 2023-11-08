@@ -130,4 +130,13 @@
       margin: $spacer-S 0 0 0;
     }
   }
+  .row_poster_loading{
+    font-size: $font-size-M;
+    margin: $spacer-S 0 0 0;
+    min-width: 93px !important;
+    height: 140px !important;
+  }
+  .thumbs-up{
+    height: $spacer-S;
+  }
 }

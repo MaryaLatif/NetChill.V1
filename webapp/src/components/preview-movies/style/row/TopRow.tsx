@@ -8,6 +8,7 @@ import RowLoading from '../../../general/loading/RowLoading';
 import '../../../../../assets/scss/components/style/row/row.scss';
 import '../../../../../assets/scss/components/style/arrow/arrow.scss';
 import '../../../../../assets/scss/components/style/row/top-row.scss';
+import RowTopLoading from '../../../general/loading/RowTopLoading';
 import Poster from '../poster/Poster';
 import Slider from '../slider/Slider';
 
@@ -68,7 +69,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
   return (
     <div className="row-top">
       {
-        isDataLoading ? <RowLoading />
+        isDataLoading ? <RowTopLoading />
           : (
             <>
               <Slider

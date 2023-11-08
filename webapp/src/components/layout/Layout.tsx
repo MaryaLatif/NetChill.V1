@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
+import MediaQuery from 'react-responsive';
 import { ScrollRestoration } from 'react-router-dom';
 import GlobalErrorBoundary from '../theme/GlobalErrorBoundary';
 import logo from '../../../assets/icons/logo-netchill.png';
+import logoLong from '../../../assets/icons/logo-long-netchill.png';
 import Header from './Header';
 
 type Props = {
@@ -21,7 +23,12 @@ export default function Layout({ children }: Props) {
     setLighterHeader(headerRef.current.scrollTop === 0);
   }
   return <GlobalErrorBoundary>
-    <Header logo={logo} /* navItems={navItems} */ isLighter={lighterHeader}/>
+    <MediaQuery maxWidth={767}>
+      <Header logo={logo} /* navItems={navItems} */ isLighter={lighterHeader}/>
+    </MediaQuery>
+    <MediaQuery minWidth={767}>
+      <Header logo={logoLong} /* navItems={navItems} */ isLighter={lighterHeader}/>
+    </MediaQuery>
     {/* <Header /> */}
     <div ref={headerRef} className='content-layout' onScroll={handleScroll}>
       {children}

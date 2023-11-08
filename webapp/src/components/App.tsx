@@ -1,6 +1,7 @@
 import { getGlobalInstance } from 'plume-ts-di';
 import React, { useEffect, useMemo } from 'react';
 import '../../assets/scss/app.scss';
+import MediaQuery from 'react-responsive';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { Logger } from 'simple-logging-system';
 import useMessages from '../i18n/hooks/messagesHook';
@@ -11,6 +12,7 @@ import ErrorPage from './pages/ErrorPage';
 import RenderMovies from './preview-movies/RenderMovies';
 import Stream from './pages/stream/Stream';
 import logo from '../../assets/icons/logo-netchill.png';
+import logoLong from '../../assets/icons/logo-long-netchill.png';
 import '../../assets/scss/components/general/loading/loading.scss';
 
 const logger = new Logger('App');
@@ -44,7 +46,14 @@ export default function App() {
   }, []);
 
   if (configurationLoader.isLoading) {
-    return <div className='loading-logo'><img src={logo} alt='logo' /></div>;
+    return <div className="loading-logo">
+      <MediaQuery maxWidth={767}>
+        <img src={logo} alt="logo" />
+      </MediaQuery>
+      <MediaQuery minWidth={767}>
+        <img src={logoLong} alt="logo" />
+      </MediaQuery>
+    </div>;
   }
   if (configurationLoader.error) {
     return <div>{httpError(configurationLoader.error)}</div>;
