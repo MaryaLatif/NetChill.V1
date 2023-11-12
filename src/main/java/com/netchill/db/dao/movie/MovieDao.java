@@ -1,10 +1,12 @@
 package com.netchill.db.dao.movie;
 
 import com.coreoz.plume.db.querydsl.transaction.TransactionManagerQuerydsl;
+import com.netchill.db.generated.QForYouMovies;
 import com.netchill.db.generated.QMovie;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
 public class MovieDao {
@@ -48,6 +50,13 @@ public class MovieDao {
             .from(QMovie.movie)
             .where(QMovie.movie.id.eq(idMovie))
             .fetchOne();
+    }
+
+    public List<Long> getForYouMovies(){
+        return transactionManager.selectQuery()
+            .select(QForYouMovies.forYouMovies.id)
+            .from(QForYouMovies.forYouMovies)
+            .fetch();
     }
 }
 

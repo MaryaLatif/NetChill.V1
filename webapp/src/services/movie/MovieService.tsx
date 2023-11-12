@@ -18,4 +18,10 @@ export default class MovieService {
       logger.error('Failed to fetch top rated movies: {} ', { error });
       throw error;
     });
+
+  getForYou = () => this.movieApi.getForYou()
+    .catch((error) => {
+      logger.error('Failed to fetch for you movies: {} ', { error });
+      throw error;
+    });
 }

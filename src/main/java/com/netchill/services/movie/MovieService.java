@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +52,14 @@ public class MovieService {
 
     public List<Production> getTopRated() {
         return this.movieApiClient.getTopRated().getResults();
+    }
+
+    public List<Production> getMoviesByIds(){
+        List<Production> movies = new ArrayList<>();
+        for(Long id: this.movieDao.getForYouMovies()){
+            movies.add(this.movieApiClient.getMovieById(id));
+        }
+
+        return movies;
     }
 }

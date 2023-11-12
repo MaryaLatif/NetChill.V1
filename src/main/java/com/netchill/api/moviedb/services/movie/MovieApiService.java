@@ -33,10 +33,10 @@ public class MovieApiService {
 
     public MovieDbPaginatedResponse<Production> getMoviesByGenre(Long genre, @Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getMovieByGenre(
-                        this.configurationService.getMovieDbApiKey(),
-                        genre,
-                        page
-                )
+                this.configurationService.getMovieDbApiKey(),
+                genre,
+                page
+            )
         );
     }
 
@@ -46,17 +46,17 @@ public class MovieApiService {
 
     public MovieDbPaginatedResponse<Production> getTopRated(@Nullable Integer page) {
         return this.apiClient.executeRequest(movieApi.getTopRated(
-                        this.configurationService.getMovieDbApiKey(),
-                        TmdbApiClient.LANGUAGE,
-                        page
-                )
+                this.configurationService.getMovieDbApiKey(),
+                TmdbApiClient.LANGUAGE,
+                page
+            )
         );
     }
 
     public Production getMovieById(Long id) {
         return this.apiClient.executeRequest(movieApi.getMovieById(
-                this.configurationService.getMovieDbApiKey(),
-                id
+            id,
+            this.configurationService.getMovieDbApiKey()
         ));
     }
 }

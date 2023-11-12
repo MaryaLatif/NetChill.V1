@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getGlobalInstance } from 'plume-ts-di';
+import ForYouMovies from './fetch-movies/ForYouMovies';
 import MoviesByGenre from './fetch-movies/MoviesByGenre';
 import NetflixMovies from './fetch-movies/NetflixMovies';
 import TrendingMovies from './fetch-movies/TrendingMovies';
@@ -23,6 +24,7 @@ function RenderMovies() {
   return (
     <div className={'app'}>
       <NetflixMovies/>
+      <ForYouMovies/>
       <TopRatedMovies/>
       <TrendingMovies/>
       {genres.map((genre) => (

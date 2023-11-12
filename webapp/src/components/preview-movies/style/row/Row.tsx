@@ -94,7 +94,7 @@ function Row({
     if (!movieInfo) {
       return;
     }
-
+    console.log(movieInfo);
     const apiCall = movieInfo.type === MediaType.MOVIE
       ? trailerService.getTrailerByMovieId
       : trailerService.getTrailerBySerieId;

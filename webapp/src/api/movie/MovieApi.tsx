@@ -22,4 +22,11 @@ export default class MovieApi {
       .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/top-rated`)
       .execute();
   }
+
+  getForYou() {
+    return this
+      .httpClient
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/for-you`)
+      .execute();
+  }
 }

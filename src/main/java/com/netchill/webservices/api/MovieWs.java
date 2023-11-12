@@ -45,4 +45,10 @@ public class MovieWs {
     public List<Production> getTopRatedByGenre(@QueryParam("genre") Long genre) {
         return movieService.getTopRatedByGenre(genre);
     }
+
+    @GET
+    @Path("/for-you")
+    public List<Production> getMoviesByIds(){
+        return this.movieService.getMoviesByIds();
+    }
 }

@@ -10,20 +10,20 @@ import com.querydsl.sql.Column;
 @Generated("com.coreoz.plume.db.querydsl.generation.IdBeanSerializer")
 public class Movie extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl {
 
-    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("genre1_id")
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long genre1Id;
 
-    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("genre2_id")
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long genre2Id;
 
-    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("genre3_id")
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long genre3Id;
 
-    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("id")
+    @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     private Long id;
 
     @Column("img_url")

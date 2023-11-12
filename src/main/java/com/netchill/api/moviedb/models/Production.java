@@ -14,6 +14,8 @@ public class Production {
     private boolean adult;
     private String backdrop_path;
     private ArrayList<Long> genre_ids;
+    @JsonAlias({"genres"})
+    private static ArrayList<Genre> genres;
     private int id;
     private String overview;
     private String poster_path;
@@ -34,5 +36,13 @@ public class Production {
     public void setTypeToSerie(String name) {
         this.title = name;
         this.type = ProductionType.SERIE;
+    }
+
+    @JsonSetter("genres")
+    public void setGenres(ArrayList<Genre> genres) {
+        this.genre_ids = new ArrayList<>();
+        for (Genre genre : genres) {
+            this.genre_ids.add(genre.getId());
+        }
     }
 }
