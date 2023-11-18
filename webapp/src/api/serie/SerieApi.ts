@@ -1,6 +1,6 @@
 import { HttpMethod } from 'simple-http-request-builder';
 import ApiHttpClient from '../ApiHttpClient';
-import { Production } from '../types/MovieDbTypes';
+import { Production, Serie } from '../types/MovieDbTypes';
 
 export default class SerieApi {
   private baseUrl: string = '/series';
@@ -12,6 +12,13 @@ export default class SerieApi {
     return this
       .httpClient
       .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/netflix-originals`)
+      .execute();
+  }
+
+  getSerieById(id: number) {
+    return this
+      .httpClient
+      .restRequest<Serie>(HttpMethod.GET, `${this.baseUrl}/${id}`)
       .execute();
   }
 }

@@ -16,6 +16,6 @@ public class Serie {
     private String poster_path;
     private String first_air_date;
     private String name;
-    private String media_type;
     private Float vote_average;
+    private int number_of_seasons;
 }

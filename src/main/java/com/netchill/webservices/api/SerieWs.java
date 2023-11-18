@@ -31,7 +31,7 @@ public class SerieWs {
 
     @GET
     @Path("/{id}")
-    public Production getSerieById(@PathParam("id") Long id) {
+    public Serie getSerieById(@PathParam("id") Long id) {
         return this.serieService.getSerieById(id)
                 .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }

@@ -22,6 +22,19 @@ export type Production = {
   vote_average: number,
 };
 
+export type Serie = {
+  adult: boolean,
+  backdrop_path: string,
+  genre_ids: number[],
+  id: number,
+  overview: string,
+  poster_path: string,
+  first_air_date: string,
+  name: string,
+  vote_average: number,
+  number_of_seasons: number,
+};
+
 type Genre = {
   id: number,
   name: string

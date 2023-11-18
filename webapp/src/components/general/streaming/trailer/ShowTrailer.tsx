@@ -1,13 +1,16 @@
 import React from 'react';
+import { XCircle } from 'react-feather';
 import YouTube from 'react-youtube';
 import '../../../../../assets/scss/components/general/streaming/trailer/show-trailer.scss';
-import { XCircle } from 'react-feather';
+import { MediaType } from '../../../../api/types/MovieDbTypes';
 import GenreList from '../../../preview-movies/style/genre/GenreList';
-import ErrorTrailer from './ErrorTrailer';
+import SerieDetails from '../../../preview-movies/style/serie/SerieDetails';
 import Player from '../movie/Player';
+import ErrorTrailer from './ErrorTrailer';
 
 type Props = {
-  movieId: number,
+  mediaId: number,
+  mediaType: MediaType;
   url: string,
   overview: string,
   genreIds: number[],
@@ -15,7 +18,7 @@ type Props = {
 };
 
 function ShowTrailer({
-  movieId,
+  mediaId, mediaType,
   url, overview, genreIds, onClose,
 }: Props) {
   const opts = {
@@ -37,7 +40,11 @@ function ShowTrailer({
             ? <YouTube videoId={url} opts={opts}/>
             : <ErrorTrailer/>
         }
-        <Player movieId={movieId}/>
+        {
+          mediaType === MediaType.MOVIE
+            ? <Player movieId={mediaId}/>
+            : <SerieDetails serieId={mediaId}/>
+        }
         <div className='about-it'>
           <div className='about-it__overview__container'>
             <h3>Overview</h3>

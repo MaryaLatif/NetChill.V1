@@ -35,7 +35,7 @@ function Row({
   const trailerService = getGlobalInstance(TrailerService);
 
   const [trailer, setTrailer] = useState<Trailer>();
-  const [movieInfo, setMovieInfo] = useState<MovieInfo>();
+  const [mediaInfo, setMediaInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(0);
 
@@ -45,7 +45,7 @@ function Row({
 
   function handleClick(index: number): void {
     const movie = movieList[index];
-    setMovieInfo({
+    setMediaInfo({
       id: movie.id,
       overview: movie.overview,
       type: movie.type,
@@ -91,17 +91,17 @@ function Row({
   }, [currentPosition]);
 
   useEffect(() => {
-    if (!movieInfo) {
+    if (!mediaInfo) {
       return;
     }
-    console.log(movieInfo);
-    const apiCall = movieInfo.type === MediaType.MOVIE
+    console.log(mediaInfo);
+    const apiCall = mediaInfo.type === MediaType.MOVIE
       ? trailerService.getTrailerByMovieId
       : trailerService.getTrailerBySerieId;
 
-    movieLoader.monitor(apiCall(movieInfo.id)
+    movieLoader.monitor(apiCall(mediaInfo.id)
       .then(setTrailer));
-  }, [movieInfo]);
+  }, [mediaInfo]);
 
   return (
     <div>
@@ -159,7 +159,7 @@ function Row({
       {
         visible
         && trailer
-        && movieInfo
+        && mediaInfo
         && (<div /* onClick={(event) => {
           let element = event.target;
           while (element.parentNode
@@ -171,10 +171,11 @@ function Row({
           }
         }} */>
             <ShowTrailer
-              movieId={movieInfo.id}
+              mediaId={mediaInfo.id}
+              mediaType={mediaInfo.type}
               url={trailer.key}
-              overview={movieInfo.overview}
-              genreIds={movieInfo.genre_ids}
+              overview={mediaInfo.overview}
+              genreIds={mediaInfo.genre_ids}
               onClose={handleCloseTrailerPopIn}
             />
           </div>

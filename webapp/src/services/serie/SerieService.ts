@@ -12,4 +12,10 @@ export default class SerieService {
       logger.error('Failed to fetch netflix originals series: {} ', { error });
       throw error;
     });
+
+  getSerieById = (id: number) => this.serieApi.getSerieById(id)
+    .catch((error) => {
+      logger.error('Failed to fetch serie by this id: {} ', { error });
+      throw error;
+    });
 }

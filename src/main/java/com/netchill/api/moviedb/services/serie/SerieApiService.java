@@ -3,6 +3,7 @@ package com.netchill.api.moviedb.services.serie;
 import com.netchill.api.moviedb.TmdbApiClient;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
+import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.configuration.ConfigurationService;
 import okhttp3.MediaType;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class SerieApiService {
         ));
     }
 
-    public Production getSerieById(Long id) {
+    public Serie getSerieById(Long id) {
         return this.apiClient.executeRequest(serieApi.getSerieById(
                 this.configurationService.getMovieDbApiKey(),
                 id

@@ -2,6 +2,7 @@ package com.netchill.services.serie;
 
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
+import com.netchill.api.moviedb.models.Serie;
 import com.netchill.api.moviedb.services.serie.SerieApiService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +33,7 @@ public class SerieService {
         }
     }
 
-    public Optional<Production> getSerieById(Long id) {
+    public Optional<Serie> getSerieById(Long id) {
         try{
             return Optional.ofNullable(this.serieApiClient.getSerieById(id));
         } catch (Exception e){
