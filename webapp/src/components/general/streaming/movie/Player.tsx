@@ -2,13 +2,13 @@ import React from 'react';
 import '../../../../../assets/scss/components/general/streaming/movie/player.scss';
 import { Play } from 'react-feather';
 
-function Player({ movieId }: { movieId: number }) {
+function Player({ onClickPlay }: { onClickPlay?: ()=>void }) {
   return (
-    <a href={`/stream/${movieId}`}>
-      <button className="play-button">
+    <div>
+      <button className="play-button" onClick={onClickPlay}>
         <Play />
       </button>
-    </a>
+    </div>
   );
 }
 

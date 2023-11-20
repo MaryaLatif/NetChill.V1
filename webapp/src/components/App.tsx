@@ -1,5 +1,5 @@
 import { getGlobalInstance } from 'plume-ts-di';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import '../../assets/scss/app.scss';
 import MediaQuery from 'react-responsive';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
@@ -20,6 +20,15 @@ const logger = new Logger('App');
 export default function App() {
   const { httpError } = useMessages();
   const configurationService = getGlobalInstance(ConfigurationService);
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    const loadingTimeout = setTimeout(() => {
+      setShowLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(loadingTimeout); // Nettoyer le timeout lors du démontage du composant
+  }, []);
 
   const router = useMemo(() => createBrowserRouter([
     {
@@ -45,7 +54,7 @@ export default function App() {
     configurationLoader.monitor(configurationService.loadConfiguration());
   }, []);
 
-  if (configurationLoader.isLoading) {
+  if (configurationLoader.isLoading || showLoading) {
     return <div className="loading-logo">
       <MediaQuery maxWidth={767}>
         <img src={logo} alt="logo" />

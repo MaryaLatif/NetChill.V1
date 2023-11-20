@@ -9,4 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Configuration {
     private String imageBaseUrl;
+    private String connectionKey;
 }

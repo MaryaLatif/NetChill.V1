@@ -42,5 +42,9 @@ public class ConfigurationService {
     public String getVideoBaseUrl() {
         return config.getString("video.base-url");
     }
+
+    public String getConnectionKey(){
+        return config.getString("connection-key");
+    }
 }
 

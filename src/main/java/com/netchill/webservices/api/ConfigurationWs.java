@@ -22,15 +22,17 @@ import javax.ws.rs.core.MediaType;
 @Singleton
 public class ConfigurationWs {
     private String imageBaseUrl;
+    private String connectionKey;
 
     @Inject
     private ConfigurationWs(ConfigurationService configurationService){
         this.imageBaseUrl = configurationService.getImageBaseUrl();
+        this.connectionKey = configurationService.getConnectionKey();
     }
 
     @GET
     @Path("/image-base-url")
     public Configuration getConfiguration(){
-        return new Configuration(this.imageBaseUrl);
+        return new Configuration(this.imageBaseUrl, this.connectionKey);
     }
 }

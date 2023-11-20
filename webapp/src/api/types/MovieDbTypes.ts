@@ -1,5 +1,6 @@
 export type Configuration = {
   imageBaseUrl: string,
+  connectionKey: string,
 };
 
 export type PaginatedResult<T> = {

@@ -7,10 +7,10 @@ const logger = new Logger('StreamingService');
 export default class ConfigurationService {
   private configuration: Configuration | undefined;
 
-  constructor(private readonly imageApi: ConfigurationApi) {
+  constructor(private readonly configurationApi: ConfigurationApi) {
   }
 
-  loadConfiguration = () => this.imageApi.getConfiguration()
+  loadConfiguration = () => this.configurationApi.getConfiguration()
     .then((appConfiguration) => {
       this.configuration = appConfiguration;
     })
@@ -24,5 +24,12 @@ export default class ConfigurationService {
       throw new Error();
     }
     return this.configuration;
+  };
+
+  getConnectionKey = () => {
+    if (!this.configuration) {
+      throw new Error();
+    }
+    return this.configuration.connectionKey;
   };
 }

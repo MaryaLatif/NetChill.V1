@@ -4,89 +4,59 @@
   display: block;
 }
 
-.show-movie__container {
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0;
-  z-index: 3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-  .show-movie {
-    width: 50%;
-    height: 90%;
-    background: $background-popin;
-    border-radius: $border-radius-small;
-    overflow: scroll;
+.show-movie {
+  overflow: scroll;
 
-    .cross {
+  .play-button {
+    margin: $spacer-L 0 0 $spacer-L;
+  }
+
+  .about-it {
+    display: flex;
+    padding: $spacer-XM;
+    color: $color-p;
+    justify-content: space-between;
+    min-height: 28%;
+    bottom: 0px;
+
+    &__overview__container {
       display: flex;
-      justify-content: flex-end;
-      background: black;
+      flex-direction: column;
+      width: 50%;
 
-      &__icon {
-        cursor: pointer;
-        margin: $spacer-XS;
-        color: $border-color;
+      h3 {
+        margin: $spacer-S 0px $spacer-S 0px;
+      }
 
-        &:hover {
-          color: white;
-        }
+      .about-it__overview {
+        line-height: $spacer-XM;
       }
     }
 
-    .play-button {
-      margin: $spacer-L 0 0 $spacer-L;
-    }
+    &__genre-list {
+      list-style: none;
+      margin-top: $spacer-S;
 
-    .about-it {
-      display: flex;
-      padding: $spacer-XM;
-      color: $color-p;
-      justify-content: space-between;
-      min-height: 28%;
-      bottom: 0px;
-
-      &__overview__container {
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-
-        h3 {
-          margin: $spacer-S 0px $spacer-S 0px;
-        }
-
-        .about-it__overview {
-          line-height: $spacer-XM;
-        }
+      h4 {
+        margin: $spacer-S 0px $spacer-S 0px;
       }
 
-      &__genre-list {
-        list-style: none;
-        margin-top: $spacer-S;
-
-        h4 {
-          margin: $spacer-S 0px $spacer-S 0px;
-        }
-
-        li {
-          margin-bottom: $spacer-XS;
-        }
+      li {
+        margin-bottom: $spacer-XS;
       }
-    }
-
-    .error-trailer {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $color-p;
     }
   }
+
+  .error-trailer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-p;
+  }
 }
+
 
 .trailer-large {
   position: absolute;
@@ -116,7 +86,7 @@
 
 // css for phone with screen under 767px
 @media (max-width: 767px) {
-  .show-movie{
-    width: 100%!important;
+  .show-movie {
+    width: 100% !important;
   }
 }
