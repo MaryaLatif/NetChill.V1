@@ -72,7 +72,7 @@ function Poster({
         className={classNames('top-card', { 'top-card--selected': isSelected })}
       >
         <MediaQuery minWidth={767}>
-          <MediaDetails movieId={id} title={title} overview={overview} />
+          <MediaDetails title={title} overview={overview} />
         </MediaQuery>
 
         <div>
@@ -91,7 +91,7 @@ function Poster({
           )}
       </div>
       <MediaQuery maxWidth={767}>
-        <MediaDetails movieId={id} title={title} overview={overview} />
+        <MediaDetails title={title} overview={overview} />
       </MediaQuery>
     </div>
   );
