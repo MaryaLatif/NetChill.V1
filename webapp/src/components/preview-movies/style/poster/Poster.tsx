@@ -27,7 +27,7 @@ function Poster({
   const trailerService = getGlobalInstance(TrailerService);
 
   const [isTrailerStarted, setIsTrailerStarted] = useState(false);
-  const [trailerUrl, setTrailerUrl] = useState<Trailer>();
+  const [trailerUrl, setTrailerUrl] = useState<Trailer | null>();
 
   const trailerRef = useRef<HTMLDivElement>(null);
 

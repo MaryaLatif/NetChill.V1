@@ -1,4 +1,4 @@
-import {Logger} from 'simple-logging-system';
+import { Logger } from 'simple-logging-system';
 import TrailerApi from '../../api/streaming/TrailerApi';
 
 const logger = new Logger('StreamingService');
@@ -9,21 +9,19 @@ export default class TrailerService {
 
   getTrailerByMovieId = (id: number) => this.streamingApi.getTrailerMovieById(id)
     .catch((error) => {
-      if (this.streamingApi.getTrailerMovieById(id).status.toString()[0] === '4') {
+      if (error.errorCode === 'RESOURCE_NOT_FOUND') {
         return null;
-      } else {
-        logger.error('Error while fetching movie trailer', {movieId: id, err: error});
-        throw error;
       }
+      logger.error('Error while fetching movie trailer', { movieId: id, err: error });
+      throw error;
     });
 
   getTrailerBySerieId = (id: number) => this.streamingApi.getTrailerBySerieId(id)
     .catch((error) => {
-      if (this.streamingApi.getTrailerBySerieId(id).status.toString()[0] === '4') {
+      if (error.errorCode === 'RESOURCE_NOT_FOUND') {
         return null;
-      } else {
-        logger.error('Error while fetching tv show trailer', {movieId: id, err: error});
-        throw error;
       }
+      logger.error('Error while fetching tv show trailer', { movieId: id, err: error });
+      throw error;
     });
 }
