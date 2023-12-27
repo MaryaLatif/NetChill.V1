@@ -30,11 +30,11 @@ type MovieInfo = {
 // TODO [REFACTO-SCSS]
 // TODO Couper ce composant en 2 sous-composant générique : MediaSlider, MediaTile
 function Row({
-  title, movieList, isLargerRow, topRated, isDataLoading,
-}: Props) {
+               title, movieList, isLargerRow, topRated, isDataLoading,
+             }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
-  const [trailer, setTrailer] = useState<Trailer>();
+  const [trailer, setTrailer] = useState<Trailer | null>();
   const [mediaInfo, setMediaInfo] = useState<MovieInfo>();
   const [visible, setVisible] = useState(false);
   const [currentPosition, setCurrentPosition] = useState(0);
@@ -117,7 +117,7 @@ function Row({
                   isArrowRightVisible
                   onClickArrowRight={handleClickArrowRight}
                   onClickArrowLeft={handleClickArrowLeft}>
-                  <div ref={sliderRef} className="row__posters">
+                  <div ref={sliderRef} className="row__posters" key={title}>
                     {movieList.map((movie, index) => (
                       <div
                         key={movie.id}
