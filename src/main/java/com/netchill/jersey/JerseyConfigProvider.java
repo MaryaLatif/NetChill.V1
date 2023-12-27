@@ -30,7 +30,7 @@ public class JerseyConfigProvider implements Provider<ResourceConfig> {
 
 		// filters configuration
 		// handle errors and exceptions
-		config.register(WsResultExceptionMapper.class);
+		config.register(NetchillWsResultExceptionMapper.class);
 		// require explicit access control on API
 		config.register(RequireExplicitAccessControlFeature.accessControlAnnotations(PublicApi.class));
 		// to debug web-service requests

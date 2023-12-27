@@ -4,7 +4,6 @@ import { Production } from '../../../../api/types/MovieDbTypes';
 import useIntersectionObserver from '../../../../lib/hooks/IntersectionObserver';
 import useInterval from '../../../../lib/hooks/Interval';
 import { useOnDependenciesChange } from '../../../../lib/react-hooks-alias/ReactHooksAlias';
-import RowLoading from '../../../general/loading/RowLoading';
 import '../../../../../assets/scss/components/style/row/row.scss';
 import '../../../../../assets/scss/components/style/arrow/arrow.scss';
 import '../../../../../assets/scss/components/style/row/top-row.scss';
@@ -27,7 +26,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
   const isSliderVisible = useIntersectionObserver(sliderRef);
 
   function goNextPoster() {
-    setCurrentPoster((prevPoster) => {
+    setCurrentPoster((prevPoster: number) => {
       if (!sliderRef.current) {
         return prevPoster;
       }
@@ -76,16 +75,16 @@ function TopRow({ movieList, isDataLoading }: Props) {
                 isArrowLeftVisible={currentPoster > 0}
                 isArrowRightVisible={currentPoster < movieList.length - 1}
                 onClickArrowRight={goNextPoster}
-                onClickArrowLeft={goPreviousPoster}>
+                onClickArrowLeft={goPreviousPoster}
+              >
                 <div ref={sliderRef} className="row__posters row__posters--top">
                   {movieList.map((movie, index) => {
                     const isSelected = currentPoster === index;
+
                     return (
-                      // eslint-disable-next-line react/jsx-key
-                      <div>
+                      <div key={movie.id}>
                         <MediaQuery maxWidth={767}>
                           <Poster
-                            key={movie.id}
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
@@ -98,7 +97,6 @@ function TopRow({ movieList, isDataLoading }: Props) {
                         </MediaQuery>
                         <MediaQuery minWidth={767}>
                           <Poster
-                            key={movie.id}
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
