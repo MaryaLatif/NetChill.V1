@@ -109,22 +109,24 @@
 
 // css for phone with screen under 767px
 @media (max-width: 767px) {
-  .arrow{
-    height: $height-top-poster !important;
-  }
-  .top-card__img{
-    min-height: $height-top-poster;
-    object-fit: contain;
-  }
-  #info{
-    display: flex;
-    flex-direction: column;
-    gap: $spacer-S;
-    margin: $spacer-S;
-    color: white;
-  }
-  .row-top_poster_loading {
-    min-width: 100vw;
-    height: $height-top-poster;
+  .row-top{
+    .arrow{
+      height: $height-top-poster !important;
+    }
+    .top-card__img{
+      min-height: $height-top-poster;
+      object-fit: contain;
+    }
+    #info{
+      display: flex;
+      flex-direction: column;
+      gap: $spacer-S;
+      margin: $spacer-S;
+      color: white;
+    }
+    .row-top_poster_loading {
+      min-width: 100vw;
+      height: $height-top-poster;
+    }
   }
 }
