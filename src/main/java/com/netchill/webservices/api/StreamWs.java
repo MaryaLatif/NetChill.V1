@@ -55,6 +55,7 @@ public class StreamWs {
                     }
                 }).header("Content-Length", videoFile.length())
                 .header("Accept-Ranges", "bytes")
+                .header("Content-type", "video/mp4")
                 .build();
         }
 
@@ -71,7 +72,12 @@ public class StreamWs {
                 byte[] buffer = new byte[8192];
                 int length;
                 while ((length = videoStream.read(buffer)) != -1) {
-                    output.write(buffer, 0, length);
+                    try {
+                        output.write(buffer, 0, length);
+                    } catch (IOException e) {
+                        System.out.println("LE TRY N'A PAS FONCTIONNÉ : " + e);
+                        break;
+                    }
                 }
                 videoStream.close();
             })
