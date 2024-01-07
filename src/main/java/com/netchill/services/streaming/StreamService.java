@@ -9,13 +9,9 @@ import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
 import java.util.Optional;
 
-import static java.lang.Integer.parseInt;
-import static java.lang.Long.parseLong;
-
 public class StreamService {
     private final MovieDao movieDao;
     private final ConfigurationService configurationService;
-    private static final int CHUNK_SIZE = 1_000_000; // 1MB de tampon pour la mémoire cache
 
     @Inject
     private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
@@ -41,15 +37,6 @@ public class StreamService {
      * @param range
      * @param videoLength
      * @return
-     */
-    /*
-    public long[] getRangePart(String range, long videoLength) {
-        String[] parts = range.replace("bytes=", "").split("-");
-
-        // Si le byte de fin > taille de la vidéo -> on envoie le bout vidéo jusqu'à la fin du film
-        return new long[]{parseLong(parts[0], 10), parts.length > 1 ? parseInt(parts[1]) : Math.min(parseLong(parts[0], 10) + CHUNK_SIZE, videoLength)};//prend le plus petit des 2 paramètres
-    }
-
      */
     public long[] getRangePart(String range, long videoLength) {
         long start;
@@ -89,5 +76,4 @@ public class StreamService {
             }
         };
     }
-
 }
