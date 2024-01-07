@@ -32,6 +32,7 @@ public class StreamWs {
         this.streamService = streamService;
     }
 
+
     @GET
     @Produces("application/octet-stream")
     @Path("/video/{movieId}")
@@ -42,48 +43,94 @@ public class StreamWs {
         }
 
         File videoFile = video.get();
-
-        // If there is no range, we send the whole video
-        if(range == null){
-            return Response.ok((StreamingOutput) output -> {
-                    try (InputStream input = new FileInputStream(videoFile)) {
-                        byte[] buffer = new byte[8192];
-                        int length;
-                        while ((length = input.read(buffer)) != -1) {
-                            output.write(buffer, 0, length);
-                        }
-                    }
-                }).header("Content-Length", videoFile.length())
-                .header("Accept-Ranges", "bytes")
-                .header("Content-type", "video/mp4")
-                .build();
-        }
+        long contentLength = videoFile.length();
 
         // Otherwise, handle range requests
-        long[] parts = this.streamService.getRangePart(range, videoFile.length() - 1);
+        long[] parts = this.streamService.getRangePart(range, videoFile.length());
         long start = parts[0];
         long end = parts[1];
 
-        InputStream videoStream = this.streamService.getVideoPartStream(videoFile, start, end);
+        // get StreamingOutput from streamService
+        StreamingOutput streamingOutput = streamService.generateStreamingOutput(videoFile, start, end);
 
-        // Return the partial content with the input stream
-        return Response.status(Response.Status.PARTIAL_CONTENT)
-            .entity((StreamingOutput) output -> {
+        // Creating response
+        Response.ResponseBuilder responseBuilder = Response.status(Response.Status.PARTIAL_CONTENT)
+            .entity(streamingOutput)
+            .header("Content-Range", "bytes " + start + "-" + end + "/" + contentLength)
+            .header("Content-Length", end - start + 1)
+            .header("Accept-Ranges", "bytes");
+
+        if (range != null) {
+            responseBuilder.header("Content-Type", "video/mp4");
+        }
+
+        return responseBuilder.build();
+    }
+
+/*
+    @GET
+    @Path("/video/{movieId}")
+    @Produces("video/mp4")
+    public Response streamVideo(
+        @HeaderParam("Range") String range
+    ) {
+        File videoFile = getVideoFile(); // Méthode pour récupérer le fichier vidéo, à implémenter
+
+        if (videoFile == null || !videoFile.exists()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        long contentLength = videoFile.length();
+
+        // Parsing de la plage de contenu
+        long start;
+        long end;
+        if (range != null && range.startsWith("bytes=")) {
+            String[] rangeParts = range.substring(6).split("-");
+            start = Long.parseLong(rangeParts[0]);
+            end = rangeParts.length > 1 ? Long.parseLong(rangeParts[1]) : contentLength - 1;
+        } else {
+            end = contentLength - 1;
+            start = 0;
+        }
+
+        // Création du StreamingOutput
+        StreamingOutput streamingOutput = output -> {
+            try (InputStream inputStream = new FileInputStream(videoFile)) {
+                inputStream.skip(start); // Se positionner au début de la plage spécifiée
                 byte[] buffer = new byte[8192];
-                int length;
-                while ((length = videoStream.read(buffer)) != -1) {
-                    try {
-                        output.write(buffer, 0, length);
-                    } catch (IOException e) {
-                        System.out.println("LE TRY N'A PAS FONCTIONNÉ : " + e);
+                int bytesRead;
+                long bytesRemaining = end - start + 1;
+                while ((bytesRead = inputStream.read(buffer, 0, (int) Math.min(bytesRemaining, buffer.length))) > 0) {
+                    output.write(buffer, 0, bytesRead);
+                    bytesRemaining -= bytesRead;
+                    if (bytesRemaining == 0) {
                         break;
                     }
                 }
-                videoStream.close();
-            })
-            .header("Content-Range", "bytes " + start + "-" + end + "/" + videoFile.length())
+            }
+        };
+
+        // Construction de la réponse
+        Response.ResponseBuilder responseBuilder = Response.status(Response.Status.PARTIAL_CONTENT)
+            .entity(streamingOutput)
+            .header("Content-Range", "bytes " + start + "-" + end + "/" + contentLength)
             .header("Content-Length", end - start + 1)
-            .header("Accept-Ranges", "bytes")
-            .build();
+            .header("Accept-Ranges", "bytes");
+
+        if (range != null) {
+            responseBuilder.header("Content-Type", "video/mp4");
+        }
+
+        return responseBuilder.build();
+
     }
+
+    // Méthode factice pour récupérer le fichier vidéo (à remplacer avec votre logique)
+    private File getVideoFile() {
+        return new File("../../Downloads/hunger-games-5.mp4");
+    }
+
+ */
 }
+

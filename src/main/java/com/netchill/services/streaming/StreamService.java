@@ -5,6 +5,7 @@ import com.netchill.db.dao.movie.MovieDao;
 import com.netchill.services.configuration.ConfigurationService;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
 import java.util.Optional;
 
@@ -51,69 +52,42 @@ public class StreamService {
 
      */
     public long[] getRangePart(String range, long videoLength) {
-        String[] parts = range.replace("bytes=", "").split("-");
+        long start;
+        long end;
+        if (range != null && range.startsWith("bytes=")) {
+            String[] rangeParts = range.substring(6).split("-");
+            start = Long.parseLong(rangeParts[0]);
+            end = rangeParts.length > 1 ? Long.parseLong(rangeParts[1]) : videoLength - 1;
+        } else {
+            end = videoLength - 1;
+            start = 0;
+        }
 
-        long start = parseLong(parts[0], 10);
-        long end = parts.length > 1 ? parseLong(parts[1], 10) : videoLength;
-
-        // Si le byte de fin > taille de la vidéo -> on envoie le bout de vidéo jusqu'à la fin du film
-        return new long[]{start, Math.min(start + CHUNK_SIZE, end)};
+        return new long[]{start, end};
     }
 
     /**
-     * Renvoie un InputStream pour le morceau de vidéo souhaité
-     * @param initialFile
+     * Renvoie un StreamingOutput pour le morceau de vidéo souhaité
      * @param start
      * @param end
-     * @return InputStream for the video part
-     * @throws IOException
+     * @return StreamingOutput for the video part
      */
-    public InputStream getVideoPartStream(File initialFile, long start, long end) throws IOException {
-        // on se positionne à l'emplacement du start directement
-        RandomAccessFile randomAccessFile = new RandomAccessFile(initialFile, "r");
-        randomAccessFile.seek(start);
-        //
-        final long[] remaining = {end - start + 1}; // +1 pour pas oublier la fin
-        InputStream inputStream = new FileInputStream(randomAccessFile.getFD()) {
-            @Override
-            public int available() throws IOException {
-                return (int) Math.min(remaining[0], super.available());
-            }
-
-            @Override
-            public int read() throws IOException {
-                if (remaining[0] > 0) {
-                    int data = super.read();
-                    if (data != -1) {
-                        remaining[0]--;
+    public StreamingOutput generateStreamingOutput(File videoFile, long start, long end) {
+        return output -> {
+            try (InputStream inputStream = new FileInputStream(videoFile)) {
+                inputStream.skip(start); // Se positionner au début de la plage spécifiée
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                long bytesRemaining = end - start + 1;
+                while ((bytesRead = inputStream.read(buffer, 0, (int) Math.min(bytesRemaining, buffer.length))) > 0) {
+                    output.write(buffer, 0, bytesRead);
+                    bytesRemaining -= bytesRead;
+                    if (bytesRemaining == 0) {
+                        break;
                     }
-                    return data;
-                } else {
-                    return -1;
                 }
-            }
-
-            @Override
-            public int read(byte[] b, int off, int len) throws IOException {
-                if (remaining[0] > 0) {
-                    int toRead = (int) Math.min(len, remaining[0]);
-                    int numRead = super.read(b, off, toRead);
-                    if (numRead != -1) {
-                        remaining[0] -= numRead;
-                    }
-                    return numRead;
-                } else {
-                    return -1;
-                }
-            }
-
-            @Override
-            public void close() throws IOException {
-                randomAccessFile.close(); // close avant de close le stream
-                super.close();
             }
         };
-        return inputStream;
     }
 
 }
