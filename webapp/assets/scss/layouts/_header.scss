@@ -21,6 +21,7 @@ $background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
   justify-content: space-between;
   position: fixed;
   width: 100%;
+  height: 10%;
   z-index: 3;
   box-shadow: $box-shadow;
   background: $background-header;
@@ -32,7 +33,7 @@ $background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
 
   .logo {
     object-fit: contain;
-    height: $height-logo;
+    height: $height-logo__header;
     margin: 1rem;
   }
 
@@ -40,14 +41,20 @@ $background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
     list-style: none;
     display: flex;
   }
+
   li {
     margin-right: $spacer-L;
   }
 
-  .header__left {
+  &__left {
     display: flex;
     align-items: center;
     margin-left: $spacer-S;
+    height: 100%;
+
+    a{
+      height: 60%;
+    }
   }
 
   .header__right {
@@ -57,8 +64,9 @@ $background-light: linear-gradient(rgba(0, 0, 0, 0.75), rgba(40, 44, 52, 0));
 
 // css for phone with screen under 767px
 @media (max-width: 767px) {
-  .logo{
+  .logo {
     height: $height-logo__phone !important;
   }
 }
+
 

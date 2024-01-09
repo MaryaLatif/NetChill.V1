@@ -139,3 +139,31 @@
     height: $spacer-S;
   }
 }
+
+@media (min-width: 1920px) {
+  .row {
+    > h2 {
+      font-size: $font-size-L;
+    }
+    &__poster-container{
+      margin: $spacer-M 0 0 0;
+    }
+    .poster{
+      height: $height-poster__tv;
+    }
+    .media__info{
+      p{
+        font-size: large;
+      }
+    }
+  }
+  .row_poster_loading{
+    font-size: $font-size-M;
+    margin: $spacer-S 0 0 0;
+    min-width: 348px !important;
+    height: $height-poster__tv !important;
+  }
+  .thumbs-up{
+    height: $spacer-S;
+  }
+}

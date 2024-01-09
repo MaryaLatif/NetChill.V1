@@ -30,7 +30,7 @@ export default function Header({ logo, /* navItems, */ isLighter }: Props) {
     <header className={classNames('header', { 'header--light': isLighter })}>
       {/* <LocaleSelectorContainer /> */}
       <div className="header__left">
-        <img src={logo} alt="logo" className="logo" />
+        <a href="https://netchill.net"><img src={logo} alt="logo" className="logo" /></a>
         {/* <ul>
           {navItems.map((navItem) => (<li key={navItem}>{navItem}</li>))}
         </ul> */}
