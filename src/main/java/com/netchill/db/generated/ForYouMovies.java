@@ -10,8 +10,8 @@ import com.querydsl.sql.Column;
 @Generated("com.coreoz.plume.db.querydsl.generation.IdBeanSerializer")
 public class ForYouMovies extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl {
 
-    @Column("id")
     @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
+    @Column("id")
     private Long id;
 
     @Column("title")

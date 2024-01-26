@@ -18,4 +18,10 @@ export default class SerieService {
       logger.error('Failed to fetch serie by this id: {} ', { error });
       throw error;
     });
+
+  getForYou = () => this.serieApi.getForYou()
+    .catch((error) => {
+      logger.error('Failed to fetch for you series: {} ', { error });
+      throw error;
+    });
 }

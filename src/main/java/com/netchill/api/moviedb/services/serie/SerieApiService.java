@@ -35,17 +35,17 @@ public class SerieApiService {
 
     public MovieDbPaginatedResponse<Production> getNetflixOriginals(@Nullable Integer page) {
         return this.apiClient.executeRequest(serieApi.getNetflixOriginals(
-                this.configurationService.getMovieDbApiKey(),
-                NETFLIX_ID,
-                page
+            this.configurationService.getMovieDbApiKey(),
+            NETFLIX_ID,
+            page
         ));
     }
 
-    public Serie getSerieById(Long id) {
+    public Production getSerieById(Long id) {
         return this.apiClient.executeRequest(serieApi.getSerieById(
-                this.configurationService.getMovieDbApiKey(),
-                id
-        ));
+            id,
+            this.configurationService.getMovieDbApiKey()
+            ));
     }
 
 }

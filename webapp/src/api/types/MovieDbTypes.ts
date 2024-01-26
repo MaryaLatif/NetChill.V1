@@ -19,7 +19,7 @@ export type Production = {
   poster_path: string,
   release_date: string,
   title: string,
-  type: MediaType,
+  mediaType: MediaType,
   vote_average: number,
 };
 

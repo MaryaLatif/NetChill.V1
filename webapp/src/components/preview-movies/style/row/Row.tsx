@@ -23,7 +23,7 @@ type Props = {
 type MovieInfo = {
   id: number,
   overview: string,
-  type: MediaType,
+  mediaType: MediaType,
   genre_ids: number[]
 };
 
@@ -48,7 +48,7 @@ function Row({
     setMediaInfo({
       id: movie.id,
       overview: movie.overview,
-      type: movie.type,
+      mediaType: movie.mediaType,
       genre_ids: movie.genre_ids,
     });
     setVisible(true);
@@ -95,7 +95,7 @@ function Row({
       return;
     }
     console.log(mediaInfo);
-    const apiCall = mediaInfo.type === MediaType.MOVIE
+    const apiCall = mediaInfo.mediaType === MediaType.MOVIE
       ? trailerService.getTrailerByMovieId
       : trailerService.getTrailerBySerieId;
 
@@ -172,7 +172,7 @@ function Row({
         }} */>
             <ShowTrailer
               mediaId={mediaInfo.id}
-              mediaType={mediaInfo.type}
+              mediaType={mediaInfo.mediaType}
               url={trailer.key}
               overview={mediaInfo.overview}
               genreIds={mediaInfo.genre_ids}

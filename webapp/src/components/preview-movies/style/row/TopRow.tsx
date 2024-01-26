@@ -88,7 +88,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
-                            type={movie.type}
+                            type={movie.mediaType}
                             backdrop_path={movie.poster_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}
@@ -100,7 +100,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
-                            type={movie.type}
+                            type={movie.mediaType}
                             backdrop_path={movie.backdrop_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}

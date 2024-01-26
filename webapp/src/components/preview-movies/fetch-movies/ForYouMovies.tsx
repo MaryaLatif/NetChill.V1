@@ -19,7 +19,7 @@ function ForYouMovies() {
     fetchMovies();
   }, []);
 
-  return <Row title='For You' movieList={movies} isDataLoading={movieLoader.isLoading}/>;
+  return <Row title='Movies For You' movieList={movies} isDataLoading={movieLoader.isLoading}/>;
 }
 
 export default ForYouMovies;

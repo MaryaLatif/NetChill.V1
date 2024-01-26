@@ -1,6 +1,6 @@
 CREATE TABLE ntc_for_you_movies(
     id BIGINT null,
-    title VaRCHAR(255),
+    title VARCHAR(255),
     constraint ntc_for_you_movies_pk
         primary key (id)
 );

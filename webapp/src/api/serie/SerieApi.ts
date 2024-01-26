@@ -21,4 +21,11 @@ export default class SerieApi {
       .restRequest<Serie>(HttpMethod.GET, `${this.baseUrl}/${id}`)
       .execute();
   }
+
+  getForYou() {
+    return this
+      .httpClient
+      .restRequest<Production[]>(HttpMethod.GET, `${this.baseUrl}/for-you`)
+      .execute();
+  }
 }

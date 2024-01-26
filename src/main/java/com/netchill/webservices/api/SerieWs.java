@@ -31,7 +31,7 @@ public class SerieWs {
 
     @GET
     @Path("/{id}")
-    public Serie getSerieById(@PathParam("id") Long id) {
+    public Production getSerieById(@PathParam("id") Long id) {
         return this.serieService.getSerieById(id)
                 .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
@@ -40,5 +40,11 @@ public class SerieWs {
     @Path("/netflix-originals")
     public List<Production> getTopNetflixOriginals() {
         return serieService.getTopNetflixOriginals();
+    }
+
+    @GET
+    @Path("/for-you")
+    public List<Production> getSeriesByIds(){
+        return this.serieService.getSeriesByIds();
     }
 }

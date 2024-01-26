@@ -23,19 +23,19 @@ public class Production {
     private String release_date;
     @JsonAlias({"title", "name"})
     private String title;
-    private ProductionType type;
+    private ProductionType mediaType;
     private Float vote_average;
 
     @JsonSetter("title")
     public void setTypeToMovie(String title) {
         this.title = title;
-        this.type = ProductionType.MOVIE;
+        this.mediaType = ProductionType.MOVIE;
     }
 
     @JsonSetter("name")
     public void setTypeToSerie(String name) {
         this.title = name;
-        this.type = ProductionType.SERIE;
+        this.mediaType = ProductionType.SERIE;
     }
 
     @JsonSetter("genres")

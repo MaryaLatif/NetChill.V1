@@ -12,9 +12,6 @@ import java.util.List;
 public class MovieDao {
     private final TransactionManagerQuerydsl transactionManager;
 
-    private record MovieTitleWithUrl(String title, String url) {
-    }
-
     @Inject
     public MovieDao(TransactionManagerQuerydsl transactionManager) {
         this.transactionManager = transactionManager;
