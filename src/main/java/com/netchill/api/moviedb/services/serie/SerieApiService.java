@@ -3,6 +3,7 @@ package com.netchill.api.moviedb.services.serie;
 import com.netchill.api.moviedb.TmdbApiClient;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
+import com.netchill.api.moviedb.models.SaisonEpisodes;
 import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.configuration.ConfigurationService;
 import okhttp3.MediaType;
@@ -48,4 +49,11 @@ public class SerieApiService {
             ));
     }
 
+    public SaisonEpisodes getEpisodesOfSaison(Long id, int season){
+        return this.apiClient.executeRequest(serieApi.getEpisodesOfSaison(
+            id,
+            season,
+            this.configurationService.getMovieDbApiKey()
+        ));
+    }
 }

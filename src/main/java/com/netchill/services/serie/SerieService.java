@@ -1,5 +1,6 @@
 package com.netchill.services.serie;
 
+import com.netchill.api.moviedb.models.Episode;
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.models.Serie;
@@ -48,11 +49,18 @@ public class SerieService {
 
     public List<Production> getSeriesByIds(){
         ArrayList<Production> series = new ArrayList<Production>();
-        System.out.println("ID DU FILM : " + this.serieDao.getForYouSeries());
         for(Long id: this.serieDao.getForYouSeries()){
             series.add(this.serieApiClient.getSerieById(id));
         }
-        System.out.println("SERIES : " + series);
         return series;
+    }
+
+    public List<Episode> getEpisodesOfSeason(Long idSerie, int season){
+        ArrayList<Episode> episodes = new ArrayList<Episode>();
+        ArrayList<Episode> allEpisodesOfSeason = this.serieApiClient.getEpisodesOfSaison(idSerie, season).getEpisodes();
+        for(int episodeNumber: this.serieDao.getEpisodesOfSeason(idSerie, season)){
+            episodes.add(allEpisodesOfSeason.get(episodeNumber));
+        }
+        return episodes;
     }
 }

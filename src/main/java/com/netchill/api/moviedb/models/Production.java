@@ -25,6 +25,7 @@ public class Production {
     private String title;
     private ProductionType mediaType;
     private Float vote_average;
+    private int number_of_seasons;
 
     @JsonSetter("title")
     public void setTypeToMovie(String title) {

@@ -64,7 +64,7 @@ function ShowTrailer({
           {
             mediaType === MediaType.MOVIE
               ? <Player onClickPlay={onClickPlayer}/>
-              : <SerieDetails serieId={mediaId} />
+              : <SerieDetails id_serie={mediaId} />
           }
           <div className="about-it">
             <div className="about-it__overview__container">

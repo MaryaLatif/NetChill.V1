@@ -2,6 +2,7 @@ package com.netchill.api.moviedb.services.serie;
 
 import com.netchill.api.moviedb.models.MovieDbPaginatedResponse;
 import com.netchill.api.moviedb.models.Production;
+import com.netchill.api.moviedb.models.SaisonEpisodes;
 import com.netchill.api.moviedb.models.Serie;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -23,5 +24,11 @@ public interface SerieApiRetrofit {
         @Query("api_key") String apiKey
     );
 
+    @GET("/3/tv/{id}/season/{season_number}")
+    Call<SaisonEpisodes> getEpisodesOfSaison(
+        @Path("id") Long id,
+        @Path("season_number") int saisonNb,
+        @Query("api_key") String apiKey
+    );
 }
 

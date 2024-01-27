@@ -21,6 +21,7 @@ export type Production = {
   title: string,
   mediaType: MediaType,
   vote_average: number,
+  number_of_seasons: number,
 };
 
 export type Serie = {
@@ -35,6 +36,18 @@ export type Serie = {
   vote_average: number,
   number_of_seasons: number,
 };
+
+export type SeasonEpisodes = {
+  season_number: number,
+  episodes: Episode[],
+}
+
+export type Episode = {
+  id: number,
+  episode_number: number,
+  name: string,
+  overview: string,
+}
 
 type Genre = {
   id: number,

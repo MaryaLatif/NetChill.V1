@@ -2,6 +2,7 @@ package com.netchill.webservices.api;
 
 import com.coreoz.plume.jersey.errors.WsException;
 import com.coreoz.plume.jersey.security.permission.PublicApi;
+import com.netchill.api.moviedb.models.Episode;
 import com.netchill.api.moviedb.models.Production;
 import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.serie.SerieService;
@@ -33,7 +34,7 @@ public class SerieWs {
     @Path("/{id}")
     public Production getSerieById(@PathParam("id") Long id) {
         return this.serieService.getSerieById(id)
-                .orElseThrow(()-> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
+            .orElseThrow(() -> new WsException(NetchillWsError.RESOURCE_NOT_FOUND));
     }
 
     @GET
@@ -44,7 +45,13 @@ public class SerieWs {
 
     @GET
     @Path("/for-you")
-    public List<Production> getSeriesByIds(){
+    public List<Production> getSeriesByIds() {
         return this.serieService.getSeriesByIds();
+    }
+
+    @GET
+    @Path("/id/season")
+    public List<Episode> getEpisodesOfSeason(@QueryParam("id") Long id, @QueryParam("season") Integer season) {
+        return this.serieService.getEpisodesOfSeason(id, season);
     }
 }
