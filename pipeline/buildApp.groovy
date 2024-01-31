@@ -24,7 +24,7 @@ pipeline {
 
                         echo 'Building the back'
                         sh 'mvn package'
-                        sh 'sudo unzip target/netchill-1.0.0-dist.zip'
+                        sh 'sudo -S st8honda213?netchill unzip target/netchill-1.0.0-dist.zip'
 
                         echo 'Building the frontend'
                         sh 'cd webapp'
