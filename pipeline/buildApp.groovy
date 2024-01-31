@@ -23,7 +23,7 @@ pipeline {
                     sh 'mvn package'
 
                     echo 'Building the frontend'
-                    sh 'cd webapp'
+                    sh "cd ${projectPath}/webapp"
                     sh 'yarn build'
                 }
             }
