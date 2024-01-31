@@ -7,6 +7,7 @@
 
 .show-movie {
   overflow: scroll;
+  width: 100%;
 
   .play-button {
     margin: $spacer-L 0 0 $spacer-L;
@@ -14,7 +15,7 @@
 
   .about-it {
     display: flex;
-    padding: $spacer-XM;
+    padding: 5%;
     color: $color-p;
     justify-content: space-between;
     min-height: 28%;
@@ -35,8 +36,10 @@
     }
 
     &__genre-list {
+      padding: 0;
       list-style: none;
-      margin-top: $spacer-S;
+      display: flex;
+      gap: $spacer-XS;
 
       h4 {
         margin: $spacer-S 0px $spacer-S 0px;

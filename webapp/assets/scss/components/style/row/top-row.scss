@@ -4,6 +4,9 @@
   z-index: 0;
   position: relative;
 
+  &__popin{
+    position: fixed;
+  }
   .row__posters {
     padding: 0;
   }
@@ -24,7 +27,6 @@
   .row__posters--top {
     margin: 0;
     gap: 0;
-    position: relative;
     overflow: hidden;
     scroll-behavior: unset;
   }
@@ -35,7 +37,6 @@
     align-items: center;
     color: white;
     gap: $spacer-XL;
-    position: relative;
     opacity: 0;
     transition: opacity ease-in 2s;
     flex: 1 0 100vw;

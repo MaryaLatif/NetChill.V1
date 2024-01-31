@@ -8,6 +8,7 @@ import com.netchill.api.moviedb.models.Serie;
 import com.netchill.services.serie.SerieService;
 import com.netchill.webservices.error.NetchillWsError;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -50,8 +51,14 @@ public class SerieWs {
     }
 
     @GET
-    @Path("/id/season")
-    public List<Episode> getEpisodesOfSeason(@QueryParam("id") Long id, @QueryParam("season") Integer season) {
+    @Path("/{id}/episodes")
+    public List<Episode> getEpisodesOfSeason(@PathParam("id") Long id, @QueryParam("season") Integer season) {
         return this.serieService.getEpisodesOfSeason(id, season);
+    }
+
+    @GET
+    @Path("/{id}/seasons-availables")
+    public List<Integer> getSeasonAvailable(@PathParam("id") Long id){
+        return this.serieService.getSeasonAvailable(id);
     }
 }

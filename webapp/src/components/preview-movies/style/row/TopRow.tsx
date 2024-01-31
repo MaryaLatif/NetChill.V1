@@ -88,6 +88,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
+                            genre_ids={movie.genre_ids}
                             type={movie.mediaType}
                             backdrop_path={movie.poster_path}
                             isSelected={isSelected}
@@ -100,6 +101,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             title={movie.title}
                             overview={movie.overview}
                             id={movie.id}
+                            genre_ids={movie.genre_ids}
                             type={movie.mediaType}
                             backdrop_path={movie.backdrop_path}
                             isSelected={isSelected}

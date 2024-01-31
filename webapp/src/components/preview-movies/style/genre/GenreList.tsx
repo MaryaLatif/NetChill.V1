@@ -26,15 +26,14 @@ function GenreList({ genreId, className } : Props) {
   }, [genreId]);
 
   return (
-    <div className={className}>
-      <h4>Genre :</h4>
+    <ul className={className}>
       {
         movieLoader.isLoaded
         && genres.map((genre) => (
           <li key={genre.id}>{genre.name}</li>
         ))
       }
-    </div>
+    </ul>
   );
 }
 

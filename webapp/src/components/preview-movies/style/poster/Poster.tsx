@@ -14,6 +14,7 @@ type Props = {
   overview: string,
   id: number,
   type: string,
+  genre_ids: number[],
   backdrop_path: string,
   isSelected: boolean,
   isVisible: boolean,
@@ -22,7 +23,7 @@ type Props = {
 };
 
 function Poster({
-  title, overview, id, type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
+  title, overview, id, genre_ids,  type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
 }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
@@ -72,7 +73,7 @@ function Poster({
         className={classNames('top-card', { 'top-card--selected': isSelected })}
       >
         <MediaQuery minWidth={767}>
-          <MediaDetails title={title} overview={overview} />
+          <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onStartTrailer}/>
         </MediaQuery>
 
         <div>
@@ -91,7 +92,7 @@ function Poster({
           )}
       </div>
       <MediaQuery maxWidth={767}>
-        <MediaDetails title={title} overview={overview} />
+        <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onStartTrailer}/>
       </MediaQuery>
     </div>
   );

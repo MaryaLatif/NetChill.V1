@@ -1,16 +1,45 @@
 @use '../../variables' as *;
 
-.saison{
-  &-infos__container{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-  }
+.season{
+  width: 100%;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacer-M;
+
   &-infos{
-    border: $border;
-    border-radius: $button-border-radius;
+    display: flex;
     width: fit-content;
-    padding: $spacer-XS;
-    background: $button-background;
   }
+  .episode{
+    &-container{
+      display: flex;
+      flex-direction: column;
+      gap: $spacer-XS;
+    }
+
+    &-title{
+      display: flex;
+      gap:$spacer-XS;
+    }
+
+    &-overview{
+      font-size: smaller;
+    }
+  }
+  .episodes{
+    &-container{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: $spacer-XS;
+    }
+  }
+  &-button{
+    cursor: pointer;
+  }
+}
+
+.episode__icon-play{
+  height: $icon-size-XS;
 }

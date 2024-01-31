@@ -33,4 +33,10 @@ export default class SerieService {
       logger.error('Failed to fetch episodes: {} ', { error });
       throw error;
     });
+
+  getSeasonAvailable = (id: number) => this.serieApi.getSeasonAvailable(id)
+    .catch((error) => {
+      logger.error('Failed to fetch season available: {} ', { error });
+      throw error;
+    });
 }

@@ -59,8 +59,12 @@ public class SerieService {
         ArrayList<Episode> episodes = new ArrayList<Episode>();
         ArrayList<Episode> allEpisodesOfSeason = this.serieApiClient.getEpisodesOfSaison(idSerie, season).getEpisodes();
         for(int episodeNumber: this.serieDao.getEpisodesOfSeason(idSerie, season)){
-            episodes.add(allEpisodesOfSeason.get(episodeNumber));
+            episodes.add(allEpisodesOfSeason.get(episodeNumber-1));
         }
         return episodes;
+    }
+
+    public List<Integer> getSeasonAvailable(Long id){
+        return this.serieDao.getSeasonAvailable(id);
     }
 }

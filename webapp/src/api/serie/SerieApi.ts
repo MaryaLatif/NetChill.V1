@@ -32,8 +32,15 @@ export default class SerieApi {
   getEpisodes(id: number, season: number) {
     return this
       .httpClient
-      .restRequest<Episode[]>(HttpMethod.GET, `${this.baseUrl}/id/season`)
-      .queryParams([['id', id,], ['season', season]])
+      .restRequest<Episode[]>(HttpMethod.GET, `${this.baseUrl}/${id}/episodes`)
+      .queryParams([['season', season]])
+      .execute();
+  }
+
+  getSeasonAvailable(id: number) {
+    return this
+      .httpClient
+      .restRequest<number[]>(HttpMethod.GET, `${this.baseUrl}/${id}/seasons-availables`)
       .execute();
   }
 }

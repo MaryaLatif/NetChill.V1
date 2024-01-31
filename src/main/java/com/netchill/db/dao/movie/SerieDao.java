@@ -33,4 +33,13 @@ public class SerieDao {
             .where(QSeries.series.id.eq(idSerie).and(QSeries.series.season.eq(season)))
             .fetch();
     }
+
+    public List<Integer> getSeasonAvailable(Long id){
+        return this.transactionManager.selectQuery()
+            .select(QSeries.series.season)
+            .distinct()
+            .from(QSeries.series)
+            .where(QSeries.series.id.eq(id))
+            .fetch();
+    }
 }
