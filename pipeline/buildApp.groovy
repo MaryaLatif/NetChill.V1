@@ -15,8 +15,9 @@ pipeline {
 
                         echo 'Get the latest tag'
                         sh 'git checkout main'
-                        sh 'git pull --tags'
                         TAG = sh(script: 'git describe --tags `git rev-list --tags --max-count=1`', returnStdout: true).trim()
+                        sh "git tag -d $TAG"
+                        sh 'git pull --tags'
                         sh "git checkout $TAG"
 
                         echo 'Building the backend'
