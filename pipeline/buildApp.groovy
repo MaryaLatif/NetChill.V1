@@ -11,6 +11,7 @@ pipeline {
 
                     echo 'Get the latest tag'
                     sh "cd ${projectPath}"
+                    sh 'git checkout main'
                     sh 'git pull --tags'
                     sh 'tag=$(git describe --tags `git rev-list --tags --max-count=1`)'
                     sh 'git switch $tag '
