@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'NetChill'
     }
+    environment {
+        TAG = ''
+    }
     stages {
         stage('Build') {
             steps {
@@ -13,13 +16,11 @@ pipeline {
                     sh "cd ${projectPath}"
                     sh 'git checkout main'
                     sh 'git pull --tags'
-                    sh 'tag=$(git describe --tags `git rev-list --tags --max-count=1`)'
-                    sh "git switch $tag "
-                    sh "git checkout $tag"
+                    TAG = sh(script: 'git describe --tags `git rev-list --tags --max-count=1`', returnStdout: true).trim()
+                    sh "git checkout $TAG"
 
                     echo 'Building the backend'
                     sh 'mvn package'
-                    sh 'unzip target/netchill-1.0.0-dist.zip'
 
                     echo 'Building the frontend'
                     sh 'cd webapp'
