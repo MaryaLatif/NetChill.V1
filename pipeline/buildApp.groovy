@@ -26,11 +26,16 @@ pipeline {
                         sh 'mvn package'
                         sh 'echo "st8honda213?netchill" | sudo -S rm -rf netchill-1.0.0'
                         sh 'echo "st8honda213?netchill" | sudo -S unzip target/netchill-1.0.0-dist.zip'
-
-                        echo 'Building the frontend'
-                        sh 'cd webapp'
-                        sh 'yarn build'
                     }
+                }
+            }
+        }
+
+        stage('Build the front') {
+            steps {
+                dir("${PROJECT_PATH}/webapp") {
+                    echo 'Building the frontend'
+                    sh 'yarn build'
                 }
             }
         }
