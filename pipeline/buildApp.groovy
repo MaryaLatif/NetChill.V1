@@ -24,7 +24,7 @@ pipeline {
 
                         echo 'Building the back'
                         sh 'mvn package'
-                        sh 'echo "st8honda213?netchill" | sudo rm -rf netchill-1.0.0'
+                        sh 'echo "st8honda213?netchill" | sudo -S rm -rf netchill-1.0.0'
                         sh 'echo "st8honda213?netchill" | sudo -S unzip target/netchill-1.0.0-dist.zip'
 
                         echo 'Building the frontend'
