@@ -22,8 +22,13 @@ pipeline {
                         TAG = sh(script: 'git describe --tags `git rev-list --tags --max-count=1`', returnStdout: true).trim()
                         sh "git checkout $TAG"
 
-                        echo 'Building the backend'
+                        echo 'Building the back'
                         sh 'mvn package'
+                        sh 'unzip target/netchill-1.0.0-dist.zip'
+
+                        echo 'Building the frontend'
+                        sh 'cd webapp'
+                        sh 'yarn build'
                     }
                 }
             }
