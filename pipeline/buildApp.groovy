@@ -14,8 +14,8 @@ pipeline {
                     sh 'git checkout main'
                     sh 'git pull --tags'
                     sh 'tag=$(git describe --tags `git rev-list --tags --max-count=1`)'
-                    sh 'git switch $tag '
-                    sh 'git checkout $tag'
+                    sh "git switch $tag "
+                    sh "git checkout $tag"
 
                     echo 'Building the backend'
                     sh 'mvn package'
