@@ -16,7 +16,9 @@ pipeline {
                         echo 'Get the latest tag'
                         sh 'git checkout main'
                         TAG = sh(script: 'git describe --tags `git rev-list --tags --max-count=1`', returnStdout: true).trim()
-                        sh "git tag -d $TAG"
+
+                        echo 'Delete old tags and pull the new one'
+                        sh 'git tag -l | xargs -n 1 git tag -d'
                         sh 'git pull --tags'
                         sh "git checkout $TAG"
 
