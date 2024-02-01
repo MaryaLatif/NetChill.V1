@@ -58,7 +58,7 @@ function EpisodesPopin({
           {
             mediaType === MediaType.MOVIE
               ? <Player onClickPlay={onClickPlayer}/>
-              : <SerieDetails id_serie={mediaId} />
+              : <SerieDetails id_serie={mediaId} genreIds={genreIds} />
           }
           <div className="about-it">
             <div className="about-it__overview__container">
