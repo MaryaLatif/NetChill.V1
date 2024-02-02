@@ -18,12 +18,12 @@ type Props = {
   backdrop_path: string,
   isSelected: boolean,
   isVisible: boolean,
-  onStartTrailer?: () => void,
-  onStopTrailer?: () => void
+  onClickButton?: (event: React.MouseEvent) => void,
+  onStopTrailer?: () => void,
 };
 
 function Poster({
-  title, overview, id, genre_ids,  type, backdrop_path, isSelected, isVisible, onStartTrailer, onStopTrailer,
+  title, overview, id, genre_ids,  type, backdrop_path, isSelected, isVisible, onClickButton, onStopTrailer,
 }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
@@ -34,11 +34,11 @@ function Poster({
 
   const movieLoader = useLoader();
 
-  const startTrailer = () => {
+  const startTrailer = (event: React.MouseEvent) => {
     if (!trailerUrl) {
       return;
     }
-    onStartTrailer?.();
+    onClickButton?.(event);
     setIsTrailerStarted(true);
   };
 
@@ -73,7 +73,7 @@ function Poster({
         className={classNames('top-card', { 'top-card--selected': isSelected })}
       >
         <MediaQuery minWidth={767}>
-          <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onStartTrailer}/>
+          <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onClickButton} />
         </MediaQuery>
 
         <div>
@@ -92,7 +92,7 @@ function Poster({
           )}
       </div>
       <MediaQuery maxWidth={767}>
-        <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onStartTrailer}/>
+        <MediaDetails id_serie={id} title={title} overview={overview} genre_ids={genre_ids} onClickButton={onClickButton}/>
       </MediaQuery>
     </div>
   );

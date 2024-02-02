@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import MediaQuery from 'react-responsive';
-import { Production } from '../../../../api/types/MovieDbTypes';
+import { MediaType, MovieInfo, Production } from '../../../../api/types/MovieDbTypes';
 import useIntersectionObserver from '../../../../lib/hooks/IntersectionObserver';
 import useInterval from '../../../../lib/hooks/Interval';
 import { useOnDependenciesChange } from '../../../../lib/react-hooks-alias/ReactHooksAlias';
@@ -8,6 +8,7 @@ import '../../../../../assets/scss/components/style/row/row.scss';
 import '../../../../../assets/scss/components/style/arrow/arrow.scss';
 import '../../../../../assets/scss/components/style/row/top-row.scss';
 import RowTopLoading from '../../../general/loading/RowTopLoading';
+import EpisodesPopin from '../../../general/streaming/trailer/EpisodesPopin';
 import Poster from '../poster/Poster';
 import Slider from '../slider/Slider';
 
@@ -22,8 +23,28 @@ const SLIDER_TIMING: number = 5_000;
 function TopRow({ movieList, isDataLoading }: Props) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const { createInterval, stopInterval, resetInterval } = useInterval();
+  const [mediaInfo, setMediaInfo] = useState<MovieInfo>();
   const [currentPoster, setCurrentPoster] = useState(0);
+  const [episodesVisible, setEpisodesVisible] = useState(false);
   const isSliderVisible = useIntersectionObserver(sliderRef);
+
+  function onClickPlayer(event: React.MouseEvent<Element, MouseEvent>, index: number) {
+    event.stopPropagation();
+    stopInterval();
+    const movie = movieList[index];
+    setMediaInfo({
+      id: movie.id,
+      overview: movie.overview,
+      mediaType: movie.mediaType,
+      genre_ids: movie.genre_ids,
+    });
+    setEpisodesVisible(true);
+  }
+
+  function onClose(event: React.MouseEvent<Element, MouseEvent>) {
+    event.stopPropagation();
+    setEpisodesVisible(false);
+  }
 
   function goNextPoster() {
     setCurrentPoster((prevPoster: number) => {
@@ -70,7 +91,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
       {
         isDataLoading ? <RowTopLoading />
           : (
-            <>
+            <div>
               <Slider
                 isArrowLeftVisible={currentPoster > 0}
                 isArrowRightVisible={currentPoster < movieList.length - 1}
@@ -93,7 +114,9 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             backdrop_path={movie.poster_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}
-                            onStartTrailer={stopInterval}
+                            onClickButton={(event) => {
+                              onClickPlayer(event, index);
+                            }}
                           />
                         </MediaQuery>
                         <MediaQuery minWidth={767}>
@@ -106,7 +129,9 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             backdrop_path={movie.backdrop_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}
-                            onStartTrailer={stopInterval}
+                            onClickButton={(event) => {
+                              onClickPlayer(event, index);
+                            }}
                           />
                         </MediaQuery>
                       </div>
@@ -114,9 +139,17 @@ function TopRow({ movieList, isDataLoading }: Props) {
                   })}
                 </div>
               </Slider>
-            </>
+            </div>
           )
       }
+      <div>
+        {
+          episodesVisible && mediaInfo &&
+          <EpisodesPopin mediaId={mediaInfo.id} mediaType={MediaType.SERIE} overview={mediaInfo.overview}
+                         genreIds={mediaInfo.genre_ids} onClose={onClose} />
+        }
+      </div>
+
     </div>
   );
 }

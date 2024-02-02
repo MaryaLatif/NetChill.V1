@@ -3,7 +3,7 @@ import '../../../../../assets/scss/components/style/row/row.scss';
 import { getGlobalInstance } from 'plume-ts-di';
 import classNames from 'classnames';
 import MediaQuery from 'react-responsive';
-import { MediaType, Production, Trailer } from '../../../../api/types/MovieDbTypes';
+import { MediaType, MovieInfo, Production, Trailer } from '../../../../api/types/MovieDbTypes';
 import TrailerService from '../../../../services/streaming/TrailerService';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import RowLoading from '../../../general/loading/RowLoading';
@@ -18,13 +18,6 @@ type Props = {
   isLargerRow?: boolean,
   topRated?: boolean,
   isDataLoading?: boolean
-};
-
-type MovieInfo = {
-  id: number,
-  overview: string,
-  mediaType: MediaType,
-  genre_ids: number[]
 };
 
 // TODO [REFACTO-SCSS]

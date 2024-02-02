@@ -1,7 +1,7 @@
 import { getGlobalInstance } from 'plume-ts-di';
 import { useEffect, useState } from 'react';
 import * as React from 'react';
-import { Production, Serie } from '../../../../api/types/MovieDbTypes';
+import { Production } from '../../../../api/types/MovieDbTypes';
 import useLoader from '../../../../lib/plume-http-react-hook-loader/promiseLoaderHook';
 import SerieService from '../../../../services/serie/SerieService';
 import GenreList from '../genre/GenreList';

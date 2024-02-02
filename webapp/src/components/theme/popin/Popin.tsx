@@ -8,14 +8,14 @@ export type PopinProps = {
   width?: string;
   className?: string;
   children?: React.ReactNode;
-  onClose?: ()=>void,
+  onClose?: (event: React.MouseEvent)=>void,
 };
 
 export function Popin({
   children, zIndex, height, width, onClose, className
 }: PopinProps) {
   return (
-    <div className={`popin ${className}`} style={{ zIndex: zIndex ?? 100 }}>`
+    <div className={`popin ${className}`} style={{ zIndex: zIndex ?? 100 }}>
       <div className="popin-container" style={{ height, width }}>
         <div className="cross">
           <XCircle className="cross__icon" onClick={onClose}/>
