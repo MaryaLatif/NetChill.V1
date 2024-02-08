@@ -19,11 +19,12 @@ type Props = {
   isSelected: boolean,
   isVisible: boolean,
   onClickButton?: (event: React.MouseEvent) => void,
+  onStartTrailer?: () => void,
   onStopTrailer?: () => void,
 };
 
 function Poster({
-  title, overview, id, genre_ids,  type, backdrop_path, isSelected, isVisible, onClickButton, onStopTrailer,
+  title, overview, id, genre_ids,  type, backdrop_path, isSelected, isVisible, onStartTrailer,  onClickButton, onStopTrailer,
 }: Props) {
   const trailerService = getGlobalInstance(TrailerService);
 
@@ -38,6 +39,7 @@ function Poster({
     if (!trailerUrl) {
       return;
     }
+    onStartTrailer?.();
     setIsTrailerStarted(true);
   };
 

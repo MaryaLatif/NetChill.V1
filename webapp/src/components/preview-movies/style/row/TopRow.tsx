@@ -116,6 +116,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             backdrop_path={movie.poster_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}
+                            onStartTrailer={stopInterval}
                             onClickButton={(event) => {
                               onClickPlayer(event, index);
                             }}
@@ -131,6 +132,7 @@ function TopRow({ movieList, isDataLoading }: Props) {
                             backdrop_path={movie.backdrop_path}
                             isSelected={isSelected}
                             isVisible={isSliderVisible}
+                            onStartTrailer={stopInterval}
                             onClickButton={(event) => {
                               onClickPlayer(event, index);
                             }}
