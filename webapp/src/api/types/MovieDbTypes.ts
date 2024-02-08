@@ -66,9 +66,11 @@ type Trailer = {
 
 type MovieInfo = {
   id: number,
+  title: string,
   overview: string,
   mediaType: MediaType,
-  genre_ids: number[]
+  genre_ids: number[],
+  release_date: string,
 };
 
 export type { Genre, Trailer, MovieInfo };

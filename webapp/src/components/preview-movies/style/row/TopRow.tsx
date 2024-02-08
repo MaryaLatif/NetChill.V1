@@ -34,6 +34,8 @@ function TopRow({ movieList, isDataLoading }: Props) {
     const movie = movieList[index];
     setMediaInfo({
       id: movie.id,
+      title: movie.title,
+      release_date: movie.release_date,
       overview: movie.overview,
       mediaType: movie.mediaType,
       genre_ids: movie.genre_ids,

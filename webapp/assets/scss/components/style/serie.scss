@@ -1,45 +1,103 @@
 @use '../../variables' as *;
 
-.season{
+.season {
   width: 100%;
   padding: 5%;
   display: flex;
   flex-direction: column;
-  gap: $spacer-M;
+  gap: $spacer-L;
 
-  &-infos{
+  &__header{
+    display: flex;
+    flex-direction: column;
+    gap: $spacer-S;
+
+    h2 {
+      padding: 0;
+    }
+  }
+
+  &__selected {
+    transform: rotate(180deg);
+  }
+
+  &-date{
+    color: #999999;
+  }
+
+  &-infos {
     display: flex;
     width: fit-content;
+    padding: 0;
+
+    &__nb-season {
+      color: #999999;
+    }
   }
-  .episode{
-    &-container{
+
+  .episode {
+    &-container {
       display: flex;
       flex-direction: column;
       gap: $spacer-XS;
     }
 
-    &-title{
+    &-title {
       display: flex;
-      gap:$spacer-XS;
+      gap: $spacer-XS;
+      align-items: center;
+      justify-content: center;
+      width: $width-poster-S;
+      height: $height-poster;
+      background: $button-background-hover;
+      border-radius: 10px;
+      border: $border;
+
     }
 
-    &-overview{
+    &-overview {
       font-size: smaller;
+      text-align: justify;
+      width: $width-poster-S;
+      padding: 0.5rem;
     }
   }
-  .episodes{
-    &-container{
+
+  .media__img{
+    cursor: pointer;
+  }
+
+  .media__img:hover{
+    background: $episode-card-background-hover;
+  }
+  .episodes {
+    &-container {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: $spacer-XS;
+
+      .arrow {
+        top: 0;
+        height: $height-poster;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 0;
+      }
+    }
+
+    &-row {
+      display: flex;
+      gap: $spacer-S;
+      overflow: scroll;
+      scroll-behavior: smooth;
     }
   }
-  &-button{
+
+  &-button {
     cursor: pointer;
   }
 }
 
-.episode__icon-play{
+.episode__icon-play {
   height: $icon-size-XS;
 }

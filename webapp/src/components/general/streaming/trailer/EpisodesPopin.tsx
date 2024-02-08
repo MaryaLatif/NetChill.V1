@@ -49,13 +49,6 @@ function EpisodesPopin({
               ? <Player onClickPlay={onClickPlayer}/>
               : <SerieDetails id_serie={mediaId} genreIds={genreIds} />
           }
-          <div className="about-it">
-            <div className="about-it__overview__container">
-              <h3>Overview</h3>
-              <p className="about-it__overview">{overview}</p>
-            </div>
-            <GenreList genreId={genreIds} className="about-it__genre-list" />
-          </div>
         </div>
       }
     </Popin>

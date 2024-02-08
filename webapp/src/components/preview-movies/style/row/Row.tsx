@@ -40,9 +40,11 @@ function Row({
     const movie = movieList[index];
     setMediaInfo({
       id: movie.id,
+      title: movie.title,
       overview: movie.overview,
       mediaType: movie.mediaType,
       genre_ids: movie.genre_ids,
+      release_date: movie.release_date
     });
     setVisible(true);
   }
@@ -164,10 +166,12 @@ function Row({
         }} */>
             <ShowTrailer
               mediaId={mediaInfo.id}
+              title={mediaInfo.title}
               mediaType={mediaInfo.mediaType}
               url={trailer.key}
               overview={mediaInfo.overview}
               genreIds={mediaInfo.genre_ids}
+              date={mediaInfo.release_date}
               onClose={handleCloseTrailerPopIn}
             />
           </div>

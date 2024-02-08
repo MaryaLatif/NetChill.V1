@@ -34,11 +34,10 @@ function Poster({
 
   const movieLoader = useLoader();
 
-  const startTrailer = (event: React.MouseEvent) => {
+  const startTrailer = () => {
     if (!trailerUrl) {
       return;
     }
-    onClickButton?.(event);
     setIsTrailerStarted(true);
   };
 

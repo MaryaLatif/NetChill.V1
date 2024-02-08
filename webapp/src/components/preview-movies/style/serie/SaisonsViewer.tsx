@@ -21,9 +21,9 @@ function SaisonsViewer({ id_serie }: Props) {
   return (
     <div>
       {
-        seasonsAvailable === undefined
+        seasonsAvailable?.length == 0
           ? <h1>Contactez moi si vous voulez des épisodes !</h1>
-          : seasonsAvailable.map((season) => (
+          : seasonsAvailable?.map((season) => (
             <Episodes id_serie={id_serie} season={season} key={id_serie} />
           ))
       }

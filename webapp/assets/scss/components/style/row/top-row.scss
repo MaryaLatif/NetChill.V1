@@ -93,6 +93,12 @@
   .arrow{
     height: 100%;
   }
+
+  .about-it{
+    &__overview__container{
+      width: 100%;
+    }
+  }
 }
 
 .row-top_poster_loading {

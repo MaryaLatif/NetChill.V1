@@ -46,4 +46,9 @@ public class Production {
             this.genre_ids.add(genre.getId());
         }
     }
+
+    @JsonSetter("release_date")
+    public void setReleaseDate(String release_date) {
+        this.release_date = release_date.substring(0, 4);
+    }
 }

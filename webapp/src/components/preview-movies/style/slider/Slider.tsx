@@ -1,5 +1,6 @@
 import React from 'react';
 import Arrow from '../arrow/Arrow';
+import '../../../../../assets/scss/theme/slider/slider.scss';
 
 type Props = {
   isArrowLeftVisible: boolean,
@@ -12,7 +13,7 @@ function Slider({
   isArrowLeftVisible, isArrowRightVisible, onClickArrowRight, onClickArrowLeft, children,
 } : Props) {
   return (
-    <div>
+    <div className='slider-container'>
       {
         isArrowLeftVisible
         && <Arrow orientation={'left'} onClick={onClickArrowLeft}/>

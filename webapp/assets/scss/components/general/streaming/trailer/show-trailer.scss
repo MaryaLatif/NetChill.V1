@@ -8,30 +8,50 @@
 .show-movie {
   overflow: scroll;
   width: 100%;
-
   .play-button {
     margin: $spacer-L 0 0 $spacer-L;
   }
 
+  h3 {
+    margin: $spacer-S 0px $spacer-S 0px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $spacer-S;
+
+    h2 {
+      padding: 0;
+    }
+
+    &__date{
+      color: #999999;
+    }
+  }
+
   .about-it {
     display: flex;
-    padding: 5%;
+    flex-direction: column;
     color: $color-p;
     justify-content: space-between;
     min-height: 28%;
     bottom: 0px;
 
+    &__container{
+      width: 100%;
+      padding: 5%;
+      display: flex;
+      flex-direction: column;
+      gap: $spacer-L;
+    }
+
     &__overview__container {
       display: flex;
       flex-direction: column;
-      width: 50%;
 
       h3 {
-        margin: $spacer-S 0px $spacer-S 0px;
-      }
-
-      .about-it__overview {
-        line-height: $spacer-XM;
+        padding: 0;
       }
     }
 

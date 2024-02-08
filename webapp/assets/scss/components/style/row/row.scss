@@ -89,7 +89,6 @@
         object-fit: contain; /*img pas déformée selon sa taille*/
         height: 100%;
         border-radius: 10px;
-        border: $border-color;
 
         &-deformed {
           width: $width-poster-S;
@@ -128,6 +127,9 @@
     &__poster-container{
       margin: $spacer-S 0 0 0;
     }
+    .arrow{
+      margin: 0;
+    }
   }
   .row_poster_loading{
     font-size: $font-size-M;
@@ -148,6 +150,7 @@
     .poster{
       height: $height-poster__tv;
     }
+
     .media__info{
       p{
         font-size: large;

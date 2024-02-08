@@ -15,15 +15,17 @@ import ErrorTrailer from './ErrorTrailer';
 
 type Props = {
   mediaId: number,
+  title: string,
   mediaType: MediaType;
   url: string,
   overview: string,
   genreIds: number[],
+  date: string,
   onClose: () => void,
 };
 
 function ShowTrailer({
-                       mediaId, mediaType,
+                       mediaId, title, date, mediaType,
                        url, overview, genreIds, onClose,
                      }: Props) {
   const [connectionPopinVisible, setConnectionPopinVisible] = useState(false);
@@ -63,20 +65,27 @@ function ShowTrailer({
           }
           {
             mediaType === MediaType.MOVIE
-            && <div><Player onClickPlay={onClickPlayer} />
-              <div className="about-it">
-                <div className="about-it__overview__container">
-                  <h3>Overview</h3>
-                  <p className="about-it__overview">{overview}</p>
+            && <div>
+              <Player onClickPlay={onClickPlayer} />
+              <div className='about-it__container'>
+                <div className="show-movie__header">
+                  <h2>{title}</h2>
+                  <p className="show-movie__header__date">{date}</p>
+                  <GenreList genreId={genreIds} className="about-it__genre-list" />
                 </div>
-                <GenreList genreId={genreIds} className="about-it__genre-list" />
+                <div className="about-it">
+                  <div className="about-it__overview__container">
+                    <h3>Overview</h3>
+                    <p className="about-it__overview">{overview}</p>
+                  </div>
+                </div>
               </div>
             </div>
           }
 
           {
             mediaType === MediaType.SERIE
-            && <SerieDetails id_serie={mediaId} genreIds={genreIds}/>
+            && <SerieDetails id_serie={mediaId} genreIds={genreIds} />
 
           }
 
