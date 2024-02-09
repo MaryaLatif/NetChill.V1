@@ -2,6 +2,7 @@ package com.netchill.services.streaming;
 
 import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.db.dao.movie.MovieDao;
+import com.netchill.db.dao.movie.SerieDao;
 import com.netchill.services.configuration.ConfigurationService;
 
 import javax.inject.Inject;
@@ -11,11 +12,13 @@ import java.util.Optional;
 
 public class StreamService {
     private final MovieDao movieDao;
+    private final SerieDao serieDao;
     private final ConfigurationService configurationService;
 
     @Inject
-    private StreamService(MovieDao movieDao, ConfigurationService configurationService) {
+    private StreamService(MovieDao movieDao, SerieDao serieDao, ConfigurationService configurationService) {
         this.movieDao = movieDao;
+        this.serieDao = serieDao;
         this.configurationService = configurationService;
     }
 
@@ -24,10 +27,21 @@ public class StreamService {
      *
      * @param movieId
      * @return
-     * @throws WsException
      */
     public Optional<File> getVideoFile(Long movieId) {
         File video = new File(this.configurationService.getVideoBaseUrl() + this.movieDao.fetchMoviePath(movieId));
+        return Optional.of(video);
+    }
+
+    /**
+     * Récupère le nom du fichier vidéo de l'épisode en fonction du film et de la saison à partir de la bd
+     * @param serieId
+     * @param season
+     * @param episode
+     * @return
+     */
+    public Optional<File> getEpisodeVideoFile(Long serieId, int season, int episode) {
+        File video = new File(this.configurationService.getEpisodeVideoBaseUrl() + this.serieDao.fetchEpisodePath(serieId, season, episode));
         return Optional.of(video);
     }
 

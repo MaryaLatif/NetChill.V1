@@ -15,18 +15,18 @@ public class SerieDao {
     private final TransactionManagerQuerydsl transactionManager;
 
     @Inject
-    public SerieDao(TransactionManagerQuerydsl transactionManager){
+    public SerieDao(TransactionManagerQuerydsl transactionManager) {
         this.transactionManager = transactionManager;
     }
 
-    public List<Long> getForYouSeries(){
+    public List<Long> getForYouSeries() {
         return this.transactionManager.selectQuery()
             .select(QForYouSeries.forYouSeries.id)
             .from(QForYouSeries.forYouSeries)
             .fetch();
     }
 
-    public List<Integer> getEpisodesOfSeason(Long idSerie, int season){
+    public List<Integer> getEpisodesOfSeason(Long idSerie, int season) {
         return this.transactionManager.selectQuery()
             .select(QSeries.series.episode)
             .from(QSeries.series)
@@ -34,12 +34,25 @@ public class SerieDao {
             .fetch();
     }
 
-    public List<Integer> getSeasonAvailable(Long id){
+    public List<Integer> getSeasonAvailable(Long id) {
         return this.transactionManager.selectQuery()
             .select(QSeries.series.season)
             .distinct()
             .from(QSeries.series)
             .where(QSeries.series.id.eq(id))
             .fetch();
+    }
+
+    public String fetchEpisodePath(Long serieId, int season, int episode) {
+        return this.transactionManager.selectQuery()
+            .select(QSeries.series.episodeUrl)
+            .from(QSeries.series)
+            .where(QSeries.series.id.eq(serieId)
+                .and(QSeries.series.season.eq(season)
+                    .and(QSeries.series.episode.eq(episode)
+                    )
+                )
+            )
+            .fetchOne();
     }
 }

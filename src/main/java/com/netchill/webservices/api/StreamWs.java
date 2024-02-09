@@ -13,9 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Optional;
 
 @Path("/stream")
@@ -36,8 +33,42 @@ public class StreamWs {
     @GET
     @Produces("application/octet-stream")
     @Path("/video/{movieId}")
-    public Response streamVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range) throws WsException, IOException {
+    public Response streamVideo(@PathParam("movieId") Long movieId, @HeaderParam("Range") String range) throws WsException {
         Optional<File> video = this.streamService.getVideoFile(movieId);
+        if(video.isEmpty()){
+            throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
+        }
+
+        File videoFile = video.get();
+        long contentLength = videoFile.length();
+
+        // Otherwise, handle range requests
+        long[] parts = this.streamService.getRangePart(range, videoFile.length());
+        long start = parts[0];
+        long end = parts[1];
+
+        // get StreamingOutput from streamService
+        StreamingOutput streamingOutput = streamService.generateStreamingOutput(videoFile, start, end);
+
+        // Creating response
+        Response.ResponseBuilder responseBuilder = Response.status(Response.Status.PARTIAL_CONTENT)
+            .entity(streamingOutput)
+            .header("Content-Range", "bytes " + start + "-" + end + "/" + contentLength)
+            .header("Content-Length", end - start + 1)
+            .header("Accept-Ranges", "bytes");
+
+        if (range != null) {
+            responseBuilder.header("Content-Type", "video/mp4");
+        }
+
+        return responseBuilder.build();
+    }
+
+    @GET
+    @Produces("application/octet-stream")
+    @Path("/video/serie/{serieId}")
+    public Response streamVideo(@PathParam("serieId") Long serieId, @QueryParam("season") int season, @QueryParam("episode") int episode, @HeaderParam("Range") String range) throws WsException {
+        Optional<File> video = this.streamService.getEpisodeVideoFile(serieId, season, episode);
         if(video.isEmpty()){
             throw new WsException(NetchillWsError.RESOURCE_NOT_FOUND);
         }

@@ -26,6 +26,8 @@ public class QSeries extends com.querydsl.sql.RelationalPathBase<Series> {
 
     public final NumberPath<Integer> episode = createNumber("episode", Integer.class);
 
+    public final StringPath episodeUrl = createString("episodeUrl");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> season = createNumber("season", Integer.class);
@@ -57,6 +59,7 @@ public class QSeries extends com.querydsl.sql.RelationalPathBase<Series> {
 
     public void addMetadata() {
         addMetadata(episode, ColumnMetadata.named("episode").withIndex(3).ofType(Types.INTEGER).withSize(10));
+        addMetadata(episodeUrl, ColumnMetadata.named("episode_url").withIndex(4).ofType(Types.VARCHAR).withSize(255));
         addMetadata(id, ColumnMetadata.named("id").withIndex(1).ofType(Types.BIGINT).withSize(19));
         addMetadata(season, ColumnMetadata.named("season").withIndex(2).ofType(Types.INTEGER).withSize(10));
     }

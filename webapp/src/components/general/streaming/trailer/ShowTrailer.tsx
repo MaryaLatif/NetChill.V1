@@ -64,29 +64,26 @@ function ShowTrailer({
               : <ErrorTrailer />
           }
           {
-            mediaType === MediaType.MOVIE
-            && <div>
-              <Player onClickPlay={onClickPlayer} />
-              <div className='about-it__container'>
-                <div className="show-movie__header">
-                  <h2>{title}</h2>
-                  <p className="show-movie__header__date">{date}</p>
-                  <GenreList genreId={genreIds} className="about-it__genre-list" />
-                </div>
-                <div className="about-it">
-                  <div className="about-it__overview__container">
-                    <h3>Overview</h3>
-                    <p className="about-it__overview">{overview}</p>
+            mediaType === MediaType.MOVIE ?
+              <div>
+                <Player onClickPlay={onClickPlayer} />
+                <div className="about-it__container">
+                  <div className="show-movie__header">
+                    <h2>{title}</h2>
+                    <p className="show-movie__header__date">{date}</p>
+                    <GenreList genreId={genreIds} className="about-it__genre-list" />
+                  </div>
+                  <div className="about-it">
+                    <div className="about-it__overview__container">
+                      <h3>Overview</h3>
+                      <p className="about-it__overview">{overview}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          }
-
-          {
-            mediaType === MediaType.SERIE
-            && <SerieDetails id_serie={mediaId} genreIds={genreIds} />
-
+              :
+              mediaType === MediaType.SERIE
+              && <SerieDetails id_serie={mediaId} genreIds={genreIds} />
           }
 
         </div>

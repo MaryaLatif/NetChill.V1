@@ -40,7 +40,11 @@ public class ConfigurationService {
     }
 
     public String getVideoBaseUrl() {
-        return config.getString("video.base-url");
+        return config.getString("video.movie.base-url");
+    }
+
+    public String getEpisodeVideoBaseUrl() {
+        return config.getString("video.serie.base-url");
     }
 
     public String getConnectionKey(){

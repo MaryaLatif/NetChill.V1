@@ -44,6 +44,10 @@ export default function App() {
           path: 'stream/:movieId',
           element: <Stream />,
         },
+        {
+          path: 'stream/serie/:serieId/season/:season/episode/:episode',
+          element: <Stream />,
+        },
       ],
     },
   ]), []);

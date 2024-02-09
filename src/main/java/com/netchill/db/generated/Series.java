@@ -13,6 +13,9 @@ public class Series extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl
     @Column("episode")
     private Integer episode;
 
+    @Column("episode_url")
+    private String episodeUrl;
+
     @JsonSerialize(using=com.fasterxml.jackson.databind.ser.std.ToStringSerializer.class)
     @Column("id")
     private Long id;
@@ -26,6 +29,14 @@ public class Series extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl
 
     public void setEpisode(Integer episode) {
         this.episode = episode;
+    }
+
+    public String getEpisodeUrl() {
+        return episodeUrl;
+    }
+
+    public void setEpisodeUrl(String episodeUrl) {
+        this.episodeUrl = episodeUrl;
     }
 
     public Long getId() {
@@ -46,7 +57,7 @@ public class Series extends com.coreoz.plume.db.querydsl.crud.CrudEntityQuerydsl
 
     @Override
     public String toString() {
-         return "episode = " + episode + ", id = " + id + ", season = " + season;
+         return "episode = " + episode + ", episodeUrl = " + episodeUrl + ", id = " + id + ", season = " + season;
     }
 
 }
