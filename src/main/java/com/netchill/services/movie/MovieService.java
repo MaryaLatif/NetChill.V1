@@ -38,6 +38,7 @@ public class MovieService {
     }
 
     public List<Production> getTopRatedByGenre(Long genre) {
+        System.out.print(this.movieApiClient.getMoviesByGenre(genre).getResults());
         return this.movieApiClient.getMoviesByGenre(genre).getResults();
     }
 

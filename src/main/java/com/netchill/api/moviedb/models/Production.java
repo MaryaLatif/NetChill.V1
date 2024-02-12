@@ -49,6 +49,10 @@ public class Production {
 
     @JsonSetter("release_date")
     public void setReleaseDate(String release_date) {
-        this.release_date = release_date.substring(0, 4);
+        if(release_date.length() > 0){
+            this.release_date = release_date.substring(0, 4);
+        } else{
+            this.release_date = "No lo sé, sorry";
+        }
     }
 }
