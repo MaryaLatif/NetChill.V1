@@ -12,6 +12,7 @@ pipeline {
                 dir(PROJECT_PATH) {
                     script {
                         echo 'Building the project...'
+                        sh 'whoami'
 
                         echo 'Get the latest tag'
                         sh 'git checkout main'
