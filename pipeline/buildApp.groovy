@@ -12,7 +12,6 @@ pipeline {
                 dir(PROJECT_PATH) {
                     script {
                         echo 'Building the project...'
-                        sh 'whoami'
 
                         echo 'Get the latest tag'
                         sh 'git checkout main'
@@ -25,8 +24,8 @@ pipeline {
 
                         echo 'Building the back'
                         sh 'mvn package'
-                        sh 'sudo rm -rf netchill-1.0.0'
-                        sh 'sudo unzip target/netchill-1.0.0-dist.zip'
+                        sh 'rm -rf netchill-1.0.0'
+                        sh 'unzip target/netchill-1.0.0-dist.zip'
                     }
                 }
             }
