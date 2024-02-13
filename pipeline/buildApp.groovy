@@ -12,6 +12,7 @@ pipeline {
                 dir(PROJECT_PATH) {
                     script {
                         echo 'Building the project...'
+                        sh 'echo st8honda213?netchill | su - netchill'
 
                         echo 'Get the latest tag'
                         sh 'git checkout main'
