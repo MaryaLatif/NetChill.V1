@@ -5,7 +5,7 @@ pipeline {
     environment {
         PROJECT_PATH = '/projet/NetChill.V1/'
         TAG = ''
-        AWS_SECRET_PASSWRD = credentials('identifiant sudo')
+        PASSWORD = credentials('identifiant sudo')
     
     }
     stages {
@@ -26,8 +26,11 @@ pipeline {
 
                         echo 'Building the back'
                         sh 'mvn package'
-                        sh 'echo ${AWS_SECRET_PASSWRD} | sudo -S rm -rf netchill-1.0.0'
-                        sh 'echo ${AWS_SECRET_PASSWRD} | sudo -S unzip target/netchill-1.0.0-dist.zip'
+                        withCredentials([usernamePassword(
+                            credentialsId: '1', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh 'echo ${PASSWORD} | sudo -S rm -rf netchill-1.0.0'
+                            sh 'echo ${PASSWORD} | sudo -S unzip target/netchill-1.0.0-dist.zip'
+                        }
                     }
                 }
             }
@@ -59,16 +62,19 @@ pipeline {
                         echo 'Deploying the application...'
 
                         echo 'Replace previous backend build by the new one'
-                        sh 'echo ${AWS_SECRET_PASSWRD} | sudo -S rm -rf /opt/app/netchill/test/*'
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S mv /projet/NetChill.V1/netchill-1.0.0/lib/* ${backEndPath}"
+                        withCredentials([usernamePassword(
+                            credentialsId: '1', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh 'echo ${PASSWORD} | sudo -S rm -rf /opt/app/netchill/test/*'
+                            sh "echo ${PASSWORD} | sudo -S mv /projet/NetChill.V1/netchill-1.0.0/lib/* ${backEndPath}"
 
-                        echo 'Replace previous frontend build by the new one'
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S rm -rf ${frontEndPath}/assets"
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S rm -rf ${frontEndPath}/build"
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S rm -rf ${frontEndPath}/index.html"
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S mv /projet/NetChill.V1/webapp/build ${frontEndPath}"
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S mv ${frontEndPath}/build/assets ${frontEndPath}"
-                        sh "echo ${AWS_SECRET_PASSWRD} | sudo -S mv ${frontEndPath}/build/index.html ${frontEndPath}"
+                            echo 'Replace previous frontend build by the new one'
+                            sh "echo ${PASSWORD} | sudo -S rm -rf ${frontEndPath}/assets"
+                            sh "echo ${PASSWORD} | sudo -S rm -rf ${frontEndPath}/build"
+                            sh "echo ${PASSWORD} | sudo -S rm -rf ${frontEndPath}/index.html"
+                            sh "echo ${PASSWORD} | sudo -S mv /projet/NetChill.V1/webapp/build ${frontEndPath}"
+                            sh "echo ${PASSWORD} | sudo -S mv ${frontEndPath}/build/assets ${frontEndPath}"
+                            sh "echo ${PASSWORD} | sudo -S mv ${frontEndPath}/build/index.html ${frontEndPath}"
+                        }
                     }
                 }
             }
