@@ -1,8 +1,10 @@
 package com.netchill.services.streaming;
 
+import com.coreoz.plume.jersey.errors.WsException;
 import com.netchill.api.moviedb.models.MediaVideo;
 import com.netchill.api.moviedb.models.YoutubeKey;
 import com.netchill.api.moviedb.services.trailer.TrailerApiService;
+import com.netchill.webservices.error.NetchillWsError;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -42,10 +44,13 @@ public class TrailerService {
     }
 
     private Optional<YoutubeKey> getTrailer(List<YoutubeKey> trailers) {
+        if(trailers.isEmpty()) {
+            return Optional.of(new YoutubeKey());
+        }
         return Optional.of(trailers.stream()
             .filter(trailer -> TRAILER_TYPE.equals(trailer.getType()))
             .findFirst()
-            // returns the first video if there is no type of trailer available, is better then nothing at all
+            // returns the first video if there is no type of trailer available, is better than nothing
             .orElse(trailers.get(0)));
     }
 }

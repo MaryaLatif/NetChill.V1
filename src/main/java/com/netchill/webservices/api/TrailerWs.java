@@ -23,13 +23,11 @@ import javax.ws.rs.core.MediaType;
 public class TrailerWs {
     private final ConfigurationService configurationService;
     private final TrailerService movieStreamingService;
-    private final MovieDao movieDao;
 
     @Inject
-    private TrailerWs(ConfigurationService configurationService, TrailerService movieStreamingService, MovieDao movieDao) {
+    private TrailerWs(ConfigurationService configurationService, TrailerService movieStreamingService) {
         this.configurationService = configurationService;
         this.movieStreamingService = movieStreamingService;
-        this.movieDao = movieDao;
     }
 
     @GET

@@ -28,10 +28,10 @@ function SerieDetails({ id_serie, genreIds }: Props) {
       <div className="season__header">
         <h2>{serie?.title}</h2>
         <p className="season-date">{serie?.release_date}</p>
-        <p className="season-infos"><span
+        <div className="season-infos"><span
           className="season-infos__nb-season">Total saisons: {serie?.number_of_seasons}</span> &nbsp; | &nbsp; <span>
         <GenreList genreId={genreIds} className="about-it__genre-list" />
-      </span></p>
+      </span></div>
       </div>
       <div className="about-it">
         <div className="about-it__overview__container">
